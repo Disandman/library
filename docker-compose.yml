@@ -3,7 +3,7 @@ services:
     # PHP service
     app:
         build: .
-        container_name: php-app
+        container_name: php-app-library
         working_dir: /var/www/html
         volumes:
             - ./:/var/www/html
@@ -12,9 +12,9 @@ services:
     # MySQL database service
     db:
         image: mysql:latest
-        container_name: mysql-db
+        container_name: mysql-db-library
         ports:
-            - "3306:3306"
+            - "33062:3306"
         environment:
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
             MYSQL_DATABASE: ${DB_DATABASE}
@@ -26,9 +26,9 @@ services:
     # Nginx service
     nginx:
         image: nginx:alpine
-        container_name: php-nginx
+        container_name: php-nginx-library
         ports:
-            - 8000:80
+            - 8005:80
         volumes:
             - ./:/var/www/html
             - ./config/nginx/conf.d/:/etc/nginx/conf.d/
