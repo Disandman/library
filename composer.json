@@ -1,0 +1,22 @@
+{
+  "name": "library/mvc",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "disandman",
+      "email": "sdg.silka@gmail.com"
+    }
+  ],
+    "require": {
+      "robmorgan/phinx": "dev-master",
+      "vlucas/phpdotenv": "dev-master",
+      "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": ""
+        }
+    }
+}

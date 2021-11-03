@@ -1,0 +1,105 @@
+.navbar-nav {
+    float:none;
+    margin:0 auto;
+    display: block;
+    text-align: center;
+}
+
+.navbar-nav > li {
+    display: inline-block;
+    float:none;
+}
+.navbar-light .nav-item.active .nav-link,
+.navbar-light .nav-item .nav-link:active,
+.navbar-light .nav-item .nav-link:focus,
+.navbar-light .nav-item:hover .nav-link {
+    color: #FF7A00;
+}
+body {
+    font-size:14px;
+    padding: 15px 20px;
+}
+.breadcrumb {
+    padding: 0;
+    margin: 20px;
+}
+.breadcrumb a {
+    display: inline-block;
+    font-size: 15px;
+    vertical-align: top;
+}
+.breadcrumb_item:before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin: 7px 4px;
+    vertical-align: top;
+    background: #FF7A00;
+    border-radius: 50%;
+}
+
+body{
+    font-family: 'Capriola', sans-serif;
+}
+.wrap{
+    margin:0 auto;
+    width:1000px;
+}
+.error h1{
+    color:#ff7a00;
+}
+
+.sub a{
+    color:#ff7a00;
+    text-decoration:none;
+    padding:5px;
+    font-size:13px;
+    font-family: arial, serif;
+    font-weight:bold;
+}
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.button_submit {
+    text-align: center;
+    display: inline-block !important;
+    text-decoration: none !important;
+    background-color: #ffffff !important;
+    color: #ff7a00 !important;
+    border: 1px solid #ff7a00 !important;
+    border-radius: 61px !important;
+    font-size: 16px !important;
+    padding: 5px 20px !important;
+    transition: all 0.8s ease !important;
+}
+.button_submit:hover{
+    text-decoration: none !important;
+    background-color: #ff7a00 !important;
+    color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+
