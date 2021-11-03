@@ -7,7 +7,7 @@ services:
         working_dir: /var/www/html
         volumes:
             - ./:/var/www/html
-            - ./config/php/php.ini:/usr/local/etc/php/php.ini
+            - ./docker/php/php.ini:/usr/local/etc/php/php.ini
 
     # MySQL database service
     db:
@@ -31,4 +31,4 @@ services:
             - 8005:80
         volumes:
             - ./:/var/www/html
-            - ./config/nginx/conf.d/:/etc/nginx/conf.d/
+            - ./docker/nginx/:/etc/nginx/conf.d/

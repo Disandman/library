@@ -22,4 +22,4 @@ set_exception_handler('App\core\Error::exceptionHandler');
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__. '/../');
 $dotenv->load();
 
-\App\config\app\Routes::Routes();
+\App\config\Routes::Routes();
