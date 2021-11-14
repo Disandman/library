@@ -63,8 +63,5 @@ foreach ($model as $product) {
     <input type = "submit" />
 </form>
 <br>
-rgeg<br>
+<hr>
 <br>
-rgeg<br>
-<br>
-rgeg<br>
