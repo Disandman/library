@@ -12,7 +12,9 @@
     "require": {
       "robmorgan/phinx": "dev-master",
       "vlucas/phpdotenv": "dev-master",
-      "ext-pdo": "*"
+      "ext-pdo": "*",
+      "symfony/orm-pack": "*",
+      "cache/cache-bundle": "*"
     },
     "autoload": {
         "psr-4": {
