@@ -53,7 +53,7 @@
 
 /** @var void $model */
 foreach ($model as $product) {
-    echo $product->getName().'<br>';
+    echo "Имя:".$product->getName().'<br>';
 }
 
 

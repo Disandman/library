@@ -28,4 +28,8 @@ class View
             throw new \Exception("$file not found");
         }
     }
+    public static function redirect($url) {
+        header('location: '.$url);
+        exit;
+    }
 }

@@ -4,7 +4,6 @@ namespace App\controllers;
 
 use App\core\View;
 use App\models\AcademicDegree;
-use App\models\AcademicDegreeModels;
 
 
 class AccountController
@@ -43,12 +42,7 @@ class AccountController
         /** @var array $entityManager */
         $entityManager->persist($product);
         $entityManager->flush();
-        $ADM = new AcademicDegreeModels();
-        $result = $ADM->getIndex();
-        $model = [
-            'model' => $result,
-        ];
-        View::render('Главная страница','site/index.php',$model);
+        View::redirect('/');
 
 
 
