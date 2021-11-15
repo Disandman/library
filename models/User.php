@@ -39,7 +39,106 @@ class User
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="App\models\Role", mappedBy="id_role", cascade={"persist"})
+     * @ORM\JoinColumn(name="role", referencedColumnName="id_role")
      */
     protected $role;
+
+    /**
+     * @return mixed
+     */
+    public function getIdUser()
+    {
+        return $this->id_user;
+    }
+
+    /**
+     * @param mixed $id_user
+     */
+    public function setIdUser($id_user): void
+    {
+        $this->id_user = $id_user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * @param mixed $login
+     */
+    public function setLogin($login): void
+    {
+        $this->login = $login;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFullName()
+    {
+        return $this->full_name;
+    }
+
+    /**
+     * @param mixed $full_name
+     */
+    public function setFullName($full_name): void
+    {
+        $this->full_name = $full_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role): void
+    {
+        $this->role = $role;
+    }
+
 
 }

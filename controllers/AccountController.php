@@ -29,7 +29,10 @@ class AccountController
      */
     public function logout()
     {
-        View::render('Главная страница','account/index.php');
+        session_start();
+        session_destroy();
+        View::redirect('/');
+        exit;
     }
     public function update(){
 
