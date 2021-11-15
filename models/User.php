@@ -39,7 +39,7 @@ class User
 
     /**
      * @ORM\Column(type="integer")
-     * @ORM\OneToMany(targetEntity="App\models\Role", mappedBy="id_role", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Role")
      * @ORM\JoinColumn(name="role", referencedColumnName="id_role")
      */
     protected $role;

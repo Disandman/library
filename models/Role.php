@@ -14,8 +14,6 @@ class Role
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\ManyToOne(targetEntity="App\models\Role", inversedBy="role")
-     * @ORM\JoinColumn(name="id_role", referencedColumnName="role")
      */
     protected $id_role;
 
