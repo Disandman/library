@@ -23,9 +23,16 @@ class Role
      */
     protected $name;
 
+
+
     /**
-     * Связь User и Role
-     * @ORM\OneToMany(targetEntity="User", mappedBy="role", cascade={"persist", "remove"})
+     * @var object
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="User",
+     *      mappedBy="role",
+     *      cascade={"persist", "remove"}
+     * )
      */
     protected $role;
 
@@ -34,6 +41,14 @@ class Role
      */
     public function __construct() {
         $this->role = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdRole()
+    {
+        return $this->id_role;
     }
 
     /**

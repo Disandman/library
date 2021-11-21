@@ -4,11 +4,18 @@ namespace App\core;
 
 class Breadcrumb
 {
-    private static $_items = array();
+
+
+    private static $items = array();
+    private static $itemsСurrent = array();
 
     public static function add($url, $name)
     {
-        self::$_items[] = array($url, $name);
+        self::$items[] = array($url, $name);
+    }
+    public static function add_current($url, $name)
+    {
+        self::$itemsСurrent[] = array($url, $name);
     }
 
     public static function out()
@@ -23,7 +30,7 @@ class Breadcrumb
 			</span>';
 
         $i = 1;
-        foreach (self::$_items as $row) {
+        foreach (self::$items as $row) {
             $res .= '<span class="breadcrumb_item" itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
 				<a href="' . $row[0] . '" itemprop="item">
 					' . $row[1] . '
@@ -32,7 +39,22 @@ class Breadcrumb
 				<meta itemprop="position" content="' . ++$i . '">
 			</span>';
         }
+
+
+
+        $j = 1;
+        foreach (self::$itemsСurrent as $rows) {
+            $res .= '<span class="breadcrumb_item" itemscope="" itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+				<a itemprop="item">
+					' . $rows[1] . '
+					<meta itemprop="name" content="' . $rows[1] . '">
+				</a>
+				<meta itemprop="position" content="' . ++$j . '">
+			</span>';
+        }
         $res .= '</div>';
+
+
 
         return $res;
     }

@@ -5,6 +5,7 @@
         echo $title; ?></title>
     <link rel="stylesheet" href="/css/bootstrap.css" >
     <link rel="stylesheet" href="/css/style.css" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <script type="text/javascript" src="/js/bootstrap.js"></script>
 </head>
 <body>
@@ -22,6 +23,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/noAction">Не главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/user/index">Пользователи (для Админа)</a>
                     </li>
 
 

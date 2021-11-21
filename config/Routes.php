@@ -15,6 +15,9 @@ class Routes
         $router->add('account/login', ['controller' => 'AccountController', 'action' => 'login']);
         $router->add('account/register', ['controller' => 'AccountController', 'action' => 'register']);
         $router->add('account/update', ['controller' => 'AccountController', 'action' => 'update']);
+        $router->add('user/index', ['controller' => 'UserController', 'action' => 'index']);
+        $router->add('user/create', ['controller' => 'UserController', 'action' => 'create']);
+        $router->add('user/delete', ['controller' => 'UserController', 'action' => 'delete']);
         $router->add('{controller}/{action}');
 
         $router->dispatch($_SERVER['QUERY_STRING']);

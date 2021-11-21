@@ -38,10 +38,14 @@ class User
      */
     protected $active;
 
+
+
+
     /**
-     * Связь User и Role
+     * @var object
+     *
      * @ORM\ManyToOne(targetEntity="Role", inversedBy="role")
-     * @ORM\JoinColumn(name="role", referencedColumnName="id_role")
+     * @ORM\JoinColumn(name="role", referencedColumnName="id_role", nullable=false, onDelete="CASCADE")
      */
     protected $role;
 
@@ -73,7 +77,7 @@ class User
      */
     public function __construct()
     {
-        $this->role = new ArrayCollection();
+      //  $this->role = new ArrayCollection();
         $this->connect_academic_info = new ArrayCollection();
         $this->connect_violation = new ArrayCollection();
     }
@@ -92,6 +96,14 @@ class User
     public function getLogin()
     {
         return $this->login;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdUser()
+    {
+        return $this->id_user;
     }
 
     /**
