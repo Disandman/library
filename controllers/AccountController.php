@@ -4,6 +4,7 @@ namespace App\controllers;
 
 use App\core\View;
 use App\models\AcademicDegree;
+use App\models\UserModels;
 
 
 class AccountController
@@ -13,7 +14,14 @@ class AccountController
      */
     public function login()
     {
-        View::render('Главная страница','account/login.php');
+
+        $user = new UserModels();
+        $result = $user->getIndex();
+        $model = [
+            'model' => $result,
+        ];
+
+        View::render('Главная страница','account/login.php', $model);
     }
 
     /**

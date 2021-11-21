@@ -29,4 +29,17 @@ echo \App\core\Breadcrumb::out();
         <button class="button_submit"  type="submit" target="_blank">Войти</button>
     </div>
 </form>
+
+    <?php
+
+
+    /** @var void $model */
+    foreach ($model as $user) {
+        echo "Логин:".$user->getLogin().'<br>';
+        echo "ФИО:".$user->getFullName().'<br>';
+        echo "Роль:".$user->getRole().'<br>';
+    }
+
+
+    ?>
 </main>

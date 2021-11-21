@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,26 @@ class Division
      * @ORM\Column(type="string")
      */
     protected $division;
+
+
+    /**
+     * @var object
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="ReadersTicket",
+     *      mappedBy="id_division",
+     *      cascade={"persist", "remove"}
+     * )
+     */
+    protected $readers_ticket_division;
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->readers_ticket_division = new ArrayCollection();
+    }
 
     /**
      * @param mixed $id_division

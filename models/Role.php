@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,6 +24,27 @@ class Role
     protected $name;
 
     /**
+     * Связь User и Role
+     * @ORM\OneToMany(targetEntity="User", mappedBy="role", cascade={"persist", "remove"})
+     */
+    protected $role;
+
+    /**
+     *
+     */
+    public function __construct() {
+        $this->role = new ArrayCollection();
+    }
+
+    /**
+     * @param mixed $id_role
+     */
+    public function setIdRole($id_role): void
+    {
+        $this->id_role = $id_role;
+    }
+
+    /**
      * @return mixed
      */
     public function getName()
@@ -39,11 +61,19 @@ class Role
     }
 
     /**
-     * @param mixed $id_role
+     * @return ArrayCollection
      */
-    public function setIdRole($id_role): void
+    public function getRole(): ArrayCollection
     {
-        $this->id_role = $id_role;
+        return $this->role;
+    }
+
+    /**
+     * @param ArrayCollection $role
+     */
+    public function setRole(ArrayCollection $role): void
+    {
+        $this->role = $role;
     }
 
 }

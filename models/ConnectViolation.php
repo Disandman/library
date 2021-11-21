@@ -19,15 +19,20 @@ class ConnectViolation
     protected $id_connect_violations;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="connect_violation")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false, onDelete="CASCADE")
      */
     protected $id_user;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="Violation", inversedBy="connect_violation")
+     * @ORM\JoinColumn(name="id_violation", referencedColumnName="id_violation", nullable=false, onDelete="CASCADE")
      */
     protected $id_violations;
-
 
     /**
      * @param mixed $id_connect_violations
@@ -38,36 +43,35 @@ class ConnectViolation
     }
 
     /**
-     * @return mixed
+     * @return object
      */
-    public function getIdUser()
+    public function getIdUser(): object
     {
         return $this->id_user;
     }
 
     /**
-     * @param mixed $id_user
+     * @param object $id_user
      */
-    public function setIdUser($id_user): void
+    public function setIdUser(object $id_user): void
     {
         $this->id_user = $id_user;
     }
 
     /**
-     * @return mixed
+     * @return object
      */
-    public function getIdViolations()
+    public function getIdViolations(): object
     {
         return $this->id_violations;
     }
 
     /**
-     * @param mixed $id_violations
+     * @param object $id_violations
      */
-    public function setIdViolations($id_violations): void
+    public function setIdViolations(object $id_violations): void
     {
         $this->id_violations = $id_violations;
     }
-
 
 }

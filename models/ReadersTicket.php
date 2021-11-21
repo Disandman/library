@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,14 +25,21 @@ class ReadersTicket
     protected $id_user;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="readers_ticket_cource")
+     * @ORM\JoinColumn(name="id_course", referencedColumnName="id_course", nullable=false, onDelete="CASCADE")
      */
     protected $id_division;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="Division", inversedBy="readers_ticket_division")
+     * @ORM\JoinColumn(name="id_division", referencedColumnName="id_division", nullable=false, onDelete="CASCADE")
      */
     protected $id_course;
+
 
     /**
      * @ORM\Column(type="boolean")
@@ -47,6 +55,17 @@ class ReadersTicket
      * @ORM\Column(type="string")
      */
     protected $date_unblocking;
+
+    /**
+     * @var object
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="ConnectBooks",
+     *      mappedBy="id_readers_ticket",
+     *      cascade={"persist", "remove"}
+     * )
+     */
+    protected $connect_books;
 
 
     /**
@@ -153,5 +172,20 @@ class ReadersTicket
         $this->date_unblocking = $date_unblocking;
     }
 
+    /**
+     * @return object
+     */
+    public function getConnectBooks(): object
+    {
+        return $this->connect_books;
+    }
+
+    /**
+     * @param object $connect_books
+     */
+    public function setConnectBooks(object $connect_books): void
+    {
+        $this->connect_books = $connect_books;
+    }
 
 }

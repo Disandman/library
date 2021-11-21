@@ -18,12 +18,18 @@ class ConnectBooks
     protected $id_connect_books;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="ReadersTicket", inversedBy="connect_books")
+     * @ORM\JoinColumn(name="id_readers_ticket", referencedColumnName="id_readers_ticket", nullable=false, onDelete="CASCADE")
      */
     protected $id_readers_ticket;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="Books", inversedBy="connect_books")
+     * @ORM\JoinColumn(name="id_books", referencedColumnName="id_books", nullable=false, onDelete="CASCADE")
      */
     protected $id_books;
 
@@ -51,33 +57,33 @@ class ConnectBooks
     }
 
     /**
-     * @return mixed
+     * @return object
      */
-    public function getIdReadersTicket()
+    public function getIdReadersTicket(): object
     {
         return $this->id_readers_ticket;
     }
 
     /**
-     * @param mixed $id_readers_ticket
+     * @param object $id_readers_ticket
      */
-    public function setIdReadersTicket($id_readers_ticket): void
+    public function setIdReadersTicket(object $id_readers_ticket): void
     {
         $this->id_readers_ticket = $id_readers_ticket;
     }
 
     /**
-     * @return mixed
+     * @return object
      */
-    public function getIdBooks()
+    public function getIdBooks(): object
     {
         return $this->id_books;
     }
 
     /**
-     * @param mixed $id_books
+     * @param object $id_books
      */
-    public function setIdBooks($id_books): void
+    public function setIdBooks(object $id_books): void
     {
         $this->id_books = $id_books;
     }
@@ -129,6 +135,5 @@ class ConnectBooks
     {
         $this->refund = $refund;
     }
-
 
 }

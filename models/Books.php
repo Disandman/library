@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,6 +41,33 @@ class Books
     /**
      * @ORM\Column(type="string")
      */protected $date_lost;
+
+    /**
+     * @var object
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="ConnectBooks",
+     *      mappedBy="id_books",
+     *      cascade={"persist", "remove"}
+     * )
+     */
+    protected $connect_books;
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->connect_books = new ArrayCollection();
+    }
+
+    /**
+     * @param mixed $id_books
+     */
+    public function setIdBooks($id_books): void
+    {
+        $this->id_books = $id_books;
+    }
 
     /**
      * @return mixed
@@ -135,6 +163,22 @@ class Books
     public function setDateLost($date_lost): void
     {
         $this->date_lost = $date_lost;
+    }
+
+    /**
+     * @return object
+     */
+    public function getConnectBooks(): object
+    {
+        return $this->connect_books;
+    }
+
+    /**
+     * @param object $connect_books
+     */
+    public function setConnectBooks(object $connect_books): void
+    {
+        $this->connect_books = $connect_books;
     }
 
 

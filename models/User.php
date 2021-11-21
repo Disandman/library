@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,18 +39,43 @@ class User
     protected $active;
 
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\OneToOne(targetEntity="Role")
+     * Связь User и Role
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="role")
      * @ORM\JoinColumn(name="role", referencedColumnName="id_role")
      */
     protected $role;
 
     /**
-     * @return mixed
+     * @var object
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="ConnectBooks",
+     *      mappedBy="id_user",
+     *      cascade={"persist", "remove"}
+     * )
      */
-    public function getIdUser()
+    protected $connect_violation;
+
+    /**
+     * @var object
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="ConnectAcademicInfo",
+     *      mappedBy="id_user",
+     *      cascade={"persist", "remove"}
+     * )
+     */
+    protected $connect_academic_info;
+
+
+    /**
+     *
+     */
+    public function __construct()
     {
-        return $this->id_user;
+        $this->role = new ArrayCollection();
+        $this->connect_academic_info = new ArrayCollection();
+        $this->connect_violation = new ArrayCollection();
     }
 
     /**
@@ -140,5 +166,36 @@ class User
         $this->role = $role;
     }
 
+    /**
+     * @return object
+     */
+    public function getConnectViolation(): object
+    {
+        return $this->connect_violation;
+    }
+
+    /**
+     * @param object $connect_violation
+     */
+    public function setConnectViolation(object $connect_violation): void
+    {
+        $this->connect_violation = $connect_violation;
+    }
+
+    /**
+     * @return object
+     */
+    public function getConnectAcademicInfo(): object
+    {
+        return $this->connect_academic_info;
+    }
+
+    /**
+     * @param object $connect_academic_info
+     */
+    public function setConnectAcademicInfo(object $connect_academic_info): void
+    {
+        $this->connect_academic_info = $connect_academic_info;
+    }
 
 }

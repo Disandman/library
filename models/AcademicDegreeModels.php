@@ -12,9 +12,9 @@ class AcademicDegreeModels
 
         require dirname(__DIR__) . '/config/bootstrap.php';
         /** @var array $entityManager */
-        $productRepository = $entityManager->getRepository(':AcademicDegree');
-        $products = $productRepository->findAll();
-        return $products;
+        $degreeRepository = $entityManager->getRepository(':AcademicDegree');
+        $degree = $degreeRepository->findAll();
+        return $degree;
     }
 
 }

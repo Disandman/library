@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,26 @@ class Course
      * @ORM\Column(type="string")
      */
     protected $cource;
+
+
+    /**
+     * @var object
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="ReadersTicket",
+     *      mappedBy="id_cource",
+     *      cascade={"persist", "remove"}
+     * )
+     */
+    protected $readers_ticket_cource;
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->readers_ticket_cource = new ArrayCollection();
+    }
 
     /**
      * @param mixed $id_course

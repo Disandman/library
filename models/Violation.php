@@ -2,6 +2,7 @@
 
 namespace App\models;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +28,25 @@ class Violation
      */
     protected $price_violations;
 
+    /**
+     * @var object
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="ConnectViolation",
+     *      mappedBy="id_violation",
+     *      cascade={"persist", "remove"}
+     * )
+     */
+    protected $connect_violation;
+
+
+    /**
+     *
+     */
+    public function __construct()
+    {
+        $this->connect_violation = new ArrayCollection();
+    }
 
     /**
      * @param mixed $id_violation
@@ -68,5 +88,20 @@ class Violation
         $this->price_violations = $price_violations;
     }
 
+    /**
+     * @return object
+     */
+    public function getConnectViolation(): object
+    {
+        return $this->connect_violation;
+    }
+
+    /**
+     * @param object $connect_violation
+     */
+    public function setConnectViolation(object $connect_violation): void
+    {
+        $this->connect_violation = $connect_violation;
+    }
 
 }
