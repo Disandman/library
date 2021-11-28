@@ -17,7 +17,10 @@ class Routes
         $router->add('account/update', ['controller' => 'AccountController', 'action' => 'update']);
         $router->add('user/index', ['controller' => 'UserController', 'action' => 'index']);
         $router->add('user/create', ['controller' => 'UserController', 'action' => 'create']);
+        $router->add('user/update', ['controller' => 'UserController', 'action' => 'update']);
         $router->add('user/delete', ['controller' => 'UserController', 'action' => 'delete']);
+        $router->add('role/create', ['controller' => 'RoleController', 'action' => 'create']);
+        $router->add('role/delete', ['controller' => 'RoleController', 'action' => 'delete']);
         $router->add('{controller}/{action}');
 
         $router->dispatch($_SERVER['QUERY_STRING']);

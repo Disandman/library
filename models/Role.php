@@ -19,10 +19,9 @@ class Role
     protected $id_role;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     protected $name;
-
 
 
     /**

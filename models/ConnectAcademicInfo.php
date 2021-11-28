@@ -21,7 +21,7 @@ class ConnectAcademicInfo
      * @var object
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="connect_academic_info")
-     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(name="id_connect_academic_info", referencedColumnName="id_user", nullable=false, onDelete="CASCADE")
      */
     protected $id_user;
 

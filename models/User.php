@@ -49,27 +49,27 @@ class User
      */
     protected $role;
 
-    /**
-     * @var object
-     *
-     * @ORM\OneToMany(
-     *      targetEntity="ConnectBooks",
-     *      mappedBy="id_user",
-     *      cascade={"persist", "remove"}
-     * )
-     */
-    protected $connect_violation;
-
-    /**
-     * @var object
-     *
-     * @ORM\OneToMany(
-     *      targetEntity="ConnectAcademicInfo",
-     *      mappedBy="id_user",
-     *      cascade={"persist", "remove"}
-     * )
-     */
-    protected $connect_academic_info;
+//    /**
+//     * @var object
+//     *
+//     * @ORM\OneToMany(
+//     *      targetEntity="ConnectBooks",
+//     *      mappedBy="id_user",
+//     *      cascade={"persist", "remove"}
+//     * )
+//     */
+//    protected $connect_violation;
+//
+//    /**
+//     * @var object
+//     *
+//     * @ORM\OneToMany(
+//     *      targetEntity="ConnectAcademicInfo",
+//     *      mappedBy="id_user",
+//     *      cascade={"persist", "remove"}
+//     * )
+//     */
+//    protected $connect_academic_info;
 
 
     /**
@@ -93,17 +93,17 @@ class User
     /**
      * @return mixed
      */
-    public function getLogin()
+    public function getIdUser()
     {
-        return $this->login;
+        return $this->id_user;
     }
 
     /**
      * @return mixed
      */
-    public function getIdUser()
+    public function getLogin()
     {
-        return $this->id_user;
+        return $this->login;
     }
 
     /**

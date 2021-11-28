@@ -26,5 +26,15 @@ class UserModels
         $user = $userRepository->findAll();
         return $user;
     }
+    public function getUpdate()
+    {
+        require dirname(__DIR__) . '/config/bootstrap.php';
+        /** @var array $entityManager */
+
+        $id_user = $_GET['id'];
+        $userRepository = $entityManager->getRepository(':User');
+        $user = $userRepository->findOneBy(['id_user' => $id_user]);
+        return $user;
+    }
 
 }

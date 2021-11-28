@@ -2,7 +2,7 @@
 FROM php:7.4-fpm
 
 # Установка системных зависимостей
-RUN apt-get update && apt-get install -y git && pecl install xdebug && docker-php-ext-enable xdebug
+RUN apt-get update && apt-get install -y git && pecl install xdebug && docker-php-ext-enable xdebug && apt install zip unzip php-zip
 
 # Установка расширений PHP (PDO)
 RUN docker-php-ext-install pdo_mysql
