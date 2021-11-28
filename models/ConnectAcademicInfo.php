@@ -18,18 +18,31 @@ class ConnectAcademicInfo
     protected $id_connect_academic_info;
 
 
-    /**
-     * @var object
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="connect_academic_info")
-     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false)
-     */
-    protected $id_user;
 
 
     /**
      * @ORM\Column(type="integer")
      */
+    protected $id_academic_title;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
     protected $id_academic_degree;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $id_user;
+
+/////////////////////////////////////////////////Связи/////////////////////////////////
+
+    /**
+     * @var object
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="connect_academic_info")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false)
+     */
+    protected $id_user_connect;
 
 
 
@@ -43,20 +56,12 @@ class ConnectAcademicInfo
 
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    protected $id_academic_title;
-
-
-    /**
      * @var object
      *
      * @ORM\ManyToOne(targetEntity="AcademicTitle", inversedBy="connect_academic_info_title")
      * @ORM\JoinColumn(name="id_academic_title", referencedColumnName="id_academic_title", nullable=false, onDelete="CASCADE")
      */
     protected $connect_academic_info_title;
-
-
 
 
 

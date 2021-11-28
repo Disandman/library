@@ -25,21 +25,14 @@ class ReadersTicket
     protected $id_user;
 
     /**
-     * @var object
-     *
-     * @ORM\ManyToOne(targetEntity="Course", inversedBy="readers_ticket_cource")
-     * @ORM\JoinColumn(name="id_course", referencedColumnName="id_course", nullable=false, onDelete="CASCADE")
+     * @ORM\Column(type="integer")
      */
     protected $id_division;
 
     /**
-     * @var object
-     *
-     * @ORM\ManyToOne(targetEntity="Division", inversedBy="readers_ticket_division")
-     * @ORM\JoinColumn(name="id_division", referencedColumnName="id_division", nullable=false, onDelete="CASCADE")
+     * @ORM\Column(type="integer")
      */
     protected $id_course;
-
 
     /**
      * @ORM\Column(type="boolean")
@@ -55,6 +48,22 @@ class ReadersTicket
      * @ORM\Column(type="string")
      */
     protected $date_unblocking;
+/////////////////////////////////////////////////Связи/////////////////////////////////
+    /**
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="Division", inversedBy="readers_ticket_division")
+     * @ORM\JoinColumn(name="id_division", referencedColumnName="id_division", nullable=false, onDelete="CASCADE")
+     */
+    protected $id_division_connect;
+
+    /**
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="readers_ticket_cource")
+     * @ORM\JoinColumn(name="id_course", referencedColumnName="id_course", nullable=false, onDelete="CASCADE")
+     */
+    protected $id_course_connect;
 
     /**
      * @var object
@@ -66,6 +75,13 @@ class ReadersTicket
      * )
      */
     protected $connect_books;
+
+    /**
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
+     */
+    private $shipment;
+
 
 
     /**

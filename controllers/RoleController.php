@@ -14,7 +14,7 @@ class RoleController
         require dirname(__DIR__) . '/config/bootstrap.php';
 
         $roleModel = new RoleModel();
-        $resultRole = $roleModel->getIndex();
+        $resultRole = $roleModel->getAll();
         $role = [
             'role' => $resultRole,
         ];
@@ -39,7 +39,7 @@ class RoleController
         require dirname(__DIR__) . '/config/bootstrap.php';
 
         $roleModel = new RoleModel();
-        $resultRole = $roleModel->getUpdate();
+        $resultRole = $roleModel->getOne();
         $model = [
             'model' => $resultRole,
         ];

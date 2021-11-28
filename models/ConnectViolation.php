@@ -18,7 +18,12 @@ class ConnectViolation
      */
     protected $id_connect_violations;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $id_violation;
 
+/////////////////////////////////////////////////Связи/////////////////////////////////
 
     /**
      * @var object
@@ -26,13 +31,6 @@ class ConnectViolation
      * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false)
      */
     protected $id_user;
-
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $id_violation;
-
 
     /**
      * @var object

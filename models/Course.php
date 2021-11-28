@@ -23,13 +23,13 @@ class Course
      */
     protected $cource;
 
-
+/////////////////////////////////////////////////Связи/////////////////////////////////
     /**
      * @var object
      *
      * @ORM\OneToMany(
      *      targetEntity="ReadersTicket",
-     *      mappedBy="id_cource",
+     *      mappedBy="id_course_connect",
      *      cascade={"persist", "remove"}
      * )
      */

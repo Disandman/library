@@ -23,7 +23,7 @@ class Role
      */
     protected $name;
 
-
+/////////////////////////////////////////////////Связи/////////////////////////////////
     /**
      * @var object
      *
@@ -65,6 +65,22 @@ class Role
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return object
+     */
+    public function getRole(): object
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param object $role
+     */
+    public function setRole(object $role): void
+    {
+        $this->role = $role;
     }
 
 

@@ -42,12 +42,13 @@ class Books
      * @ORM\Column(type="string")
      */protected $date_lost;
 
+/////////////////////////////////////////////////Связи/////////////////////////////////
     /**
      * @var object
      *
      * @ORM\OneToMany(
      *      targetEntity="ConnectBooks",
-     *      mappedBy="id_books",
+     *      mappedBy="id_books_connect",
      *      cascade={"persist", "remove"}
      * )
      */

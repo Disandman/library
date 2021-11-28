@@ -18,18 +18,7 @@ class ConnectBooks
     protected $id_connect_books;
 
     /**
-     * @var object
-     *
-     * @ORM\ManyToOne(targetEntity="ReadersTicket", inversedBy="connect_books")
-     * @ORM\JoinColumn(name="id_readers_ticket", referencedColumnName="id_readers_ticket", nullable=false, onDelete="CASCADE")
-     */
-    protected $id_readers_ticket;
-
-    /**
-     * @var object
-     *
-     * @ORM\ManyToOne(targetEntity="Books", inversedBy="connect_books")
-     * @ORM\JoinColumn(name="id_books", referencedColumnName="id_books", nullable=false, onDelete="CASCADE")
+     * @ORM\Column(type="integer")
      */
     protected $id_books;
 
@@ -47,6 +36,25 @@ class ConnectBooks
      * @ORM\Column(type="boolean")
      */
     protected $refund;
+
+/////////////////////////////////////////Связи//////////////////////////////////////////
+
+    /**
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="ReadersTicket", inversedBy="connect_books")
+     * @ORM\JoinColumn(name="id_readers_ticket", referencedColumnName="id_readers_ticket", nullable=false, onDelete="CASCADE")
+     */
+    protected $id_readers_ticket;
+
+    /**
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="Books", inversedBy="connect_books")
+     * @ORM\JoinColumn(name="id_books", referencedColumnName="id_books", nullable=false, onDelete="CASCADE")
+     */
+    protected $id_books_connect;
+
 
     /**
      * @param mixed $id_connect_books

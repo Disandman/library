@@ -34,8 +34,8 @@
         </tr>
     </table>
     <div class="container text-center">
+        <a href="/user/index" class="btn btn-outline-info">Назад</a>
         <a href="/user/update?id=<?php echo $model->getIdUser(); ?>" class="btn btn-outline-primary">Изменить</a>
-        <a href="/user/index" class="btn btn-outline-primary">Назад</a>
     </div>
 
 

@@ -18,8 +18,8 @@ class UserController
 
         $role = new RoleModel();
         $user = new UserModels();
-        $resultUser = $user->getIndex();
-        $resultRole = $role->getIndex();
+        $resultUser = $user->getAll();
+        $resultRole = $role->getAll();
         $model = [
             'model' => $resultUser,
             'role' => $resultRole
@@ -31,8 +31,8 @@ class UserController
 
         $role = new RoleModel();
         $user = new UserModels();
-        $resultUser = $user->getView();
-        $resultRole = $role->getIndex();
+        $resultUser = $user->getOne();
+        $resultRole = $role->getAll();
         $model = [
             'model' => $resultUser,
             'role' => $resultRole
@@ -46,7 +46,7 @@ class UserController
         require dirname(__DIR__) . '/config/bootstrap.php';
 
         $roleModel = new RoleModel();
-        $resultRole = $roleModel->getIndex();
+        $resultRole = $roleModel->getAll();
         $role = [
             'role' => $resultRole,
         ];
@@ -61,7 +61,7 @@ class UserController
             $user->setRole($_POST['role']);
 
             /** @var array $entityManager */
-            $classRole = $entityManager->getRepository(':Role')->find($_POST['role']);
+            $classRole = $entityManager->getRepository(':Role')->find($_POST['role'][0]);
             $user->setRole($classRole);
             $entityManager->persist($user);
             $entityManager->flush();
@@ -76,11 +76,11 @@ class UserController
         require dirname(__DIR__) . '/config/bootstrap.php';
 
         $roleModel = new RoleModel();
-        $resultRole = $roleModel->getIndex();
+        $resultRole = $roleModel->getAll();
 
 
         $view = new UserModels();
-        $viewModel = $view->getUpdate();
+        $viewModel = $view->getOne();
 
         $model = [
             'role' => $resultRole,
@@ -88,8 +88,6 @@ class UserController
         ];
 
         if ($_POST) {
-
-
 
             $id_user = $_GET['id'];
 
@@ -103,7 +101,7 @@ class UserController
             $user->setRole($_POST['role']);
 
             /** @var array $entityManager */
-            $classRole = $entityManager->getRepository(':Role')->find($_POST['role']);
+            $classRole = $entityManager->getRepository(':Role')->find($_POST['role'][0]);
             $user->setRole($classRole);
             $entityManager->persist($user);
             $entityManager->flush();

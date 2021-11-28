@@ -23,13 +23,13 @@ class Division
      */
     protected $division;
 
-
+/////////////////////////////////////////////////Связи/////////////////////////////////
     /**
      * @var object
      *
      * @ORM\OneToMany(
      *      targetEntity="ReadersTicket",
-     *      mappedBy="id_division",
+     *      mappedBy="id_division_connect",
      *      cascade={"persist", "remove"}
      * )
      */

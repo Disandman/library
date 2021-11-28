@@ -8,8 +8,6 @@ class AcademicDegreeModels
 
     public function getIndex()
     {
-
-
         require dirname(__DIR__) . '/config/bootstrap.php';
         /** @var array $entityManager */
         $degreeRepository = $entityManager->getRepository(':AcademicDegree');

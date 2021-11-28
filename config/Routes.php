@@ -13,8 +13,7 @@ class Routes
 // Add the routes
         $router->add('', ['controller' => 'HomeController', 'action' => 'index']);
         $router->add('account/login', ['controller' => 'AccountController', 'action' => 'login']);
-        $router->add('account/register', ['controller' => 'AccountController', 'action' => 'register']);
-        $router->add('account/update', ['controller' => 'AccountController', 'action' => 'update']);
+        $router->add('account/logout', ['controller' => 'AccountController', 'action' => 'logout']);
         $router->add('user/index', ['controller' => 'UserController', 'action' => 'index']);
         $router->add('user/view', ['controller' => 'UserController', 'action' => 'view']);
         $router->add('user/create', ['controller' => 'UserController', 'action' => 'create']);

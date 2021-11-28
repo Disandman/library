@@ -38,8 +38,7 @@ class User
      */
     protected $active;
 
-
-
+/////////////////////////////////////////////////Связи/////////////////////////////////
 
     /**
      * @var object
@@ -65,7 +64,7 @@ class User
      *
      * @ORM\OneToMany(
      *      targetEntity="ConnectAcademicInfo",
-     *      mappedBy="id_user",
+     *      mappedBy="id_user_connect",
      *      cascade={"persist", "remove"}
      * )
      */

@@ -28,6 +28,8 @@ class Violation
      */
     protected $price_violations;
 
+/////////////////////////////////////////////////Связи/////////////////////////////////
+
     /** @ORM\OneToMany(targetEntity="ConnectViolation", mappedBy="id_connect_violation") */
     protected $connect_violation;
 

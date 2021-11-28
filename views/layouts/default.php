@@ -21,23 +21,18 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/">Главная</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/noAction">Не главная</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/user/index">Пользователи (для Админа)</a>
+                        <a class="nav-link" aria-current="page" href="/user/index">Пользователи</a>
                     </li>
 
-
-
-
-                        <?php if(false) { ?>
-                        <li class="nav-item dropdown dropstart " style="position: absolute;right: 0;">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown">
+                        <?php if(true) { ?>
+                        <li class="nav-item dropdown dropstart ">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown" style="position: relative; text-align:right">User</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Профиль</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Выход</a></li>
+                                <li><a class="dropdown-item" href="/account/logout">Выход</a></li>
                             </ul>
                         </li>
                         <? }else{?>

@@ -4,7 +4,7 @@ namespace App\models;
 
 class RoleModel
 {
-    public function getIndex()
+    public function getAll()
     {
         require dirname(__DIR__) . '/config/bootstrap.php';
         /** @var array $entityManager */
@@ -13,7 +13,7 @@ class RoleModel
         return $role;
     }
 
-    public function getUpdate()
+    public function getOne()
     {
         require dirname(__DIR__) . '/config/bootstrap.php';
         /** @var array $entityManager */

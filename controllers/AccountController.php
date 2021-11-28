@@ -16,20 +16,12 @@ class AccountController
     {
 
         $user = new UserModels();
-        $result = $user->getIndex();
+        $result = $user->getOne();
         $model = [
             'model' => $result,
         ];
 
         View::render('Главная страница','account/login.php', $model);
-    }
-
-    /**
-     * @return void
-     */
-    public function register()
-    {
-        View::render('Главная страница','account/register.php');
     }
 
     /**
@@ -42,22 +34,5 @@ class AccountController
         View::redirect('/');
         exit;
     }
-    public function update(){
-
-        require dirname(__DIR__) . '/config/bootstrap.php';
-
-
-        $product = new AcademicDegree();
-        $product->setName($_POST['name']);
-
-        /** @var array $entityManager */
-        $entityManager->persist($product);
-        $entityManager->flush();
-        View::redirect('/');
-
-
-
-    }
-
 
 }
