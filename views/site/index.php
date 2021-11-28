@@ -45,23 +45,3 @@
         </div>
     </div>
 </div>
-
-<br>
-
-<?php
-
-
-/** @var void $model */
-foreach ($model as $product) {
-    echo "Имя:".$product->getName().'<br>';
-}
-
-
-?>
-<form action = "/account/update" method = "POST">
-    Name: <input type = "text" name = "name" />
-    <input type = "submit" />
-</form>
-<br>
-<hr>
-<br>

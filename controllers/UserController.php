@@ -26,6 +26,19 @@ class UserController
         ];
         View::render('Главная страница', 'user/index.php', $model);
     }
+    public function view()
+    {
+
+        $role = new RoleModel();
+        $user = new UserModels();
+        $resultUser = $user->getView();
+        $resultRole = $role->getIndex();
+        $model = [
+            'model' => $resultUser,
+            'role' => $resultRole
+        ];
+        View::render('Главная страница', 'user/view.php', $model);
+    }
 
 
     public function create()

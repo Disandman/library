@@ -36,13 +36,6 @@ class Role
     protected $role;
 
     /**
-     *
-     */
-    public function __construct() {
-        $this->role = new ArrayCollection();
-    }
-
-    /**
      * @return mixed
      */
     public function getIdRole()
@@ -74,20 +67,5 @@ class Role
         $this->name = $name;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getRole(): ArrayCollection
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param ArrayCollection $role
-     */
-    public function setRole(ArrayCollection $role): void
-    {
-        $this->role = $role;
-    }
 
 }

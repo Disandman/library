@@ -30,7 +30,7 @@ require dirname(__DIR__) . '/../config/bootstrap.php';
     </div>
     <br>
     <div class="form-group">
-        <label for="password">Пароль</label>
+        <label for="password">Новый пароль</label>
         <input type="password" class="form-control" id="exampleInputPassword" name="password">
     </div>
     <br>
@@ -44,14 +44,10 @@ require dirname(__DIR__) . '/../config/bootstrap.php';
     <br>
     <div class="form-group">
         <label for="exampleFormControlRole">Роль</label>
-        <select class="form-control" id="exampleFormControlRole" name="role">
-
-            <?php foreach($role as $roles): ?>
-            <option value=""><?php echo $roles->getName(); ?></option>
-            <?php endforeach; ?>
+        <select class="form-control" id="exampleFormControlRole" name="role[]">
 
             <?php foreach($role as $roles) : ?>
-                <option selected value="<?php echo $roles->getIdRole(); ?>"><?php echo $roles->getName(); ?></option>
+                <option value="<?php echo $roles->getIdRole(); ?>"><?php echo $roles->getName(); ?></option>
             <?php endforeach; ?>
 
         </select>
