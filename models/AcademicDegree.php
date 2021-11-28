@@ -28,7 +28,7 @@ class AcademicDegree
      *
      * @ORM\OneToMany(
      *      targetEntity="ConnectAcademicInfo",
-     *      mappedBy="id_academic_info",
+     *      mappedBy="connect_academic_info_degree",
      *      cascade={"persist", "remove"}
      * )
      */

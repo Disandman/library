@@ -18,21 +18,29 @@ class ConnectViolation
      */
     protected $id_connect_violations;
 
+
+
     /**
      * @var object
-     *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="connect_violation")
-     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false)
      */
     protected $id_user;
+
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $id_violation;
+
 
     /**
      * @var object
      *
      * @ORM\ManyToOne(targetEntity="Violation", inversedBy="connect_violation")
-     * @ORM\JoinColumn(name="id_violation", referencedColumnName="id_violation", nullable=false, onDelete="CASCADE")
+     * @ORM\JoinColumn(name="id_violation", referencedColumnName="id_violation", nullable=false)
      */
-    protected $id_violations;
+    protected $id_connect_violation;
 
     /**
      * @param mixed $id_connect_violations

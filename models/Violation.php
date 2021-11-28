@@ -28,17 +28,8 @@ class Violation
      */
     protected $price_violations;
 
-    /**
-     * @var object
-     *
-     * @ORM\OneToMany(
-     *      targetEntity="ConnectViolation",
-     *      mappedBy="id_violation",
-     *      cascade={"persist", "remove"}
-     * )
-     */
+    /** @ORM\OneToMany(targetEntity="ConnectViolation", mappedBy="id_connect_violation") */
     protected $connect_violation;
-
 
     /**
      *
