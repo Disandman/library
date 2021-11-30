@@ -13,6 +13,7 @@ services:
     db:
         image: mysql:latest
         container_name: mysql-db-library
+        restart: always
         ports:
             - "33062:3306"
         environment:
@@ -21,7 +22,10 @@ services:
             MYSQL_USER: ${DB_USERNAME}
             MYSQL_PASSWORD: ${DB_PASSWORD}
         env_file:
-            - ./.env    
+            - ./.env
+        volumes:
+            - ./docker/db:/docker-entrypoint-initdb.d/:ro
+            - /data/mysql:/var/lib/mysql
 
     # Nginx service
     nginx:
