@@ -102,4 +102,17 @@ body{
     color: #ffffff !important;
     border-color: #ffffff !important;
 }
+.error-heading{
+    margin: auto;
+    font-size: 126px;
+    text-shadow: 6px 6px 5px #000;
+    color: #FF7A00;
+}
+
+.error-main{
+    font-family: 'Ropa Sans', sans-serif;
+    text-align: center;
+    color: black;
+}
+
 

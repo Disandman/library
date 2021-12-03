@@ -16,13 +16,15 @@ echo \App\core\Breadcrumb::out();
         <input type="password" class="form-control" id="floatingPassword" name = "password" placeholder="Password">
         <label for="floatingPassword">Пароль</label>
     </div>
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Запомнить меня
-        </label>
-    </div>
+    <h6 class="text-center" style="color: darkred"><?php if (isset($_SESSION['msg']))echo $_SESSION['msg']; unset($_SESSION['msg']); ?></h6>
+<!--    <div class="checkbox mb-3">-->
+<!--        <label>-->
+<!--            <input type="checkbox" value="remember-me"> Запомнить меня-->
+<!--        </label>-->
+<!--    </div>-->
     <div class="text-center">
         <button class="button_submit"  type="submit" target="_blank">Войти</button>
     </div>
 </form>
+
 </main>

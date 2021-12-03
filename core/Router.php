@@ -119,10 +119,10 @@ class Router
                     throw new \Exception("Method $action in controller $controller cannot be called directly - remove the Action suffix to call this method");
                 }
             } else {
-                throw new \Exception("Controller class $controller not found");
+                View::render('Страница не найдена', '/layouts/error_404.php');
             }
         } else {
-            throw new \Exception('No route matched.', 404);
+            View::render('Страница не найдена', '/layouts/error_404.php');
         }
     }
 

@@ -15,7 +15,7 @@ require dirname(__DIR__) . '/config/bootstrap.php';
 /**
  * Старт сессии
  */
-//session_start();
+session_start();
 
 /**
  * Error and Exception handling

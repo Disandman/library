@@ -17,12 +17,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ADM = new AcademicDegreeModels();
-        $result = $ADM->getIndex();
-        $model = [
-            'model' => $result,
-        ];
-        View::render('Главная страница','site/index.php',$model);
+        View::render('Главная страница','site/index.php');
     }
 
 }

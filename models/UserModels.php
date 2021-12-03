@@ -37,4 +37,24 @@ class UserModels
         return $user;
     }
 
+    public function getAuth($login,$password)
+    {
+        require dirname(__DIR__) . '/config/bootstrap.php';
+        /** @var array $entityManager */
+
+        $userRepository = $entityManager->getRepository(':User');
+        $user = $userRepository->findOneBy(['login' => $login, 'password' => $password]);
+        return $user;
+    }
+
+    public function getIdUser($id)
+    {
+        require dirname(__DIR__) . '/config/bootstrap.php';
+        /** @var array $entityManager */
+
+        $userRepository = $entityManager->getRepository(':User');
+        $user = $userRepository->findOneBy(['id_user' => $id]);
+        return $user;
+    }
+
 }

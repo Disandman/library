@@ -27,7 +27,6 @@
         <table class="table table-hover">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">id</th>
                 <th scope="col">ФИО</th>
                 <th scope="col">Логин</th>
                 <th scope="col">Роль</th>
@@ -38,7 +37,6 @@
             <?php foreach ($model as $models) : ?>
                 <tr>
 
-                    <td align="left"><?php echo $models->getIdUser(); ?></td>
                     <td align="left"><?php echo $models->getFullName(); ?></td>
                     <td align="left"><?php echo $models->getLogin(); ?></td>
                     <td align="left"><?php /** @var object $entityManager */

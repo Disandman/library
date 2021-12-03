@@ -12,6 +12,7 @@ class Routes
 
 // Add the routes
         $router->add('', ['controller' => 'HomeController', 'action' => 'index']);
+        $router->add('account/indexLogin', ['controller' => 'AccountController', 'action' => 'indexLogin']);
         $router->add('account/login', ['controller' => 'AccountController', 'action' => 'login']);
         $router->add('account/logout', ['controller' => 'AccountController', 'action' => 'logout']);
         $router->add('user/index', ['controller' => 'UserController', 'action' => 'index']);
