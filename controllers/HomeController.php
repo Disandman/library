@@ -17,7 +17,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        View::render('Главная страница','site/index.php');
+        View::render('Главная страница', 'site/index.php');
+    }
+
+
+    /**
+     * @return void
+     */
+    public function indexInit()
+    {
+        View::render('Главная страница', 'site/init.php');
     }
 
 }

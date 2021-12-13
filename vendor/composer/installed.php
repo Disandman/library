@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '6bc8ce958e5f1b3f9477c0056f51a7201f3e82fa',
+        'reference' => '6b54b2a59714d4c988aab7e9e0e8de552aa3671b',
         'name' => 'library/mvc',
         'dev' => true,
     ),
@@ -209,12 +209,12 @@
             'dev_requirement' => false,
         ),
         'doctrine/orm' => array(
-            'pretty_version' => '2.10.2',
-            'version' => '2.10.2.0',
+            'pretty_version' => '2.10.3',
+            'version' => '2.10.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../doctrine/orm',
             'aliases' => array(),
-            'reference' => '81d472f6f96b8b571cafefe8d2fef89ed9446a62',
+            'reference' => '7b242753466508e1dd10f67c1baee95785f845c1',
             'dev_requirement' => false,
         ),
         'doctrine/persistence' => array(
@@ -254,12 +254,12 @@
             'dev_requirement' => false,
         ),
         'laminas/laminas-code' => array(
-            'pretty_version' => '4.4.3',
-            'version' => '4.4.3.0',
+            'pretty_version' => '4.5.0',
+            'version' => '4.5.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../laminas/laminas-code',
             'aliases' => array(),
-            'reference' => 'bb324850d09dd437b6acb142c13e64fdc725b0e1',
+            'reference' => 'c99ef8e5629c33bfaa3a8f1df773e916af564cd6',
             'dev_requirement' => false,
         ),
         'library/mvc' => array(
@@ -268,7 +268,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '6bc8ce958e5f1b3f9477c0056f51a7201f3e82fa',
+            'reference' => '6b54b2a59714d4c988aab7e9e0e8de552aa3671b',
             'dev_requirement' => false,
         ),
         'nyholm/nsa' => array(
@@ -293,12 +293,12 @@
             ),
         ),
         'phpoption/phpoption' => array(
-            'pretty_version' => '1.8.0',
-            'version' => '1.8.0.0',
+            'pretty_version' => '1.8.1',
+            'version' => '1.8.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpoption/phpoption',
             'aliases' => array(),
-            'reference' => '5455cb38aed4523f99977c4a12ef19da4bfe2a28',
+            'reference' => 'eab7a0df01fe2344d172bff4cd6dbd3f8b84ad15',
             'dev_requirement' => false,
         ),
         'psr/cache' => array(
@@ -375,7 +375,7 @@
             'aliases' => array(
                 0 => '9999999-dev',
             ),
-            'reference' => '4b188199673ea3e330bcf72bd0b42dfc59638c83',
+            'reference' => '9380acc3662a984cf724c9cb2876eae334bca57e',
             'dev_requirement' => false,
         ),
         'symfony/cache' => array(
@@ -710,7 +710,7 @@
             'aliases' => array(
                 0 => '5.4.x-dev',
             ),
-            'reference' => 'd4394d044ed69a8f244f3445bcedf8a0d7fe2403',
+            'reference' => '264dce589e7ce37a7ba99cb901eed8249fbec92f',
             'dev_requirement' => false,
         ),
         'webmozart/assert' => array(

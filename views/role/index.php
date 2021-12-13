@@ -1,18 +1,21 @@
 <div class="bg-light">
-<?php
-\App\core\Breadcrumb::add_current('/role/index', 'Роли');
-echo \App\core\Breadcrumb::out();
-require dirname(__DIR__) . '/../config/bootstrap.php';
+    <?php
+    use App\config\DB_connect;
 
-/** @var array $model */
-?>
+    \App\core\Breadcrumb::add_current('/role/index', 'Роли');
+    echo \App\core\Breadcrumb::out();
+
+    $entityManagerClass = new DB_connect();
+    $entityManager = $entityManagerClass->connect();
+
+    /** @var array $model */
+    ?>
 </div>
 
 
-
-    <div class="col">
-        <h1>Роли</h1>
-    </div>
+<div class="col">
+    <h1>Роли</h1>
+</div>
 
 
 <div>
@@ -23,7 +26,7 @@ require dirname(__DIR__) . '/../config/bootstrap.php';
             <th width="120"></th>
         </tr>
         </thead>
-        <?php foreach($model as $models) : ?>
+        <?php foreach ($model as $models) : ?>
             <tr>
                 <td align="left"><?php echo $models->getName(); ?></td>
                 <td>

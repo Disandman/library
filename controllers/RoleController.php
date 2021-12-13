@@ -2,6 +2,7 @@
 
 namespace App\controllers;
 
+use App\config\DB_connect;
 use App\core\View;
 use App\models\Role;
 use App\models\RoleModel;
@@ -9,9 +10,14 @@ use App\models\RoleModel;
 class RoleController
 {
 
+    /**
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function create()
     {
-        require dirname(__DIR__) . '/config/bootstrap.php';
+        $entityManagerClass = new DB_connect();
+        $entityManager = $entityManagerClass->connect();
 
         $roleModel = new RoleModel();
         $resultRole = $roleModel->getAll();
@@ -34,11 +40,17 @@ class RoleController
         View::render('Главная страница', 'role/create.php', $role);
     }
 
+    /**
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function update()
     {
-        require dirname(__DIR__) . '/config/bootstrap.php';
 
         $roleModel = new RoleModel();
+        $entityManagerConnect = new DB_connect();
+        $entityManager = $entityManagerConnect->connect();
+
         $resultRole = $roleModel->getOne();
         $model = [
             'model' => $resultRole,
@@ -62,11 +74,15 @@ class RoleController
         View::render('Главная страница', 'role/update.php', $model);
     }
 
+    /**
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function delete()
     {
-        require dirname(__DIR__) . '/config/bootstrap.php';
+        $entityManagerConnect = new DB_connect();
+        $entityManager = $entityManagerConnect->connect();
 
-        /** @var array $entityManager */
         $role_id = $_GET['id'];
 
         $role = $entityManager->getRepository(Role::class)->findOneBy(['id_role' => $role_id]);

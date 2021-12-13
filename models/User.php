@@ -38,6 +38,7 @@ class User
      */
     protected $active;
 
+
 /////////////////////////////////////////////////Связи/////////////////////////////////
 
     /**
@@ -69,6 +70,8 @@ class User
      * )
      */
     protected $connect_academic_info;
+
+
 
 
     /**

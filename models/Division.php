@@ -44,6 +44,14 @@ class Division
     }
 
     /**
+     * @return mixed
+     */
+    public function getIdDivision()
+    {
+        return $this->id_division;
+    }
+
+    /**
      * @param mixed $id_division
      */
     public function setIdDivision($id_division): void
@@ -66,5 +74,7 @@ class Division
     {
         $this->division = $division;
     }
+
+
 
 }

@@ -8,10 +8,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class DB_connect
 {
-
     public function connect()
     {
-
         $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
         $dotenv->load();
         $db = require __DIR__ . '/db.php';
@@ -26,7 +24,7 @@ class DB_connect
 
         return $entityManager;
     }
-
 }
+
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->register('db.con', 'DB_connect');

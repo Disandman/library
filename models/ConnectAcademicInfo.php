@@ -17,9 +17,6 @@ class ConnectAcademicInfo
      */
     protected $id_connect_academic_info;
 
-
-
-
     /**
      * @ORM\Column(type="integer")
      */
@@ -45,7 +42,6 @@ class ConnectAcademicInfo
     protected $id_user_connect;
 
 
-
     /**
      * @var object
      *
@@ -62,7 +58,6 @@ class ConnectAcademicInfo
      * @ORM\JoinColumn(name="id_academic_title", referencedColumnName="id_academic_title", nullable=false, onDelete="CASCADE")
      */
     protected $connect_academic_info_title;
-
 
 
     /**

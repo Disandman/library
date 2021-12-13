@@ -1,8 +1,13 @@
 <div class="bg-light">
     <?php
+
+    use App\config\DB_connect;
+
     \App\core\Breadcrumb::add_current('/user/index', 'Пользователи');
     echo \App\core\Breadcrumb::out();
-    require dirname(__DIR__) . '/../config/bootstrap.php';
+
+    $entityManagerClass = new DB_connect();
+    $entityManager = $entityManagerClass->connect();
 
     /** @var array $model */
     ?>
@@ -81,10 +86,4 @@
             <a href="/role/create" class="btn btn-success">Добавить</a>
         </div>
     </div>
-
-
-
-
-
-
 

@@ -20,27 +20,33 @@ class Books
 
     /**
      * @ORM\Column(type="string")
-     */protected $name_books;
+     */
+    protected $name_books;
 
     /**
      * @ORM\Column(type="string")
-     */protected $author;
+     */
+    protected $author;
 
     /**
      * @ORM\Column(type="float")
-     */protected $price_books;
+     */
+    protected $price_books;
 
     /**
      * @ORM\Column(type="string")
-     */protected $date_publication;
+     */
+    protected $date_publication;
 
     /**
      * @ORM\Column(type="string")
-     */protected $date_receipt;
+     */
+    protected $date_receipt;
 
     /**
      * @ORM\Column(type="string")
-     */protected $date_lost;
+     */
+    protected $date_lost;
 
 /////////////////////////////////////////////////Связи/////////////////////////////////
     /**
@@ -60,6 +66,14 @@ class Books
     public function __construct()
     {
         $this->connect_books = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdBooks()
+    {
+        return $this->id_books;
     }
 
     /**
@@ -164,22 +178,6 @@ class Books
     public function setDateLost($date_lost): void
     {
         $this->date_lost = $date_lost;
-    }
-
-    /**
-     * @return object
-     */
-    public function getConnectBooks(): object
-    {
-        return $this->connect_books;
-    }
-
-    /**
-     * @param object $connect_books
-     */
-    public function setConnectBooks(object $connect_books): void
-    {
-        $this->connect_books = $connect_books;
     }
 
 

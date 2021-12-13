@@ -2,7 +2,7 @@
 
 namespace App\models;
 
-use Doctrine\ORM\EntityRepository;
+use App\config\DB_connect;
 
 class UserModels
 {
@@ -18,18 +18,26 @@ class UserModels
         self::STATUS_OFF => 'Заблокирован',
     ];
 
+    /**
+     * @return array|object[]
+     */
     public function getAll()
     {
-        require dirname(__DIR__) . '/config/bootstrap.php';
-        /** @var array $entityManager */
+        $entityManagerClass = new DB_connect();
+        $entityManager = $entityManagerClass->connect();
+
         $userRepository = $entityManager->getRepository(':User');
         $user = $userRepository->findAll();
         return $user;
     }
+
+    /**
+     * @return mixed|object|null
+     */
     public function getOne()
     {
-        require dirname(__DIR__) . '/config/bootstrap.php';
-        /** @var array $entityManager */
+        $entityManagerClass = new DB_connect();
+        $entityManager = $entityManagerClass->connect();
 
         $id_user = $_GET['id'];
         $userRepository = $entityManager->getRepository(':User');
@@ -37,20 +45,29 @@ class UserModels
         return $user;
     }
 
-    public function getAuth($login,$password)
+    /**
+     * @param $login
+     * @param $password
+     * @return mixed|object|null
+     */
+    public function getAuth($login, $password)
     {
-        require dirname(__DIR__) . '/config/bootstrap.php';
-        /** @var array $entityManager */
+        $entityManagerClass = new DB_connect();
+        $entityManager = $entityManagerClass->connect();
 
         $userRepository = $entityManager->getRepository(':User');
         $user = $userRepository->findOneBy(['login' => $login, 'password' => $password]);
         return $user;
     }
 
+    /**
+     * @param $id
+     * @return mixed|object|null
+     */
     public function getIdUser($id)
     {
-        require dirname(__DIR__) . '/config/bootstrap.php';
-        /** @var array $entityManager */
+        $entityManagerClass = new DB_connect();
+        $entityManager = $entityManagerClass->connect();
 
         $userRepository = $entityManager->getRepository(':User');
         $user = $userRepository->findOneBy(['id_user' => $id]);

@@ -4,8 +4,6 @@ namespace App\models;
 
 use App\config\DB_connect;
 use Exception;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-
 
 class Access
 {
@@ -34,6 +32,9 @@ class Access
         }
     }
 
+    /**
+     * @return mixed|object|void|null
+     */
     public function getUser()
     {
 

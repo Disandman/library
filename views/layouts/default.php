@@ -1,11 +1,21 @@
 <?php
-require dirname(__DIR__) . '/../config/bootstrap.php';
 /** @var object $entityManager */
 /** @var string $user_name */
+
 /** @var string $user_role */
+
+use App\config\DB_connect;
 
 $modelUser = new \App\models\Access();
 $user = $modelUser->getUser();
+
+$entityManagerClass = new DB_connect();
+$entityManager = $entityManagerClass->connect();
+
+$emtyUserModel = new \App\models\UserModels();
+$emtyUser = $emtyUserModel->getAll();
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,14 +39,34 @@ $user = $modelUser->getUser();
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <?php if (!empty($emtyUser)) : ?>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/">Главная</a>
                     </li>
                     <?php
-                        if ($modelUser->getRole('Администратор')) {
-                            echo '<li class="nav-item"><a class="nav-link" aria-current="page" href="/user/index">Пользователи</a></li>';
-                        }
-                    ?>
+                    if ($modelUser->getRole('Администратор')): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/books/index">Книги</a>
+                    </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/readers-ticket/index">Читатели</a>
+                        </li>
+
+                    <li class="nav-item dropdown dropstart ">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown"
+                           style="position: relative; text-align:right">Структура ВУЗа</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/division/index">Подразделения</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/group/index">Группы</a></li>
+                        </ul>
+                    </li>
+
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="/user/index">Пользователи</a></li>
+                    <?php endif;?>
                     <?php if (!empty($_SESSION['id_user'])) { ?>
                         <li class="nav-item dropdown dropstart ">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown"
@@ -53,7 +83,7 @@ $user = $modelUser->getUser();
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/account/indexLogin">Вход</a>
                         </li>
-                    <?php } ?>
+                    <?php } endif; ?>
 
                 </ul>
             </div>

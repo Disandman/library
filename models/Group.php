@@ -7,64 +7,73 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="course")
+ * @ORM\Table(name="group_readers")
  */
-class Course
+class Group
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id_course;
+    protected $id_group;
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $cource;
+    protected $group_name;
 
 /////////////////////////////////////////////////Связи/////////////////////////////////
+
     /**
      * @var object
      *
      * @ORM\OneToMany(
      *      targetEntity="ReadersTicket",
-     *      mappedBy="id_course_connect",
+     *      mappedBy="id_group_connect",
      *      cascade={"persist", "remove"}
      * )
      */
-    protected $readers_ticket_cource;
+    protected $readers_ticket_group;
 
     /**
      *
      */
     public function __construct()
     {
-        $this->readers_ticket_cource = new ArrayCollection();
-    }
-
-    /**
-     * @param mixed $id_course
-     */
-    public function setIdCourse($id_course): void
-    {
-        $this->id_course = $id_course;
+        $this->readers_ticket_group = new ArrayCollection();
     }
 
     /**
      * @return mixed
      */
-    public function getCource()
+    public function getIdGroup()
     {
-        return $this->cource;
+        return $this->id_group;
     }
 
     /**
-     * @param mixed $cource
+     * @param mixed $id_group
      */
-    public function setCource($cource): void
+    public function setIdGroup($id_group): void
     {
-        $this->cource = $cource;
+        $this->id_group = $id_group;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroupName()
+    {
+        return $this->group_name;
+    }
+
+    /**
+     * @param mixed $group_name
+     */
+    public function setGroupName($group_name): void
+    {
+        $this->group_name = $group_name;
     }
 
 }
