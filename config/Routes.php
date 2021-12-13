@@ -51,6 +51,7 @@ class Routes
         $router->add('group/delete', ['controller' => 'GroupController', 'action' => 'delete']);
 
         $router->add('readers-ticket/index', ['controller' => 'ReadersTicketController', 'action' => 'index']);
+        $router->add('readers-ticket/update', ['controller' => 'ReadersTicketController', 'action' => 'update']);
 
         $router->add('init/init', ['controller' => 'InitController', 'action' => 'init']);
 

@@ -56,6 +56,17 @@ class ReadersTicketModel
         return $user;
     }
 
+    public function getOneView()
+    {
+        $entityManagerClass = new DB_connect();
+        $entityManager = $entityManagerClass->connect();
+
+        $id_readers_ticket = $_GET['id'];
+        $userRepository = $entityManager->getRepository(':ReadersTicket');
+        $user = $userRepository->findOneBy(['id_readers_ticket' => $id_readers_ticket]);
+        return $user;
+    }
+
 
     /**
      * @param $id

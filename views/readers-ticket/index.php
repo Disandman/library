@@ -2,12 +2,15 @@
     <?php
 
     use App\config\DB_connect;
+    use App\models\ReadersTicketModel;
+    use App\models\UserModels;
 
     \App\core\Breadcrumb::add_current('/readers-ticket/index', 'Читатели');
     echo \App\core\Breadcrumb::out();
     $entityManagerClass = new DB_connect();
     $entityManager = $entityManagerClass->connect();
     /** @var array $model */
+    /** @var object $entityManager */
     ?>
 </div>
 
@@ -31,29 +34,18 @@
         <?php foreach ($model as $models) : ?>
             <tr>
 
-                <td align="left"><a href="/user/view?id=<?php echo $models->getIdUser()?>"><?php /** @var object $entityManager */
-                    echo $entityManager->getRepository(':User')->find($models->getIdUser())->getFullName(); ?></a></td>
-
-                <td align="left"><?php /** @var object $entityManager */
-                    echo $entityManager->getRepository(':Division')->find($models->getIdDivision())->getDivision(); ?></td>
-
-                <td align="left"><?php echo \App\models\ReadersTicketModel::$course[$models->getIdCourse()]; ?></td>
-
-                <td align="left"><?php /** @var object $entityManager */
-                    echo $entityManager->getRepository(':Group')->find($models->getIdGroup())->getGroupName(); ?></td>
-
-
-                <td align="left"><?php echo \App\models\UserModels::$status[$models->getBlock()]; ?></td>
-
-
+                <td align="left">
+                    <a href="/user/view?id=<?php echo $models->getIdUser() ?>"><?php echo $entityManager->getRepository(':User')->find($models->getIdUser())->getFullName(); ?></a>
+                </td>
+                <td align="left"><?php echo $entityManager->getRepository(':Division')->find($models->getIdDivision())->getDivision(); ?></td>
+                <td align="left"><?php echo ReadersTicketModel::$course[$models->getIdCourse()]; ?></td>
+                <td align="left"><?php echo $entityManager->getRepository(':Group')->find($models->getIdGroup())->getGroupName(); ?></td>
+                <td align="left"><?php echo UserModels::$status[$models->getBlock()]; ?></td>
                 <td align="left"><?php echo $models->getDateBlocking(); ?></td>
                 <td align="left"><?php echo $models->getDateUnblocking(); ?></td>
                 <td align="left"></td>
-
-
                 <td>
-                    <a href="/readersTicket/update?id=<?php echo $models->getIdReadersTicket(); ?>"
-                       class="btn btn-outline-primary btn-sm"><i class="bi bi-lock-fill"></i></a>
+                    <a href="/readers-ticket/update?id=<?php echo $models->getIdReadersTicket(); ?>" class="btn btn-outline-primary btn-sm"><i class="bi <?php echo $models->getBlock() == 0 ? ' bi-lock' : ' bi-unlock'; ?>"></i></a>
                 </td>
             </tr>
         <?php endforeach; ?>
