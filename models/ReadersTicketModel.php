@@ -37,6 +37,15 @@ class ReadersTicketModel
         self::POSITION_EM=> 'Сотрудник',
     ];
 
+
+    private $entityManager; //создание entityManager (Doctrine);
+
+    function __construct()
+    {
+        $entityManagerClass = new DB_connect();
+        $this->entityManager = $entityManagerClass->connect();
+    }
+
     /**
      * @return array|object[]
      */
@@ -103,4 +112,17 @@ class ReadersTicketModel
         $user = $userRepository->findOneBy(['id_user' => $id]);
         return $user;
     }
+
+    /**
+     * Поиск заблокированного читателя
+     * @return int|mixed|string
+     */
+    public function getUserBlock()
+    {
+        $query = $this->entityManager->getRepository(':ReadersTicket')->createQueryBuilder('p');
+        $query->where('p.block = 1')
+            ->andWhere('p.id_user =' . $_SESSION['id_user']);
+        return $query->getQuery()->getResult();
+    }
+
 }

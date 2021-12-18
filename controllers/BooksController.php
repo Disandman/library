@@ -23,7 +23,6 @@ class BooksController
         $this->access = new Access();
         $entityManagerClass = new DB_connect();
         $this->entityManager = $entityManagerClass->connect();
-
     }
 
     /**
@@ -72,8 +71,7 @@ class BooksController
      */
     public function create()
     {
-        if ($_POST)
-        {
+        if ($_POST) {
             $book = new Books();
 
             $book->setNameBooks($_POST['name']);
@@ -108,9 +106,7 @@ class BooksController
         ];
 
         if ($_POST) {
-            $id_books = $_GET['id'];
-
-            $book = $this->entityManager->getRepository(Books::class)->findOneBy(['id_books' => $id_books]);
+            $book = $this->entityManager->getRepository(Books::class)->findOneBy(['id_books' => $_GET['id']]);
 
             $book->setNameBooks($_POST['name']);
             $book->setAuthor($_POST['author']);
@@ -124,7 +120,7 @@ class BooksController
 
             View::redirect('/books/index');
         }
-        View::render('Главная страница', 'books/update.php', $model);
+        View::render('Изменение книги', 'books/update.php', $model);
     }
 
     /**

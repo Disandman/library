@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Сущнось "КНИГИ" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="books")
  */
@@ -60,7 +61,7 @@ class Books
      * )
      */
     protected $connect_books;
-
+//////////////////////////////////////////////////////////////////////////////////////
     /**
      *
      */
@@ -180,6 +181,4 @@ class Books
     {
         $this->description = $description;
     }
-
-
 }

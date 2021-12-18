@@ -5,6 +5,7 @@ namespace App\models;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Сущнось "КНИГИ ПОЛЬЗОВАТЕЛЯ" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="connect_books")
  */
@@ -38,11 +39,6 @@ class ConnectBooks
     protected $date_end_tacking_books;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $refund;
-
-    /**
      * @ORM\Column(type="integer")
      */
     protected $status;
@@ -69,7 +65,7 @@ class ConnectBooks
      * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false, onDelete="CASCADE")
      */
     protected $id_user_connect;
-
+///////////////////////////////////////////////////////////////////////////////////////
     /**
      * @return mixed
      */
@@ -132,22 +128,6 @@ class ConnectBooks
     public function setDateEndTackingBooks($date_end_tacking_books): void
     {
         $this->date_end_tacking_books = $date_end_tacking_books;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRefund()
-    {
-        return $this->refund;
-    }
-
-    /**
-     * @param mixed $refund
-     */
-    public function setRefund($refund): void
-    {
-        $this->refund = $refund;
     }
 
     /**
@@ -229,6 +209,4 @@ class ConnectBooks
     {
         $this->date_lost = $date_lost;
     }
-
-
 }

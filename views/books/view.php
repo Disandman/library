@@ -1,52 +1,54 @@
 <?php
+
 use App\core\Breadcrumb;
+
+Breadcrumb::add('/books/index', 'Книги');
+Breadcrumb::add_current('/books/view', 'Просмотр книги');
 
 /** @var array $model */
 /** @var array $access */
 ?>
+
 <div class="bg-light">
-    <?php
-    Breadcrumb::add('/books/index', 'Книги');
-    Breadcrumb::add_current('/books/view', 'Просмотр книги');
-    echo Breadcrumb::out(); ?>
+    <?php echo Breadcrumb::out(); ?>
 </div>
 <div class="card">
     <table class="table table-hover">
         <tr>
             <th scope="col">Уникальный номер</th>
-            <td align="left"><?php echo $model->getIdBooks() ?></td>
+            <td><?php echo $model->getIdBooks() ?></td>
         </tr>
         <tr>
             <th scope="col">Название</th>
-            <td align="left"><?php echo $model->getNameBooks() ?></td>
+            <td><?php echo $model->getNameBooks() ?></td>
         </tr>
         <tr>
             <th scope="col">Автор</th>
-            <td align="left"><?php echo $model->getAuthor() ?></td>
+            <td><?php echo $model->getAuthor() ?></td>
         </tr>
 
         <tr>
             <th scope="col">Описание</th>
-            <td align="left"><?php echo $model->getDescription() ?></td>
+            <td><?php echo $model->getDescription() ?></td>
         </tr>
         <tr>
             <th scope="col">Цена</th>
-            <td align="left"><?php echo $model->getPriceBooks() ?></td>
+            <td><?php echo $model->getPriceBooks() ?></td>
         </tr>
         <tr>
             <th scope="col">Дата публикации:</th>
-            <td align="left"><?php echo $model->getDatePublication() ?></td>
+            <td><?php echo $model->getDatePublication() ?></td>
         </tr>
         <tr>
             <th scope="col">Дата получения:</th>
-            <td align="left"><?php echo $model->getDateReceipt() ?></td>
+            <td ><?php echo $model->getDateReceipt() ?></td>
         </tr>
     </table>
     <div class="container text-center">
         <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) : ?>
-            <a href="/books/update?id=<?php echo $model->getIdBooks() ?>" class="btn btn-outline-primary">Изменить</a>
+            <a class="btn btn-outline-primary" href="/books/update?id=<?php echo $model->getIdBooks() ?>">Изменить</a>
         <?php endif; ?>
-        <a href="/books/index" class="btn btn-outline-info">Назад</a>
+        <a class="btn btn-outline-info" href="/books/index">Назад</a>
     </div>
 </div>
 

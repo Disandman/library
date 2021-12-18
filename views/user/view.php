@@ -15,8 +15,6 @@
     $entityManagerClass = new DB_connect();
     $entityManager = $entityManagerClass->connect();
 
-
-
     ?>
 </div>
 
@@ -52,7 +50,7 @@
                 <?php echo \App\models\ReadersTicketModel::$position[$readersTicket->getIdPosition()]; ?>
             </td>
         </tr>
-        <?php if (!empty($resultAcademicInfo->getIdAcademicTitle())) : ?>
+        <?php if ($resultAcademicInfo !== null) : ?>
             <tr>
                 <th scope="col">Научная степень</th>
                 <td align="left">
@@ -60,7 +58,7 @@
                 </td>
             </tr>
         <?php endif; ?>
-        <?php if (!empty($resultAcademicInfo->getIdAcademicDegree())) : ?>
+        <?php if ($resultAcademicInfo !== null) : ?>
             <tr>
                 <th scope="col">Научное звание</th>
                 <td align="left">

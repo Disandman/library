@@ -3,179 +3,179 @@
 namespace App\models;
 
 use App\config\DB_connect;
-use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ * Данный клас предназначен для поиска через сущность ConnectBooks некоторых элементов в базе (книг читателей)
+ */
 class ConnectBooksModel
 {
-    /**
-     * @return array|object[]
-     */
-    public function getAll()
-    {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
+    private $access; //проверка доступа на основе роли
+    private $entityManager; //создание entityManager (Doctrine);
 
-        $connect_books_model = $entityManager->getRepository(':ConnectBooks');
-        $connect_books = $connect_books_model->findAll();
-        return $connect_books;
+    function __construct()
+    {
+        $this->access = new Access();
+        $entityManagerClass = new DB_connect();
+        $this->entityManager = $entityManagerClass->connect();
     }
 
     /**
+     * Поиск всех записей в базе по сущности "КНИГИ ПОЛЬЗОВАТЕЛЯ"
      * @return array|object[]
      */
-    public function getOrdered()
+    public function getAll(): array
     {
-        $modelUser = new \App\models\Access();
-        $access = $modelUser->getUser();
+        $connect_books_model = $this->entityManager->getRepository(':ConnectBooks');
+        return $connect_books_model->findAll();
+    }
 
+    /**
+     * Поиск одной записи (уникальный идентификатор передается через GET запрос) в базе по сущности "КНИНИ ПОЛЬЗОВАТЕЛЕЙ"
+     * @return mixed|object|null
+     */
+    public function getOne()
+    {
+        $connect_books_model = $this->entityManager->getRepository(':ReadersTicket');
+        return $connect_books_model->findOneBy(['id_user' => $_GET['id']]);
+    }
 
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
+    /**
+     * Выборка книг пользователя в раздел (На руках)
+     * @return array|object[]
+     * @throws \Exception
+     */
+    public function getMyBooks(): array
+    {
+        $query = $this->entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');//определяем сущность для создания запроса
 
-        $query = $entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');
-
-        if (!$access->getRole('Администратор') || !$access->getRole('Сотрудник библиотеки')) {
-            $query->where('p.status = 0')
-                ->andWhere('p.id_user =' . $_SESSION['id_user']);
-            return $query->getQuery()->getResult();
-        } else {
-
-            if (!empty($_GET['id'])) {
-                $id_user = $_GET['id'];
+        if ($this->access->getRole('Администратор') || $this->access->getRole('Сотрудник библиотеки')) {//проверка на роль пользователя
+            if (!empty($_GET['id'])) {//если приходит GET, то в запросе используем id пользователя (только для администратора или сотрудника библиотеки)
+                $id_user = $_GET['id'];//идентификатор из GET
             } else {
-                $id_user = $_SESSION['id_user'];
+                $id_user = $_SESSION['id_user'];//для пользователя используем идентификатор взятый из сессии
             }
-            $query->where('p.status = 0')
-                ->andWhere('p.id_user =' . $id_user);
-            return $query->getQuery()->getResult();
-        }
-    }
-
-    /**
-     * @return array|object[]
-     */
-    public function getMyBooks()
-    {
-        $modelUser = new \App\models\Access();
-        $access = $modelUser->getUser();
-
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $query = $entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');
-        if (!$access->getRole('Администратор') || !$access->getRole('Сотрудник библиотеки')) {
-            $query->where('p.status = 1')
-                ->andWhere('p.id_user =' . $_SESSION['id_user']);
-            return $query->getQuery()->getResult();
+            //собираем запрос для администратора или сотрудника библиотеки
+            $query->where('p.status = 1')//книги (На руках)
+            ->andWhere('p.id_user =' . $id_user);
         } else {
-
-            if (!empty($_GET['id'])) {
-                $id_user = $_GET['id'];
-            } else {
-                $id_user = $_SESSION['id_user'];
-            }
-
-            $query->where('p.status = 1')
-                ->andWhere('p.id_user =' . $id_user);
-            return $query->getQuery()->getResult();
+            //собираем запрос для пользователя
+            $query->where('p.status = 1')//книги (На руках)
+            ->andWhere('p.id_user =' . $_SESSION['id_user']);
         }
-    }
-
-    /**
-     * @return array|object[]
-     */
-    public function getLost()
-    {
-        $modelUser = new \App\models\Access();
-        $access = $modelUser->getUser();
-
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $query = $entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');
-        if (!$access->getRole('Администратор') || !$access->getRole('Сотрудник библиотеки')) {
-            $query->where('p.status = 2')
-                ->andWhere('p.id_user =' . $_SESSION['id_user']);
-            return $query->getQuery()->getResult();
-        } else {
-
-            if (!empty($_GET['id'])) {
-                $id_user = $_GET['id'];
-            } else {
-                $id_user = $_SESSION['id_user'];
-            }
-            $query->where('p.status = 2')
-                ->andWhere('p.id_user =' . $id_user);
-            return $query->getQuery()->getResult();
-        }
-    }
-
-
-    /**
-     * @return array|object[]
-     */
-    public function getWorker()
-    {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $id_user = $_GET['id'];
-
-        $query = $entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');
-        $query->where('p.id_user = ' . $id_user);
-
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * Выборка книг пользователя в раздел (Заказанные)
+     * @return array|object[]
+     * @throws \Exception
+     */
+    public function getOrdered(): array
+    {
+        $query = $this->entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');//определяем сущность для создания запроса
+
+        if ($this->access->getRole('Администратор') || $this->access->getRole('Сотрудник библиотеки')) {//проверка на роль пользователя
+            if (!empty($_GET['id'])) {//если приходит GET, то в запросе используем id пользователя (только для администратора или сотрудника библиотеки)
+                $id_user = $_GET['id'];
+            } else {
+                $id_user = $_SESSION['id_user'];//для пользователя используем идентификатор взятый из сессии
+            }
+            //собираем запрос для администратора или сотрудника библиотеки
+            $query->where('p.status = 0')//книги (Заказаны)
+            ->andWhere('p.id_user =' . $id_user);
+
+        } else {
+            //собираем запрос для пользователя
+            $query->where('p.status = 0')//книги (Заказаны)
+                ->andWhere('p.id_user =' . $_SESSION['id_user']);
+        }
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Выборка книг пользователя в раздел (Потерянные)
+     * @return array|object[]
+     * @throws \Exception
+     */
+    public function getLost(): array
+    {
+        $query = $this->entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');//определяем сущность для создания запроса
+
+        if ($this->access->getRole('Администратор') || $this->access->getRole('Сотрудник библиотеки')) {//проверка на роль пользователя
+            if (!empty($_GET['id'])) {//если приходит GET, то в запросе используем id пользователя (только для администратора или сотрудника библиотеки)
+                $id_user = $_GET['id'];
+            } else {
+                $id_user = $_SESSION['id_user'];//для пользователя используем идентификатор взятый из сессии
+            }
+            //собираем запрос для администратора или сотрудника библиотеки
+            $query->where('p.status = 2')//книги (Потеряны)
+            ->andWhere('p.id_user =' . $id_user);
+
+        } else {
+            //собираем запрос для пользователя
+            $query->where('p.status = 2')//книги (Потеряны)
+                ->andWhere('p.id_user =' . $_SESSION['id_user']);
+        }
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Вывод всех книг кроме (утерянных и списанных)
+     * @param $books
+     * @return int|mixed|string
+     */
     public function getAvailability($books)
     {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $query = $entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');
+        $query = $this->entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');
         $query->where('p.id_user = ' . $_SESSION['id_user'])->andWhere('p.id_books = ' . $books)->andWhere('p.status = 0 OR p.status = 1 OR p.status = 2');
 
         return $query->getQuery()->getResult();
     }
 
     /**
-     * @return mixed|object|null
-     */
-    public function getOne()
-    {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $id_user = $_GET['id'];
-        $connect_books_model = $entityManager->getRepository(':ReadersTicket');
-        $connect_books = $connect_books_model->findOneBy(['id_user' => $id_user]);
-        return $connect_books;
-    }
-
-    public function getOneView()
-    {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $id_readers_ticket = $_GET['id'];
-        $userRepository = $entityManager->getRepository(':ReadersTicket');
-        $user = $userRepository->findOneBy(['id_readers_ticket' => $id_readers_ticket]);
-        return $user;
-    }
-
-
-    /**
+     * Поиск читательского билета для редирект на страницу с книгами читателя
      * @param $id
      * @return mixed|object|null
      */
     public function getIdUser($id)
     {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $userRepository = $entityManager->getRepository(':ReadersTicket');
-        $user = $userRepository->findOneBy(['id_user' => $id]);
-        return $user;
+        $userRepository = $this->entityManager->getRepository(':ReadersTicket');
+        return $userRepository->findOneBy(['id_user' => $id]);
     }
+    /**
+     * Поиск читательского билета для редирект на страницу с книгами читателя
+     * @param $id
+     * @return mixed|object|null
+     */
+    public function getUserName($id)
+    {
+        $userRepository = $this->entityManager->getRepository(':ReadersTicket');
+        $findUser = $userRepository->findOneBy(['id_user' => $id]);
+        return $findUser->getFullName();
+    }
+
+    /**
+     * Вывод названия книги
+     * @param $id
+     * @return mixed|object|null
+     */
+    public function getBooks($id)
+    {
+        $userRepository = $this->entityManager->getRepository(':Books');
+        $findBooks = $userRepository->findOneBy(['id_books' => $id]);
+        return $findBooks->getNameBooks();
+    }
+
+    /**
+     * Вывод цены книги
+     * @param $id
+     * @return mixed
+     */
+    public function getPriceBooks($id)
+    {
+        $userRepository = $this->entityManager->getRepository(':Books');
+        $findBooks = $userRepository->findOneBy(['id_books' => $id]);
+        return $findBooks->getPriceBooks();
+    }
+
 }

@@ -1,20 +1,18 @@
+<?php
+
+use App\core\Breadcrumb;
+
+Breadcrumb::add_current('/user/index', 'Книги');
+
+/** @var array $model */
+/** @var array $access */
+/** @var array $connectBooks */
+/** @var array $readersTicket */
+?>
+
 <div class="bg-light">
-    <?php
-
-    use App\config\DB_connect;
-
-    /** @var array $model */
-    /** @var array $access */
-    /** @var array $connectBooks */
-    /** @var array $readersTicket */
-
-    \App\core\Breadcrumb::add_current('/user/index', 'Книги');
-    echo \App\core\Breadcrumb::out();
-
-    ?>
+    <?php echo Breadcrumb::out(); ?>
 </div>
-
-
 <br>
 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
     <table class="table table-hover">
@@ -28,8 +26,7 @@
         </thead>
         <?php foreach ($model as $models) : ?>
             <tr>
-                <td align="left"><a
-                            href="/books/view?id=<?php echo $models->getIdBooks() ?>"><?php echo $models->getNameBooks(); ?></a>
+                <td align="left"><a href="/books/view?id=<?php echo $models->getIdBooks() ?>"><?php echo $models->getNameBooks(); ?></a>
                 </td>
                 <td align="left"><?php echo $models->getAuthor(); ?></td>
                 <td align="left"><?php echo $models->getDatePublication(); ?></td>
@@ -49,9 +46,7 @@
                             if (!empty($books)) {
                                 echo ' <a class="btn btn-success btn-sm">Добавлена в Ваши книги</a>';
                             } else echo '<a href="/books-user/add?id=' . $models->getIdBooks() . ' "class="btn btn-outline-info btn-sm">Получить книгу</a>';
-                        } else {
-                            echo '<a href="/books-user/index" class="btn btn-danger btn-sm">Вы заблокированы</a>';
-                        }
+                        } else echo '<a href="/books-user/index" class="btn btn-danger btn-sm">Вы заблокированы</a>';
                     }
                     ?>
                 </td>

@@ -1,24 +1,23 @@
+<?php
+
+use App\config\DB_connect;
+use App\core\Breadcrumb;
+
+/** @var array $access */
+/** @var array $myBook */
+/** @var array $ordered */
+/** @var array $lost */
+/** @var object $entityManager */
+
+if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) {
+    Breadcrumb::add_current('/books-user/index', 'Книги читателя');
+} else {
+    Breadcrumb::add_current('/books-user/index', 'Мои книги');
+}
+?>
+
 <div class="bg-light">
-    <?php
-
-    use App\config\DB_connect;
-
-    /** @var array $myBook */
-    /** @var array $ordered */
-    /** @var array $lost */
-    /** @var array $access */
-    /** @var object $entityManager */
-
-    if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) {
-        \App\core\Breadcrumb::add_current('/books-user/index', 'Книги читателя');
-    } else {
-        \App\core\Breadcrumb::add_current('/books-user/index', 'Мои книги');
-    }
-    echo \App\core\Breadcrumb::out();
-    $entityManagerClass = new DB_connect();
-    $entityManager = $entityManagerClass->connect();
-
-    ?>
+    <?php echo Breadcrumb::out(); ?>
 </div>
 <br>
 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -49,7 +48,7 @@
                 <?php foreach ($myBook as $myBooks) : ?>
                     <tr>
                         <td align="left">
-                            <a href="/books/view?id=<?php echo $myBooks->getIdBooks() ?>"><?php echo $entityManager->getRepository(':Books')->find($myBooks->getIdBooks())->getNameBooks(); ?></a>
+                            <a href="/books/view?id=<?php echo $myBooks->getIdBooks() ?>"><?php echo $booksModel->getBooks($myBooks->getIdBooks()); ?></a>
                         </td>
                         <td align="left"><?php echo $myBooks->getDateTackingBooks(); ?></td>
                         <td align="left"><?php echo $myBooks->getDateEndTackingBooks(); ?></td>
@@ -78,7 +77,7 @@
                 <?php foreach ($ordered as $ordereds) : ?>
                     <tr>
                         <td align="left">
-                            <a href="/books/view?id=<?php echo $ordereds->getIdBooks() ?>"><?php echo $entityManager->getRepository(':Books')->find($ordereds->getIdBooks())->getNameBooks(); ?></a>
+                            <a href="/books/view?id=<?php echo $ordereds->getIdBooks() ?>"><?php echo $booksModel->getBooks($ordereds->getIdBooks()); ?></a>
                         </td>
                         <td>
                             <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) { ?>
@@ -92,7 +91,6 @@
 
                         </td>
                     </tr>
-
                 <?php endforeach; ?>
             </table>
         </div>
@@ -111,11 +109,11 @@
                 <?php foreach ($lost as $losted) : ?>
                     <tr>
                         <td align="left">
-                            <a href="/books/view?id=<?php echo $losted->getIdBooks() ?>"><?php echo $entityManager->getRepository(':Books')->find($losted->getIdBooks())->getNameBooks(); ?></a>
+                            <a href="/books/view?id=<?php echo $losted->getIdBooks() ?>"><?php echo $booksModel->getBooks($losted->getIdBooks()); ?></a>
                         </td>
                         <td align="left"><?php echo $losted->getDateLost(); ?></td>
                         <td align="left">
-                            <?php echo $entityManager->getRepository(':Books')->find($losted->getIdBooks())->getPriceBooks(); ?>
+                            <?php echo $booksModel->getPriceBooks($losted->getIdBooks()); ?>
                         </td>
                         <?php if ($access->getRole('Администратор')) { ?>
                             <td align="left">
@@ -123,7 +121,6 @@
                                    class="btn btn-outline-info btn-sm">Списать</a>
                             </td>
                         <?php } ?>
-
                     </tr>
                 <?php endforeach; ?>
             </table>

@@ -2515,12 +2515,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "d98a9889d86c149f6fa35e182d6e849d168b0ca3"
+                "reference": "dd46c263f277573244c517bac125a78f67b83a98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/d98a9889d86c149f6fa35e182d6e849d168b0ca3",
-                "reference": "d98a9889d86c149f6fa35e182d6e849d168b0ca3",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/dd46c263f277573244c517bac125a78f67b83a98",
+                "reference": "dd46c263f277573244c517bac125a78f67b83a98",
                 "shasum": ""
             },
             "require": {
@@ -2588,7 +2588,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-14T15:42:27+00:00"
+            "time": "2021-12-17T00:42:26+00:00"
         }
     ],
     "packages-dev": [],
