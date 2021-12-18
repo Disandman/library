@@ -8,13 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 class ReadersTicketModel
 {
-
     const COURSE_1 = 1;
     const COURSE_2 = 2;
     const COURSE_3 = 3;
     const COURSE_4 = 4;
     const COURSE_5 = 5;
     const COURSE_6 = 6;
+    const POSITION_ST = 1;
+    const POSITION_EM = 2;
 
     /**
      * @var string[]
@@ -26,7 +27,14 @@ class ReadersTicketModel
         self::COURSE_4 => '4 курс',
         self::COURSE_5 => '5 курс',
         self::COURSE_6 => '6 курс',
+    ];
 
+    /**
+     * @var string[]
+     */
+    public static $position = [
+        self::POSITION_ST => 'Студент',
+        self::POSITION_EM=> 'Сотрудник',
     ];
 
     /**
@@ -53,6 +61,20 @@ class ReadersTicketModel
         $id_user = $_GET['id'];
         $userRepository = $entityManager->getRepository(':ReadersTicket');
         $user = $userRepository->findOneBy(['id_user' => $id_user]);
+
+        return $user;
+    }
+
+    public function getOneUser()
+    {
+        $entityManagerClass = new DB_connect();
+        $entityManager = $entityManagerClass->connect();
+
+        $query = $entityManager->getRepository(':ReadersTicket')->createQueryBuilder('p');
+        $query->where('p.block = 0')
+            ->andWhere('p.id_user =' . $_SESSION['id_user']);
+        $user = $query->getQuery()->getResult();
+
         return $user;
     }
 

@@ -19,7 +19,7 @@ class User
     protected $id_user;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     protected $login;
 
@@ -71,7 +71,16 @@ class User
      */
     protected $connect_academic_info;
 
-
+    /**
+     * @var object
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="ConnectBooks",
+     *      mappedBy="id_user_connect",
+     *      cascade={"persist", "remove"}
+     * )
+     */
+    protected $connect_books;
 
 
     /**

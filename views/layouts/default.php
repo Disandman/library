@@ -12,8 +12,8 @@ $user = $modelUser->getUser();
 $entityManagerClass = new DB_connect();
 $entityManager = $entityManagerClass->connect();
 
-$emtyUserModel = new \App\models\UserModels();
-$emtyUser = $emtyUserModel->getAll();
+$emptyUserModel = new \App\models\UserModels();
+$emptyUser = $emptyUserModel->getAll();
 
 
 ?>
@@ -26,6 +26,7 @@ $emtyUser = $emtyUserModel->getAll();
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 </head>
 <body>
 <header>
@@ -39,20 +40,26 @@ $emtyUser = $emtyUserModel->getAll();
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <?php if (!empty($emtyUser)) : ?>
+                    <?php if (!empty($emptyUser)) : ?>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/">Главная</a>
                     </li>
-                    <?php
-                    if ($modelUser->getRole('Администратор')): ?>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/books/index">Книги</a>
-                    </li>
+                    <?php if (!empty($_SESSION['id_user'])) { ?>
+                                <?php  if (!$modelUser->getRole('Администратор')): ?>
 
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/books-user/index">Мои Книги</a>
+                        </li>
+                            <?php endif;?>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/books/index">Книги</a>
+                        </li>
+                    <?php }
+                    if ($modelUser->getRole('Администратор')): ?>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/readers-ticket/index">Читатели</a>
                         </li>
-
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="/violation/index">Нарушения</a></li>
                     <li class="nav-item dropdown dropstart ">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-bs-toggle="dropdown"
                            style="position: relative; text-align:right">Структура ВУЗа</a>

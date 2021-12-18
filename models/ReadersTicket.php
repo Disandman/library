@@ -25,17 +25,23 @@ class ReadersTicket
     protected $id_user;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     protected $id_division;
 
+
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     protected $id_course;
 
     /**
      * @ORM\Column(type="integer")
+     */
+    protected $id_position;
+
+    /**
+     * @ORM\Column(type="integer",nullable=true)
      */
     protected $id_group;
 
@@ -71,38 +77,12 @@ class ReadersTicket
      */
     protected $id_group_connect;
 
-    /**
-     * @var object
-     *
-     * @ORM\OneToMany(
-     *      targetEntity="ConnectBooks",
-     *      mappedBy="id_readers_ticket",
-     *      cascade={"persist", "remove"}
-     * )
-     */
-    protected $connect_books;
 
     /**
      * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user",onDelete="CASCADE")
      */
     private $user_connect;
-
-    /**
-     * @return mixed
-     */
-    public function getUserConnect()
-    {
-        return $this->user_connect;
-    }
-
-    /**
-     * @param mixed $user_connect
-     */
-    public function setUserConnect($user_connect): void
-    {
-        $this->user_connect = $user_connect;
-    }
 
     /**
      * @return mixed
@@ -166,6 +146,22 @@ class ReadersTicket
     public function setIdCourse($id_course): void
     {
         $this->id_course = $id_course;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdPosition()
+    {
+        return $this->id_position;
+    }
+
+    /**
+     * @param mixed $id_position
+     */
+    public function setIdPosition($id_position): void
+    {
+        $this->id_position = $id_position;
     }
 
     /**
@@ -235,7 +231,7 @@ class ReadersTicket
     /**
      * @return object
      */
-    public function getIdDivisionConnect(): object
+    public function getIdDivisionConnect()
     {
         return $this->id_division_connect;
     }
@@ -243,7 +239,7 @@ class ReadersTicket
     /**
      * @param object $id_division_connect
      */
-    public function setIdDivisionConnect(object $id_division_connect): void
+    public function setIdDivisionConnect($id_division_connect): void
     {
         $this->id_division_connect = $id_division_connect;
     }
@@ -251,7 +247,7 @@ class ReadersTicket
     /**
      * @return object
      */
-    public function getIdGroupConnect(): object
+    public function getIdGroupConnect()
     {
         return $this->id_group_connect;
     }
@@ -259,25 +255,25 @@ class ReadersTicket
     /**
      * @param object $id_group_connect
      */
-    public function setIdGroupConnect(object $id_group_connect): void
+    public function setIdGroupConnect($id_group_connect): void
     {
         $this->id_group_connect = $id_group_connect;
     }
 
     /**
-     * @return object
+     * @return mixed
      */
-    public function getConnectBooks(): object
+    public function getUserConnect()
     {
-        return $this->connect_books;
+        return $this->user_connect;
     }
 
     /**
-     * @param object $connect_books
+     * @param mixed $user_connect
      */
-    public function setConnectBooks(object $connect_books): void
+    public function setUserConnect($user_connect): void
     {
-        $this->connect_books = $connect_books;
+        $this->user_connect = $user_connect;
     }
 
 

@@ -1,5 +1,8 @@
 <div class="bg-light">
     <?php
+
+    use App\models\ReadersTicketModel;
+
     \App\core\Breadcrumb::add('/user/index', 'Пользователи');
     \App\core\Breadcrumb::add_current('/user/create', 'Добавление пользователя');
     echo \App\core\Breadcrumb::out();
@@ -8,12 +11,23 @@
     /** @var array $role */
     /** @var array $division */
     /** @var array $group */
+    /** @var array $academicDegree */
+    /** @var array $academicTitle */
+
     ?>
 </div>
-
 <div class="col">
     <h1>Создание пользователя</h1>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#position').on('change', function () {
+            var demovalue = $(this).val();
+            $("div.choice").hide();
+            $("#" + demovalue).show();
+        });
+    });
+</script>
 
 <form method="post" action="/user/create">
     <div class="form-group">
@@ -26,29 +40,67 @@
         <label for="division">Подразделение</label>
         <select class="form-control" id="division" name="division">
             <?php foreach ($division as $divisions) : ?>
-                <option value="<?php echo $divisions->getIdDivision(); ?>"><?php echo $divisions->getDivision();?></option>
+                <option disabled selected hidden>Выберите подразделение...</option>
+                <option value="<?php echo $divisions->getIdDivision(); ?>"><?php echo $divisions->getDivision(); ?></option>
             <?php endforeach; ?>
         </select>
     </div>
     <br>
     <div class="form-group">
-        <label for="course">Курс</label>
-        <select class="form-control" id="course" name="course">
-            <?php  foreach (\App\models\ReadersTicketModel::$course as $key =>$courses){ ?>
-            <option value="<?php echo $key;?>"><?php echo $courses; }?></option>
+        <label for="position">Должность</label>
+        <select class="form-control" id="position" name="position" required>
+            <?php foreach (ReadersTicketModel::$position as $key => $position){ ?>
+            <option disabled selected hidden>Выберите должность...</option>
+            <option value="<?php echo $key; ?>"><?php echo $position;
+                } ?></option>
         </select>
     </div>
-    <br>
-    <div class="form-group">
-        <label for="group">Группа</label>
-        <select class="form-control" id="division" name="group">
-            <?php foreach ($group as $groups) : ?>
-                <option value="<?php echo $groups->getIdGroup(); ?>"><?php echo $groups->getGroupName();?></option>
-            <?php endforeach; ?>
 
-        </select>
+    <div id="2" class="choice" style="display:none;">
+        <br>
+        <div class="form-group">
+            <label for="title">Научное звание</label>
+            <select class="form-control" id="title" name="title">
+                <?php foreach ($academicTitle as $academicTitles) : ?>
+                    <option value="" disabled selected hidden>Выберите научное звание...</option>
+                    <option value="<?php echo $academicTitles->getIdAcademicTitle(); ?>"><?php echo $academicTitles->getName(); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="degree">Научная степень</label>
+            <select class="form-control" id="degree" name="degree">
+                <?php foreach ($academicDegree as $academicDegrees) : ?>
+                    <option value="" disabled selected hidden>Выберите научную степень...</option>
+                    <option value="<?php echo $academicDegrees->getIdAcademicDegree(); ?>"><?php echo $academicDegrees->getName(); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
     </div>
     <br>
+    <div id="1" class="choice" style="display:none;">
+        <div class="form-group">
+            <label for="course">Курс</label>
+            <select class="form-control" id="course" name="course">
+                <?php foreach (ReadersTicketModel::$course as $key => $courses){ ?>
+                <option value="" disabled selected hidden>Выберите курс...</option>
+                <option value="<?php echo $key; ?>"><?php echo $courses;
+                    } ?></option>
+            </select>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="group">Группа</label>
+            <select class="form-control" id="division" name="group">
+                <?php foreach ($group as $groups) : ?>
+                    <option value="" disabled selected hidden>Выберите группу...</option>
+                    <option value="<?php echo $groups->getIdGroup(); ?>"><?php echo $groups->getGroupName(); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <br>
+    </div>
     <div class="form-group">
         <label for="login">Логин</label>
         <input type="text" class="form-control" id="login" name="login">
@@ -63,14 +115,14 @@
         <label for="exampleFormControlStatus">Статус</label>
         <select class="form-control" id="status" name="status">
             <?php foreach (\App\models\UserModels::$status as $key => $statuses){ ?>
-            <option value="<?php echo $key;?>"><?php echo $statuses;}?></option>
+            <option value="<?php echo $key; ?>"><?php echo $statuses;
+                } ?></option>
         </select>
     </div>
     <br>
     <div class="form-group">
         <label for="exampleFormControlRole">Роль</label>
         <select class="form-control" id="exampleFormControlRole" name="role">
-
             <?php foreach ($role as $roles) : ?>
                 <option value="<?php echo $roles->getIdRole(); ?>"><?php echo $roles->getName(); ?></option>
             <?php endforeach; ?>

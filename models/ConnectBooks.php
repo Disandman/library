@@ -23,12 +23,17 @@ class ConnectBooks
     protected $id_books;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      */
-    protected $daate_tacking_books;
+    protected $id_user;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $date_tacking_books;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $date_end_tacking_books;
 
@@ -37,15 +42,17 @@ class ConnectBooks
      */
     protected $refund;
 
-/////////////////////////////////////////Связи//////////////////////////////////////////
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $status;
 
     /**
-     * @var object
-     *
-     * @ORM\ManyToOne(targetEntity="ReadersTicket", inversedBy="connect_books")
-     * @ORM\JoinColumn(name="id_readers_ticket", referencedColumnName="id_readers_ticket", nullable=false, onDelete="CASCADE")
+     * @ORM\Column(type="string", nullable=true)
      */
-    protected $id_readers_ticket;
+    protected $date_lost;
+
+/////////////////////////////////////////Связи//////////////////////////////////////////
 
     /**
      * @var object
@@ -55,6 +62,21 @@ class ConnectBooks
      */
     protected $id_books_connect;
 
+    /**
+     * @var object
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="connect_books")
+     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user", nullable=false, onDelete="CASCADE")
+     */
+    protected $id_user_connect;
+
+    /**
+     * @return mixed
+     */
+    public function getIdConnectBooks()
+    {
+        return $this->id_connect_books;
+    }
 
     /**
      * @param mixed $id_connect_books
@@ -65,33 +87,17 @@ class ConnectBooks
     }
 
     /**
-     * @return object
+     * @return mixed
      */
-    public function getIdReadersTicket(): object
-    {
-        return $this->id_readers_ticket;
-    }
-
-    /**
-     * @param object $id_readers_ticket
-     */
-    public function setIdReadersTicket(object $id_readers_ticket): void
-    {
-        $this->id_readers_ticket = $id_readers_ticket;
-    }
-
-    /**
-     * @return object
-     */
-    public function getIdBooks(): object
+    public function getIdBooks()
     {
         return $this->id_books;
     }
 
     /**
-     * @param object $id_books
+     * @param mixed $id_books
      */
-    public function setIdBooks(object $id_books): void
+    public function setIdBooks($id_books): void
     {
         $this->id_books = $id_books;
     }
@@ -99,17 +105,17 @@ class ConnectBooks
     /**
      * @return mixed
      */
-    public function getDaateTackingBooks()
+    public function getDateTackingBooks()
     {
-        return $this->daate_tacking_books;
+        return $this->date_tacking_books;
     }
 
     /**
      * @param mixed $daate_tacking_books
      */
-    public function setDaateTackingBooks($daate_tacking_books): void
+    public function setDateTackingBooks($date_tacking_books): void
     {
-        $this->daate_tacking_books = $daate_tacking_books;
+        $this->date_tacking_books = $date_tacking_books;
     }
 
     /**
@@ -143,5 +149,86 @@ class ConnectBooks
     {
         $this->refund = $refund;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIdUser()
+    {
+        return $this->id_user;
+    }
+
+    /**
+     * @param mixed $id_user
+     */
+    public function setIdUser($id_user): void
+    {
+        $this->id_user = $id_user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return object
+     */
+    public function getIdBooksConnect()
+    {
+        return $this->id_books_connect;
+    }
+
+    /**
+     * @param object $id_books_connect
+     */
+    public function setIdBooksConnect($id_books_connect): void
+    {
+        $this->id_books_connect = $id_books_connect;
+    }
+
+    /**
+     * @return object
+     */
+    public function getIdUserConnect()
+    {
+        return $this->id_user_connect;
+    }
+
+    /**
+     * @param object $id_user_connect
+     */
+    public function setIdUserConnect($id_user_connect): void
+    {
+        $this->id_user_connect = $id_user_connect;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateLost()
+    {
+        return $this->date_lost;
+    }
+
+    /**
+     * @param mixed $date_lost
+     */
+    public function setDateLost($date_lost): void
+    {
+        $this->date_lost = $date_lost;
+    }
+
 
 }

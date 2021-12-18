@@ -26,6 +26,12 @@
     </div>
     <br>
     <div class="form-group">
+        <label for="exampleFormControlTextarea1">Описание</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
+    </div>
+    <br>
+
+    <div class="form-group">
         <label for="price">Цена</label>
         <input type="text" class="form-control" id="price" name="price">
     </div>
@@ -39,11 +45,6 @@
     <div class="form-group">
         <label for="date_receipt">Дата получения:</label>
         <input type="date" class="form-control" id="date_receipt" name="date_receipt">
-    </div>
-    <br>
-    <div class="form-group">
-        <label for="date_lost">Дата потери:</label>
-        <input type="date" class="form-control" id="date_lost" name="date_lost">
     </div>
     <br>
     <button type="submit" class="btn btn-outline-success">Создать</button>

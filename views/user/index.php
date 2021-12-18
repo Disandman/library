@@ -10,9 +10,9 @@
     $entityManager = $entityManagerClass->connect();
 
     /** @var array $model */
+    /** @var array $readersTicket */
     ?>
 </div>
-
 
 <br>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -35,6 +35,7 @@
                 <th scope="col">ФИО</th>
                 <th scope="col">Логин</th>
                 <th scope="col">Роль</th>
+                <th scope="col">Должность</th>
                 <th scope="col">Статус</th>
                 <th width="120"></th>
             </tr>
@@ -46,6 +47,10 @@
                     <td align="left"><?php echo $models->getLogin(); ?></td>
                     <td align="left"><?php /** @var object $entityManager */
                         echo $entityManager->getRepository(':Role')->find($models->getRole())->getName(); ?></td>
+                    <td align="left">
+                        <?php $result = $readersTicket->getIdUser($models->getIdUser());
+                        echo \App\models\ReadersTicketModel::$position[$result->getIdPosition()];?>
+                    </td>
                     <td align="left"><?php echo \App\models\UserModels::$status[$models->getActive()]; ?></td>
                     <td>
                         <a href="/user/view?id=<?php echo $models->getIdUser(); ?>"" class="btn btn-outline-info

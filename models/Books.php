@@ -29,6 +29,11 @@ class Books
     protected $author;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    protected $description;
+
+    /**
      * @ORM\Column(type="float")
      */
     protected $price_books;
@@ -43,10 +48,6 @@ class Books
      */
     protected $date_receipt;
 
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $date_lost;
 
 /////////////////////////////////////////////////Связи/////////////////////////////////
     /**
@@ -167,17 +168,17 @@ class Books
     /**
      * @return mixed
      */
-    public function getDateLost()
+    public function getDescription()
     {
-        return $this->date_lost;
+        return $this->description;
     }
 
     /**
-     * @param mixed $date_lost
+     * @param mixed $description
      */
-    public function setDateLost($date_lost): void
+    public function setDescription($description): void
     {
-        $this->date_lost = $date_lost;
+        $this->description = $description;
     }
 
 

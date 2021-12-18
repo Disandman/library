@@ -36,11 +36,11 @@ class AcademicDegree
     protected $connect_academic_info_degree;
 
     /**
-     *
+     * @return mixed
      */
-    public function __construct()
+    public function getIdAcademicDegree()
     {
-        $this->connect_academic_info_degree = new ArrayCollection();
+        return $this->id_academic_degree;
     }
 
     /**
@@ -70,7 +70,7 @@ class AcademicDegree
     /**
      * @return object
      */
-    public function getConnectAcademicInfoDegree(): object
+    public function getConnectAcademicInfoDegree()
     {
         return $this->connect_academic_info_degree;
     }
@@ -78,9 +78,10 @@ class AcademicDegree
     /**
      * @param object $connect_academic_info_degree
      */
-    public function setConnectAcademicInfoDegree(object $connect_academic_info_degree): void
+    public function setConnectAcademicInfoDegree($connect_academic_info_degree): void
     {
         $this->connect_academic_info_degree = $connect_academic_info_degree;
     }
+
 
 }

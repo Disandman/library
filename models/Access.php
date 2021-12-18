@@ -44,7 +44,6 @@ class Access
             $id = $_SESSION['id_user'];
             $user_model = $user->getIdUser($id);
             return $user_model;
-
         }
     }
 

@@ -6,6 +6,8 @@ use App\config\DB_connect;
 use App\core\View;
 use App\models\AcademicDegree;
 use App\models\AcademicTitle;
+use App\models\ReadersTicket;
+use App\models\ReadersTicketModel;
 use App\models\Role;
 use App\models\RoleModel;
 use App\models\User;
@@ -51,12 +53,19 @@ class InitController
         ];
     }
 
+    private function role()
+    {
+        return [
+            'Администратор', 'Сотрудник библиотеки',
+            'Читатель'
+        ];
+    }
+
 
     public function init()
     {
         $user = new User();
-        $role = new Role();
-
+        $readersTicket = new ReadersTicket();
 
         $entityManagerClass = new DB_connect();
         $entityManager = $entityManagerClass->connect();
@@ -77,26 +86,37 @@ class InitController
             $entityManager->flush();
         }
 
-        $role->setName('Администратор');
+        foreach ($this->role() as $roles) {
+            $role = new Role();
+            $role->setName($roles);
+            $entityManager->persist($role);
+            $entityManager->flush();
+        }
 
-        $entityManager->persist($role);
-        $entityManager->flush();
-
-        $roleId = $role->getIdRole();
+        ;
 
         $user->setLogin('admin');
         $user->setPassword(md5('admin'));
         $user->setFullName('Администратор системы');
         $user->setActive(1);
 
-        $classRole = $entityManager->getRepository(':Role')->find($roleId);
+        $classRole = $entityManager->getRepository(':Role')->find(1);
         $user->setRole($classRole);
 
         $entityManager->persist($user);
         $entityManager->flush();
 
+
+        $classIdUser = $entityManager->getRepository(':User')->find($user->getIdUser());
+        $readersTicket->setUserConnect($classIdUser);
+        $readersTicket->setBlock(1);
+        $readersTicket->setIdPosition(2);
+
+        $entityManager->persist($readersTicket);
+        $entityManager->flush();
+
+
         $_SESSION['msg'] = 'Логин: admin<br>Пароль: admin';
         View::redirect('/account/indexLogin');
     }
-
 }

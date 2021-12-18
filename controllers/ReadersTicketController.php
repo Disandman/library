@@ -26,9 +26,8 @@ class ReadersTicketController
     }
 
 
-    public function update()
+    public function block()
     {
-
         $entityManagerConnect = new DB_connect();
         $entityManager = $entityManagerConnect->connect();
 
@@ -43,7 +42,6 @@ class ReadersTicketController
 
             $readersTicket = $entityManager->getRepository(ReadersTicket::class)->findOneBy(['id_readers_ticket' => $id_readers_ticket]);
 
-
             $readersTicket->setBlock($_POST['block']);
             $readersTicket->setDateBlocking($_POST['date_blocking']);
             $readersTicket->setDateUnblocking($_POST['date_unblocking']);
@@ -56,5 +54,4 @@ class ReadersTicketController
         }
         View::render('Главная страница', 'readers-ticket/update.php', $model);
     }
-
 }

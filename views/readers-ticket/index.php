@@ -27,25 +27,28 @@
             <th scope="col">Статус</th>
             <th scope="col">Дата блокировки</th>
             <th scope="col">Дата разблокировки</th>
-            <th scope="col">Книги на руках</th>
             <th width="120"></th>
         </tr>
         </thead>
         <?php foreach ($model as $models) : ?>
             <tr>
-
                 <td align="left">
-                    <a href="/user/view?id=<?php echo $models->getIdUser() ?>"><?php echo $entityManager->getRepository(':User')->find($models->getIdUser())->getFullName(); ?></a>
+                    <a href="/user/view?id=<?php echo $models->getIdUser() ?>"><?php echo $entityManager->getRepository(':User')->find($models->getIdUser())->getFullName()?></a>
                 </td>
-                <td align="left"><?php echo $entityManager->getRepository(':Division')->find($models->getIdDivision())->getDivision(); ?></td>
-                <td align="left"><?php echo ReadersTicketModel::$course[$models->getIdCourse()]; ?></td>
-                <td align="left"><?php echo $entityManager->getRepository(':Group')->find($models->getIdGroup())->getGroupName(); ?></td>
+                <td align="left"><?php echo !empty($models->getIdDivision()) ? $entityManager->getRepository(':Division')->find($models->getIdDivision())->getDivision() : ''?></td>
+                <td align="left"><?php echo !empty($models->getIdCourse()) ? ReadersTicketModel::$course[$models->getIdCourse()] : ''?></td>
+                <td align="left"><?php echo !empty($models->getIdGroup()) ? $entityManager->getRepository(':Group')->find($models->getIdGroup())->getGroupName():''?></td>
                 <td align="left"><?php echo UserModels::$status[$models->getBlock()]; ?></td>
                 <td align="left"><?php echo $models->getDateBlocking(); ?></td>
                 <td align="left"><?php echo $models->getDateUnblocking(); ?></td>
-                <td align="left"></td>
                 <td>
-                    <a href="/readers-ticket/update?id=<?php echo $models->getIdReadersTicket(); ?>" class="btn btn-outline-primary btn-sm"><i class="bi <?php echo $models->getBlock() == 0 ? ' bi-lock' : ' bi-unlock'; ?>"></i></a>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a href="/books-user/index?id=<?php echo $entityManager->getRepository(':User')->find($models->getIdUser())->getIdUser() ?>"
+                           class="btn btn-outline-primary btn-sm">Книги читателя</a>
+                        <a href="/readers-ticket/block?id=<?php echo $models->getIdReadersTicket(); ?>"
+                        <?php echo $models->getBlock() == 0 ? 'class="btn btn-danger btn-sm"><i class="bi bi-lock"></i>' : 'class="btn btn-success btn-sm"><i class="bi bi-unlock"></i>'; ?>
+                        </a>
+                    </div>
                 </td>
             </tr>
         <?php endforeach; ?>

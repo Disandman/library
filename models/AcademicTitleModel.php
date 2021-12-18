@@ -5,20 +5,19 @@ namespace App\models;
 
 use App\config\DB_connect;
 
-class AcademicDegreeModels
+class AcademicTitleModel
 {
 
     /**
      * @return array|object[]
      */
-    public function getIndex()
+    public function getAll()
     {
         $entityManagerClass = new DB_connect();
         $entityManager = $entityManagerClass->connect();
 
-        $degreeRepository = $entityManager->getRepository(':AcademicDegree');
-        $degree = $degreeRepository->findAll();
-        return $degree;
+        $titleRepository = $entityManager->getRepository(':AcademicTitle');
+        $title = $titleRepository->findAll();
+        return $title;
     }
-
 }

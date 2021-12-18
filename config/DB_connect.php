@@ -4,7 +4,6 @@ namespace App\config;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class DB_connect
 {
@@ -18,13 +17,8 @@ class DB_connect
         $config = Setup::createAnnotationMetadataConfiguration([dirname(__DIR__) . '/models'], $isDevMode, null, null, false);
         $config->addEntityNamespace('', 'App\models');
 
-// database configuration parameters
-
         $entityManager = EntityManager::create($db, $config);
 
         return $entityManager;
     }
 }
-
-$containerBuilder = new ContainerBuilder();
-$containerBuilder->register('db.con', 'DB_connect');

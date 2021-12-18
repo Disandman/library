@@ -4,7 +4,7 @@ namespace App\controllers;
 
 use App\core\Controller;
 use App\core\View;
-use App\models\AcademicDegreeModels;
+use App\models\AcademicDegreeModel;
 
 /**
  * HomeController controller

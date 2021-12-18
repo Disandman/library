@@ -59,6 +59,13 @@ class ConnectAcademicInfo
      */
     protected $connect_academic_info_title;
 
+    /**
+     * @return mixed
+     */
+    public function getIdConnectAcademicInfo()
+    {
+        return $this->id_connect_academic_info;
+    }
 
     /**
      * @param mixed $id_connect_academic_info
@@ -69,17 +76,49 @@ class ConnectAcademicInfo
     }
 
     /**
-     * @return object
+     * @return mixed
      */
-    public function getIdUser(): object
+    public function getIdAcademicTitle()
+    {
+        return $this->id_academic_title;
+    }
+
+    /**
+     * @param mixed $id_academic_title
+     */
+    public function setIdAcademicTitle($id_academic_title): void
+    {
+        $this->id_academic_title = $id_academic_title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdAcademicDegree()
+    {
+        return $this->id_academic_degree;
+    }
+
+    /**
+     * @param mixed $id_academic_degree
+     */
+    public function setIdAcademicDegree($id_academic_degree): void
+    {
+        $this->id_academic_degree = $id_academic_degree;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdUser()
     {
         return $this->id_user;
     }
 
     /**
-     * @param object $id_user
+     * @param mixed $id_user
      */
-    public function setIdUser(object $id_user): void
+    public function setIdUser($id_user): void
     {
         $this->id_user = $id_user;
     }
@@ -87,33 +126,50 @@ class ConnectAcademicInfo
     /**
      * @return object
      */
-    public function getIdAcademicDegree(): object
+    public function getIdUserConnect()
     {
-        return $this->id_academic_degree;
+        return $this->id_user_connect;
     }
 
     /**
-     * @param object $id_academic_degree
+     * @param object $id_user_connect
      */
-    public function setIdAcademicDegree(object $id_academic_degree): void
+    public function setIdUserConnect($id_user_connect): void
     {
-        $this->id_academic_degree = $id_academic_degree;
+        $this->id_user_connect = $id_user_connect;
     }
 
     /**
      * @return object
      */
-    public function getIdAcademicTitle(): object
+    public function getConnectAcademicInfoDegree()
     {
-        return $this->id_academic_title;
+        return $this->connect_academic_info_degree;
     }
 
     /**
-     * @param object $id_academic_title
+     * @param object $connect_academic_info_degree
      */
-    public function setIdAcademicTitle(object $id_academic_title): void
+    public function setConnectAcademicInfoDegree($connect_academic_info_degree): void
     {
-        $this->id_academic_title = $id_academic_title;
+        $this->connect_academic_info_degree = $connect_academic_info_degree;
     }
+
+    /**
+     * @return object
+     */
+    public function getConnectAcademicInfoTitle()
+    {
+        return $this->connect_academic_info_title;
+    }
+
+    /**
+     * @param object $connect_academic_info_title
+     */
+    public function setConnectAcademicInfoTitle($connect_academic_info_title): void
+    {
+        $this->connect_academic_info_title = $connect_academic_info_title;
+    }
+
 
 }

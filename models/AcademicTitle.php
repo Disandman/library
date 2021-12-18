@@ -36,11 +36,11 @@ class AcademicTitle
     protected $connect_academic_info_title;
 
     /**
-     *
+     * @return mixed
      */
-    public function __construct()
+    public function getIdAcademicTitle()
     {
-        $this->connect_academic_info_title = new ArrayCollection();
+        return $this->id_academic_title;
     }
 
     /**
@@ -70,7 +70,7 @@ class AcademicTitle
     /**
      * @return object
      */
-    public function getConnectAcademicInfoTitle(): object
+    public function getConnectAcademicInfoTitle()
     {
         return $this->connect_academic_info_title;
     }
@@ -78,7 +78,7 @@ class AcademicTitle
     /**
      * @param object $connect_academic_info_title
      */
-    public function setConnectAcademicInfoTitle(object $connect_academic_info_title): void
+    public function setConnectAcademicInfoTitle($connect_academic_info_title): void
     {
         $this->connect_academic_info_title = $connect_academic_info_title;
     }

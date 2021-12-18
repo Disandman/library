@@ -36,14 +36,6 @@ class Division
     protected $readers_ticket_division;
 
     /**
-     *
-     */
-    public function __construct()
-    {
-        $this->readers_ticket_division = new ArrayCollection();
-    }
-
-    /**
      * @return mixed
      */
     public function getIdDivision()
@@ -75,6 +67,20 @@ class Division
         $this->division = $division;
     }
 
+    /**
+     * @return object
+     */
+    public function getReadersTicketDivision()
+    {
+        return $this->readers_ticket_division;
+    }
 
+    /**
+     * @param object $readers_ticket_division
+     */
+    public function setReadersTicketDivision($readers_ticket_division): void
+    {
+        $this->readers_ticket_division = $readers_ticket_division;
+    }
 
 }

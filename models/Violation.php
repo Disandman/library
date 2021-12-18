@@ -34,11 +34,11 @@ class Violation
     protected $connect_violation;
 
     /**
-     *
+     * @return mixed
      */
-    public function __construct()
+    public function getIdViolation()
     {
-        $this->connect_violation = new ArrayCollection();
+        return $this->id_violation;
     }
 
     /**
@@ -82,19 +82,20 @@ class Violation
     }
 
     /**
-     * @return object
+     * @return mixed
      */
-    public function getConnectViolation(): object
+    public function getConnectViolation()
     {
         return $this->connect_violation;
     }
 
     /**
-     * @param object $connect_violation
+     * @param mixed $connect_violation
      */
-    public function setConnectViolation(object $connect_violation): void
+    public function setConnectViolation($connect_violation): void
     {
         $this->connect_violation = $connect_violation;
     }
+
 
 }
