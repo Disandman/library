@@ -2,31 +2,28 @@
 
 namespace App\controllers;
 
-use App\core\Controller;
 use App\core\View;
-use App\models\AcademicDegreeModel;
 
 /**
- * HomeController controller
+ * Контроллер сайта
  */
-class HomeController extends Controller
+class HomeController
 {
-
     /**
-     * @return void
+     * Вывод страницы с описанием приложения (и котиком)
+     * @throws \Exception
      */
     public function index()
     {
         View::render('Главная страница', 'site/index.php');
     }
 
-
     /**
-     * @return void
+     * Страница инициализации проекта
+     * @throws \Exception
      */
     public function indexInit()
     {
-        View::render('Главная страница', 'site/init.php');
+        View::render('Инициализация приложения', 'site/init.php');
     }
-
 }

@@ -36,11 +36,6 @@
     <br>
     <div class="date show-on">
     <div class="form-group">
-        <label for="date_publication">Дата блокировки:</label>
-        <input type="date" class="form-control" id="date_publication" value="<?php echo $model->getDateBlocking() ?>" name="date_blocking">
-    </div>
-    <br>
-    <div class="form-group">
         <label for="date_receipt">Дата разблокировки:</label>
         <input type="date" class="form-control" id="date_receipt" value="<?php echo $model->getDateUnblocking() ?>" name="date_unblocking">
     </div>

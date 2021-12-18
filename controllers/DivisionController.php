@@ -14,12 +14,10 @@ use App\models\DivisionModel;
  */
 class DivisionController
 {
-    private $access; //проверка доступа на основе роли
     private $entityManager; //создание entityManager (Doctrine);
 
     function __construct()
     {
-        $this->access = new Access();
         $entityManagerClass = new DB_connect();
         $this->entityManager = $entityManagerClass->connect();
     }
@@ -71,7 +69,6 @@ class DivisionController
         $model = [
             'model' => $resultDivision,
         ];
-
         if ($_POST) {
             $division = $this->entityManager->getRepository(Division::class)->findOneBy(['id_division' => $_GET['id']]);
 
@@ -81,7 +78,7 @@ class DivisionController
 
             View::redirect('/division/index');
         }
-        View::render('Главная страница', 'division/update.php', $model);
+        View::render('Изменение подразделения', 'division/update.php', $model);
     }
 
     /**

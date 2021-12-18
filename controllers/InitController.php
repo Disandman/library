@@ -7,17 +7,27 @@ use App\core\View;
 use App\models\AcademicDegree;
 use App\models\AcademicTitle;
 use App\models\ReadersTicket;
-use App\models\ReadersTicketModel;
 use App\models\Role;
-use App\models\RoleModel;
 use App\models\User;
-use App\models\UserModels;
-use Exception;
-use App\models\Access;
 
+/**
+ * Контроллер инициализации приложения
+ */
 class InitController
 {
-    private function academicDegree()
+    private $entityManager; //создание entityManager (Doctrine);
+
+    function __construct()
+    {
+        $entityManagerClass = new DB_connect();
+        $this->entityManager = $entityManagerClass->connect();
+    }
+
+    /**
+     * Массив с научными степенями
+     * @return string[]
+     */
+    private function academicDegree(): array
     {
         return [
             'д.арх.н.', 'к.арх.н.',
@@ -45,7 +55,11 @@ class InitController
         ];
     }
 
-    private function academicTitle()
+    /**
+     * Массив с научными званиями
+     * @return string[]
+     */
+    private function academicTitle(): array
     {
         return [
             'доц.', 'проф.',
@@ -53,70 +67,76 @@ class InitController
         ];
     }
 
-    private function role()
+    /**
+     * Массив с ролями пользователя
+     * @return string[]
+     */
+    private function role(): array
     {
         return [
-            'Администратор', 'Сотрудник библиотеки',
+            'Администратор',
+            'Сотрудник библиотеки',
             'Читатель'
         ];
     }
 
 
+    /**
+     * Наполнение базы данных (пользователем, ролями, научными степенями, званиями, создание читательского билета пользователю)
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function init()
     {
         $user = new User();
         $readersTicket = new ReadersTicket();
 
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-
-        foreach ($this->academicDegree() as $academicDegreeSave) {
+        foreach ($this->academicDegree() as $academicDegreeSave) {//наполнение базы научными степенями
             $academicDegree = new AcademicDegree();
             $academicDegree->setName($academicDegreeSave);
-            $entityManager->persist($academicDegree);
-            $entityManager->flush();
+
+            $this->entityManager->persist($academicDegree);
+            $this->entityManager->flush();
         }
 
-
-        foreach ($this->academicTitle() as $academicTitleSave) {
+        foreach ($this->academicTitle() as $academicTitleSave) {//наполнение базы научными званиями
             $academicTitle = new AcademicTitle();
             $academicTitle->setName($academicTitleSave);
-            $entityManager->persist($academicTitle);
-            $entityManager->flush();
+
+            $this->entityManager->persist($academicTitle);
+            $this->entityManager->flush();
         }
 
-        foreach ($this->role() as $roles) {
+        foreach ($this->role() as $roles) {//наполнение базы ролями пользователей
             $role = new Role();
             $role->setName($roles);
-            $entityManager->persist($role);
-            $entityManager->flush();
+
+            $this->entityManager->persist($role);
+            $this->entityManager->flush();
         }
-
-        ;
-
+///////////////////////Создание пользователя/////////////////////////
         $user->setLogin('admin');
         $user->setPassword(md5('admin'));
         $user->setFullName('Администратор системы');
         $user->setActive(1);
-
-        $classRole = $entityManager->getRepository(':Role')->find(1);
+        $classRole = $this->entityManager->getRepository(':Role')->find(1);
         $user->setRole($classRole);
 
-        $entityManager->persist($user);
-        $entityManager->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();//сохранение результатов
 
+///////////////////////Создание читательского билета/////////////////
+        $classIdUser = $this->entityManager->getRepository(':User')->find($user->getIdUser());
 
-        $classIdUser = $entityManager->getRepository(':User')->find($user->getIdUser());
         $readersTicket->setUserConnect($classIdUser);
         $readersTicket->setBlock(1);
         $readersTicket->setIdPosition(2);
 
-        $entityManager->persist($readersTicket);
-        $entityManager->flush();
+        $this->entityManager->persist($readersTicket);
+        $this->entityManager->flush();
 
+        $_SESSION['msg'] = 'Логин: admin<br>Пароль: admin';//вывод сообщения на страницу авторизации (сообщение уничтожится)
 
-        $_SESSION['msg'] = 'Логин: admin<br>Пароль: admin';
         View::redirect('/account/indexLogin');
     }
 }

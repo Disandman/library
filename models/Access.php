@@ -15,7 +15,6 @@ class Access
      */
     public function getRole($role)
     {
-
         $entityManagerClass = new DB_connect();
         $entityManager = $entityManagerClass->connect();
         if (!empty($_SESSION['id_user'])) {
@@ -28,7 +27,6 @@ class Access
             $user_role = $entityManager->getRepository(':Role')->find($user_model->getRole())->getName();
             if ($user_role == $role)
                 return true;
-
         }
     }
 
@@ -37,14 +35,11 @@ class Access
      */
     public function getUser()
     {
-
         if (!empty($_SESSION['id_user'])) {
 
             $user = new UserModels();
             $id = $_SESSION['id_user'];
-            $user_model = $user->getIdUser($id);
-            return $user_model;
+            return $user->getIdUser($id);
         }
     }
-
 }

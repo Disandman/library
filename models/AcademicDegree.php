@@ -2,10 +2,10 @@
 
 namespace App\models;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Сущность "Научные звания" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="academic_degree")
  */
@@ -82,6 +82,4 @@ class AcademicDegree
     {
         $this->connect_academic_info_degree = $connect_academic_info_degree;
     }
-
-
 }

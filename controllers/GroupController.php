@@ -8,38 +8,49 @@ use App\models\Group;
 use App\models\GroupModel;
 
 
+/**
+ * Контроллер управления Группами
+ */
 class GroupController
 {
+    private $entityManager; //создание entityManager (Doctrine);
+
+    function __construct()
+    {
+        $entityManagerClass = new DB_connect();
+        $this->entityManager = $entityManagerClass->connect();
+    }
 
     /**
+     * Вывод всех групп
      * @throws \Exception
      */
     public function index()
     {
-        $division = new GroupModel();
-        $resultGroup = $division->getAll();
-        $model = ['model' => $resultGroup,];
+        $group = new GroupModel();
+        $resultGroup = $group->getAll();
 
-        View::render('Подразделения', 'group/index.php', $model);
+        $model = [
+            'model' => $resultGroup
+        ];
+
+        View::render('Группы', 'group/index.php', $model);
     }
 
     /**
+     * Внесение в базу новой группы
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function create()
     {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
         if ($_POST) {
 
             $group = new Group();
-
             $group->setGroupName($_POST['group']);
 
-            $entityManager->persist($group);
-            $entityManager->flush();
+            $this->entityManager->persist($group);
+            $this->entityManager->flush();
 
             View::redirect('/group/index');
 
@@ -49,53 +60,41 @@ class GroupController
     }
 
     /**
+     * Обновление существующей записи (группы) в базе
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function update()
     {
-
-        $entityManagerConnect = new DB_connect();
-        $entityManager = $entityManagerConnect->connect();
-
         $groupModel = new GroupModel();
         $resultGroup = $groupModel->getOne();
         $model = [
             'model' => $resultGroup,
         ];
-
         if ($_POST) {
-            $id_group = $_GET['id'];
-
-            $group = $entityManager->getRepository(Group::class)->findOneBy(['id_group' => $id_group]);
+            $group = $this->entityManager->getRepository(Group::class)->findOneBy(['id_group' => $_GET['id']]);
 
             $group->setGroupName($_POST['group']);
-
-            $entityManager->persist($group);
-            $entityManager->flush();
+            $this->entityManager->persist($group);
+            $this->entityManager->flush();
 
             View::redirect('/group/index');
-
         }
         View::render('Изменение подразделения', 'group/update.php', $model);
     }
 
     /**
+     * Удаление записи (группы)
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function delete()
     {
-        $entityManagerConnect = new DB_connect();
-        $entityManager = $entityManagerConnect->connect();
+        $group = $this->entityManager->getRepository(Group::class)->findOneBy(['id_group' => $_GET['id']]);//поиск нужной записи в базе (данные идентификаторе записи получаем через GET запрос)
 
-        $id_group = $_GET['id'];
+        $this->entityManager->remove($group);
+        $this->entityManager->flush();
 
-        $group = $entityManager->getRepository(Group::class)->findOneBy(['id_group' => $id_group]);
-        $entityManager->remove($group);
-        $entityManager->flush();
         View::redirect('/group/index');
-
     }
-
 }

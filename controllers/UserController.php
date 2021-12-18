@@ -18,18 +18,30 @@ use App\models\UserModels;
 use Exception;
 use App\models\Access;
 
+/**
+ * Контроллер управления пользователями
+ */
 class UserController
 {
+    private Access $access; //проверка доступа на основе роли
+    private \Doctrine\ORM\EntityManager $entityManager; //создание entityManager (Doctrine);
+
+    function __construct()
+    {
+        $this->access = new Access();
+        $entityManagerClass = new DB_connect();
+        $this->entityManager = $entityManagerClass->connect();
+    }
+
     /**
+     * Вывод пользователей
      * @return void
      * @throws Exception
      */
     public function index()
     {
-
         $role = new RoleModel();
         $user = new UserModels();
-        $access = new Access();
         $readersTicket = new ReadersTicketModel();
 
         $resultUser = $user->getAll();
@@ -41,15 +53,15 @@ class UserController
             'readersTicket' => $readersTicket
         ];
 
-        if ($access->getRole('Администратор')) {
-
-            View::render('Главная страница', 'user/index.php', $model);
+        if ($this->access->getRole('Администратор')) {
+            View::render('Пользователи', 'user/index.php', $model);
         } else {
             View::render('Ошибка доступа', '/layouts/error_403.php');
         }
     }
 
     /**
+     * Просмотр пользователя
      * @throws Exception
      */
     public function view()
@@ -58,7 +70,6 @@ class UserController
         $role = new RoleModel();
         $user = new UserModels();
         $readersTicket = new ReadersTicketModel();
-        $access = new Access();
         $academicInfo = new ConnectAcadenicInfoModel();
 
         $resultUser = $user->getOne();
@@ -66,28 +77,26 @@ class UserController
         $resultReadersTicket = $readersTicket->getOne();
         $resultAcademicInfo = $academicInfo->getOne();
 
-
         $model = [
             'model' => $resultUser,
             'role' => $resultRole,
             'readersTicket' => $resultReadersTicket,
             'resultAcademicInfo' => $resultAcademicInfo
         ];
-        if ($access->getRole('Администратор')) {
-            View::render('Главная страница', 'user/view.php', $model);
 
+        if ($this->access->getRole('Администратор')) {
+            View::render('Просмотр пользователя', 'user/view.php', $model);
         } else {
             View::render('Ошибка доступа', '/layouts/error_403.php');
         }
     }
 
-
     /**
+     * Создание пользователя
      * @throws Exception
      */
     public function create()
     {
-
         $roleModel = new RoleModel();
         $readersTicketModel = new ReadersTicketModel();
         $divisionModel = new DivisionModel();
@@ -95,95 +104,81 @@ class UserController
         $academicDegreeModel = new AcademicDegreeModel();
         $academicTitleModel = new AcademicTitleModel();
 
-        $access = new Access();
-
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
         $resultRole = $roleModel->getAll();
         $resultReadersTicket = $readersTicketModel->getAll();
         $resultDivision = $divisionModel->getAll();
         $resultGroup = $groupModel->getAll();
-        $academicDegree = $academicDegreeModel->getAll();
-        $academicTitle = $academicTitleModel->getAll();
-
+        $resultAcademicDegree = $academicDegreeModel->getAll();
+        $resultAcademicTitle = $academicTitleModel->getAll();
 
         $model = [
             'role' => $resultRole,
             'readersTicket' => $resultReadersTicket,
             'division' => $resultDivision,
             'group' => $resultGroup,
-            'academicDegree' => $academicDegree,
-            'academicTitle' => $academicTitle
+            'academicDegree' => $resultAcademicDegree,
+            'academicTitle' => $resultAcademicTitle
         ];
-        if ($access->getRole('Администратор')) {
+        if ($this->access->getRole('Администратор')) {
             if ($_POST) {
                 $user = new User();
                 $readersTicket = new ReadersTicket();
                 $academicInfo = new ConnectAcademicInfo();
-
+/////////////////////////////Создание пользователя//////////////////////////////
                 $user->setLogin($_POST['login']);
                 $user->setPassword(md5($_POST['password']));
                 $user->setFullName($_POST['full_name']);
                 $user->setActive($_POST['status']);
                 $user->setRole($_POST['role']);
-
-                $classRole = $entityManager->getRepository(':Role')->find($_POST['role']);
+                $classRole = $this->entityManager->getRepository(':Role')->find($_POST['role']);
                 $user->setRole($classRole);
 
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                $classUser = $entityManager->getRepository(':User')->find($user->getIdUser());
-                $readersTicket->setUserConnect($classUser);
-
-                if(!empty($_POST['degree'])) {
-                    $classAcademicUser = $entityManager->getRepository(':User')->find($user->getIdUser());
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+/////////////////////////////Создание информации о сотруднике (научная степень, звание)///////////////
+                if (!empty($_POST['degree'])) {
+                    $classAcademicUser = $this->entityManager->getRepository(':User')->find($user->getIdUser());
                     $academicInfo->setIdUserConnect($classAcademicUser);
 
-                    $classAcademicDegree = $entityManager->getRepository(':AcademicDegree')->find($_POST['degree']);
+                    $classAcademicDegree = $this->entityManager->getRepository(':AcademicDegree')->find($_POST['degree']);
                     $academicInfo->setConnectAcademicInfoDegree($classAcademicDegree);
 
-                    $classAcademicTitle = $entityManager->getRepository(':AcademicTitle')->find($_POST['title']);
+                    $classAcademicTitle = $this->entityManager->getRepository(':AcademicTitle')->find($_POST['title']);
                     $academicInfo->setConnectAcademicInfoTitle($classAcademicTitle);
 
-                    $entityManager->persist($academicInfo);
-                    $entityManager->flush();
+                    $this->entityManager->persist($academicInfo);
+                    $this->entityManager->flush();
                 }
-
+/////////////////////////////Создание читательского билета///////////////////////////////////////////
+                $classUser = $this->entityManager->getRepository(':User')->find($user->getIdUser());
+                $readersTicket->setUserConnect($classUser);
                 $readersTicket->setIdPosition($_POST['position']);
                 $readersTicket->setBlock(1);
+                $classDivision = $this->entityManager->getRepository(':Division')->find($_POST['division']);
+                $readersTicket->setIdDivisionConnect($classDivision);
 
-
-                    $classDivision = $entityManager->getRepository(':Division')->find($_POST['division']);
-                    $readersTicket->setIdDivisionConnect($classDivision);
-
-                if(!empty($_POST['group'])) {
+                $this->entityManager->persist($readersTicket);
+                $this->entityManager->flush();
+/////////////////////////////Создание информации о студенте (курс, группа)///////////////////////////
+                if (!empty($_POST['group'])) {
                     $readersTicket->setIdCourse($_POST['course']);
-
-                    $classGroup = $entityManager->getRepository(':Group')->find($_POST['group']);
+                    $classGroup = $this->entityManager->getRepository(':Group')->find($_POST['group']);
                     $readersTicket->setIdGroupConnect($classGroup);
                 }
-                    $entityManager->persist($readersTicket);
-                    $entityManager->flush();
-
-
                 View::redirect('/user/index');
             }
             View::render('Добавление пользователя', 'user/create.php', $model);
-        } else {
-            View::render('Ошибка доступа', '/layouts/error_403.php');
-        }
+        } else View::render('Ошибка доступа', '/layouts/error_403.php');
     }
 
     /**
+     * Обновление существующей записи (пользователя) в базе
      * @throws Exception
      */
     public function update()
     {
 
         $roleModel = new RoleModel();
-        $access = new Access();
         $view = new UserModels();
         $readersTicketModel = new ReadersTicketModel();
         $divisionModel = new DivisionModel();
@@ -191,9 +186,6 @@ class UserController
         $academicInfoModel = new ConnectAcadenicInfoModel();
         $academicDegreeModel = new AcademicDegreeModel();
         $academicTitleModel = new AcademicTitleModel();
-
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
 
         $resultRole = $roleModel->getAll();
         $viewModel = $view->getOne();
@@ -214,96 +206,76 @@ class UserController
             'academicTitle' => $academicTitle,
             'resultAcademicInfo' => $resultAcademicInfo
         ];
-        if ($access->getRole('Администратор')) {
+        if ($this->access->getRole('Администратор')) {
             if ($_POST) {
-                $id_user = $_GET['id'];
-
-                /** @var object $entityManager */
-                $user = $entityManager->getRepository(User::class)->findOneBy(['id_user' => $id_user]);
-                $readersTicket = $entityManager->getRepository(ReadersTicket::class)->findOneBy(['id_user' => $id_user]);
-                $academicInfo = $entityManager->getRepository(ConnectAcademicInfo::class)->findOneBy(['id_user' => $id_user]);
-
+                $user = $this->entityManager->getRepository(User::class)->findOneBy(['id_user' => $_GET['id']]);
+                $readersTicket = $this->entityManager->getRepository(ReadersTicket::class)->findOneBy(['id_user' => $_GET['id']]);
+                $academicInfo = $this->entityManager->getRepository(ConnectAcademicInfo::class)->findOneBy(['id_user' => $_GET['id']]);
+/////////////////////////////Изменение пользователя//////////////////////////////
                 $user->setLogin($_POST['login']);
-                if(!isset($_POST['password']))
-                {
+                if (!isset($_POST['password'])) {
                     $user->setPassword(md5($_POST['password']));
                 }
                 $user->setFullName($_POST['full_name']);
                 $user->setActive($_POST['status']);
                 $user->setRole($_POST['role']);
-
-                $classRole = $entityManager->getRepository(':Role')->find($_POST['role'][0]);
+                $classRole = $this->entityManager->getRepository(':Role')->find($_POST['role'][0]);
                 $user->setRole($classRole);
-                $entityManager->persist($user);
-                $entityManager->flush();
 
-                $classUser = $entityManager->getRepository(':User')->find($user->getIdUser());
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
+/////////////////////////////Изменение читательского билета, в том числе данных о студенте//////////////////////////////
+                $classUser = $this->entityManager->getRepository(':User')->find($user->getIdUser());
                 $readersTicket->setUserConnect($classUser);
-
-                if(!empty($_POST['division']))
-                {
-                    $classDivision = $entityManager->getRepository(':Division')->find($_POST['division']);
+                if (!empty($_POST['division'])) {
+                    $classDivision = $this->entityManager->getRepository(':Division')->find($_POST['division']);
                     $readersTicket->setIdDivisionConnect($classDivision);
                 }
-
                 $readersTicket->setIdPosition($_POST['position']);
-
-                if(!empty($_POST['course']))
-                {
+                if (!empty($_POST['course'])) {
                     $readersTicket->setIdCourse($_POST['course']);
                 }
-
-                if(!empty($_POST['group']))
-                {
-                    $classGroup = $entityManager->getRepository(':Group')->find($_POST['group']);
+                if (!empty($_POST['group'])) {
+                    $classGroup = $this->entityManager->getRepository(':Group')->find($_POST['group']);
                     $readersTicket->setIdGroupConnect($classGroup);
                 }
                 $readersTicket->setBlock(1);
 
-                $entityManager->persist($readersTicket);
-                $entityManager->flush();
-
-                if(!empty($_POST['degree'])) {
-                    $classAcademicDegree = $entityManager->getRepository(':AcademicDegree')->find($_POST['degree']);
+                $this->entityManager->persist($readersTicket);
+                $this->entityManager->flush();
+/////////////////////////////Изменение информации о сотруднике (научная степень, звание)///////////////
+                if (!empty($_POST['degree'])) {
+                    $classAcademicDegree = $this->entityManager->getRepository(':AcademicDegree')->find($_POST['degree']);
                     $academicInfo->setConnectAcademicInfoDegree($classAcademicDegree);
 
-                $classAcademicTitle = $entityManager->getRepository(':AcademicTitle')->find($_POST['title']);
-                $academicInfo->setConnectAcademicInfoTitle($classAcademicTitle);
+                    $classAcademicTitle = $this->entityManager->getRepository(':AcademicTitle')->find($_POST['title']);
+                    $academicInfo->setConnectAcademicInfoTitle($classAcademicTitle);
 
-                $entityManager->persist($academicInfo);
-                $entityManager->flush();
+                    $this->entityManager->persist($academicInfo);
+                    $this->entityManager->flush();
                 }
                 View::redirect('/user/index');
             }
             View::render('Главная страница', 'user/update.php', $model);
-        } else {
-            View::render('Ошибка доступа', '/layouts/error_403.php');
-        }
+        } else View::render('Ошибка доступа', '/layouts/error_403.php');
     }
 
 
     /**
+     * Удаление записи (пользователя)
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws Exception
      */
     public function delete()
     {
+        if ($this->access->getRole('Администратор')) {
+            $user = $this->entityManager->getRepository(User::class)->findOneBy(['id_user' => $_GET['id']]);
 
-        $access = new Access();
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
+            $this->entityManager->remove($user);
+            $this->entityManager->flush();
 
-        $id_user = $_GET['id'];
-
-        if ($access->getRole('Администратор')) {
-            $user = $entityManager->getRepository(User::class)->findOneBy(['id_user' => $id_user]);
-
-
-            $entityManager->remove($user);
-            $entityManager->flush();
             View::redirect('/user/index');
-        } else {
-            View::render('Ошибка доступа', '/layouts/error_403.php');
-        }
+        } else View::render('Ошибка доступа', '/layouts/error_403.php');
     }
 }
