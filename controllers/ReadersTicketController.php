@@ -31,8 +31,7 @@ class ReadersTicketController
         $resultReadersTicket = $readersTicket->getAll();
 
         $model = [
-            'model' => $resultReadersTicket,
-            'readersTicket' => $readersTicket
+            'model' => $resultReadersTicket
         ];
 
         View::render('Читатели', 'readers-ticket/index.php', $model);
@@ -52,22 +51,15 @@ class ReadersTicketController
 
         $model = [
             'model' => $resultReadersTicket,
-            'readersTicketModel' => $readersTicketModel
-
         ];
 
         if ($_POST) {
             $readersTicket = $this->entityManager->getRepository(ReadersTicket::class)->findOneBy(['id_readers_ticket' => $_GET['id']]);//поиск нужной записи в базе (данные идентификаторе записи получаем через GET запрос)
 
             $readersTicket->setBlock($_POST['block']);//блокировка читательского билета
-            if ($_POST['block'] == 0) {//если чекбокс в положении "заблокировать"
-                $readersTicket->setDateBlocking(date('Y-m-d'));//текущее время
-                $readersTicket->setDateUnblocking($_POST['date_unblocking']);//дата до какого чиста блокировать
-            }
-            else {
-                $readersTicket->setDateBlocking(null);//перезапись на null
-                $readersTicket->setDateUnblocking(null);//перезапись на null
-            }
+            $readersTicket->setDateBlocking(date('Y-m-d'));//текущее время
+            $readersTicket->setDateUnblocking($_POST['date_unblocking']);//дата до какого чиста блокировать
+
             $this->entityManager->persist($readersTicket);
             $this->entityManager->flush();//сохранение результата
 

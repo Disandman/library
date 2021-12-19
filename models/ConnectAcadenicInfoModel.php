@@ -4,7 +4,8 @@ namespace App\models;
 
 use App\config\DB_connect;
 
-class RoleModel
+
+class ConnectAcadenicInfoModel
 {
     /**
      * @return array|object[]
@@ -14,9 +15,9 @@ class RoleModel
         $entityManagerClass = new DB_connect();
         $entityManager = $entityManagerClass->connect();
 
-        $roleRepository = $entityManager->getRepository(':Role');
-        $role = $roleRepository->findAll();
-        return $role;
+        $connect_books_model = $entityManager->getRepository(':ConnectAcademicInfo');
+        $connect_books = $connect_books_model->findAll();
+        return $connect_books;
     }
 
     /**
@@ -27,10 +28,10 @@ class RoleModel
         $entityManagerClass = new DB_connect();
         $entityManager = $entityManagerClass->connect();
 
-        $id_role = $_GET['id'];
-        $userRepository = $entityManager->getRepository(':Role');
-        $user = $userRepository->findOneBy(['id_role' => $id_role]);
-        return $user;
+        $id_user = $_GET['id'];
+        $connect_books_model = $entityManager->getRepository(':ConnectAcademicInfo');
+        $connect_books = $connect_books_model->findOneBy(['id_user' => $id_user]);
+        return $connect_books;
     }
 
 }

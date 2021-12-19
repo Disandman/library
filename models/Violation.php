@@ -2,10 +2,10 @@
 
 namespace App\models;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Сущность "Нарушения" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="violation")
  */
@@ -32,7 +32,7 @@ class Violation
 
     /** @ORM\OneToMany(targetEntity="ConnectViolation", mappedBy="id_connect_violation") */
     protected $connect_violation;
-//////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * @return mixed
      */
@@ -96,4 +96,6 @@ class Violation
     {
         $this->connect_violation = $connect_violation;
     }
+
+
 }

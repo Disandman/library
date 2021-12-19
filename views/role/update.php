@@ -1,20 +1,25 @@
-<?php
-
-use App\core\Breadcrumb;
-
-Breadcrumb::add('/user/index', 'Пользователи');
-Breadcrumb::add_current('/user/create', 'Изменение роли');
-
-/** @var array $model */
-?>
-
 <div class="bg-light">
-    <?php echo Breadcrumb::out(); ?>
+    <?php
+
+    use App\config\DB_connect;
+
+    \App\core\Breadcrumb::add('/user/index', 'Пользователи');
+    \App\core\Breadcrumb::add_current('/user/create', 'Изменение роли');
+    echo \App\core\Breadcrumb::out();
+
+    $entityManagerClass = new DB_connect();
+    $entityManager = $entityManagerClass->connect();
+
+    /** @var object $model */
+    ?>
 </div>
+
 
 <div class="col">
     <h1>Изменение роли: <?php echo $model->getName(); ?></h1>
 </div>
+
+
 <form method="post" action="/role/update?id=<?php echo $model->getIdRole() ?>">
 
     <div class="form-group">
@@ -22,5 +27,6 @@ Breadcrumb::add_current('/user/create', 'Изменение роли');
         <input type="text" class="form-control" id="role" value="<?php echo $model->getName() ?>" name="role">
     </div>
     <br>
+
     <button type="submit" class="btn btn-outline-success">Сохранить</button>
 </form>

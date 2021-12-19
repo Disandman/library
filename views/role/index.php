@@ -1,19 +1,23 @@
-<?php
-
-use App\core\Breadcrumb;
-
-Breadcrumb::add_current('/role/index', 'Роли');
-
-/** @var array $model */
-?>
-
 <div class="bg-light">
-    <?php echo Breadcrumb::out(); ?>
+    <?php
+    use App\config\DB_connect;
+
+    \App\core\Breadcrumb::add_current('/role/index', 'Роли');
+    echo \App\core\Breadcrumb::out();
+
+    $entityManagerClass = new DB_connect();
+    $entityManager = $entityManagerClass->connect();
+
+    /** @var array $model */
+    ?>
 </div>
+
 
 <div class="col">
     <h1>Роли</h1>
 </div>
+
+
 <div>
     <table class="table table-hover">
         <thead class="thead-dark">

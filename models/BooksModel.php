@@ -36,4 +36,5 @@ class BooksModel
         $userRepository = $this->entityManager->getRepository(':Books');
         return $userRepository->findOneBy(['id_books' => $_GET['id']]);
     }
+
 }

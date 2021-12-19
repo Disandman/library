@@ -1,19 +1,19 @@
-<?php
-
-use App\core\Breadcrumb;
-
-Breadcrumb::add('/division/index', 'Нарушения');
-Breadcrumb::add_current('/division/create', 'Добавление нарушения');
-
-?>
-
 <div class="bg-light">
-    <?php echo Breadcrumb::out(); ?>
+    <?php
+    \App\core\Breadcrumb::add('/division/index', 'Нарушения');
+    \App\core\Breadcrumb::add_current('/division/create', 'Добавление нарушения');
+    echo \App\core\Breadcrumb::out();
+
+    /** @var array $model */
+    /** @var array $role */
+    ?>
 </div>
+
 
 <div class="col">
     <h1>Добавление Группы</h1>
 </div>
+
 <form method="post" action="/violation/create">
     <div class="form-group">
         <label for="name">Нарушение: </label>

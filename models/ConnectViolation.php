@@ -5,7 +5,6 @@ namespace App\models;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Сущность "НАРУШЕНИЯ" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="connect_violation")
  */
@@ -40,7 +39,7 @@ class ConnectViolation
      * @ORM\JoinColumn(name="id_violation", referencedColumnName="id_violation", nullable=false)
      */
     protected $id_connect_violation;
-//////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * @param mixed $id_connect_violations
      */
@@ -80,4 +79,5 @@ class ConnectViolation
     {
         $this->id_violations = $id_violations;
     }
+
 }

@@ -1,19 +1,19 @@
-<?php
-
-use App\core\Breadcrumb;
-
-Breadcrumb::add('/group/index', 'Группы');
-Breadcrumb::add_current('/group/create', 'Добавление группы');
-
-?>
-
 <div class="bg-light">
-    <?php echo Breadcrumb::out(); ?>
+    <?php
+    \App\core\Breadcrumb::add('/division/index', 'Группы');
+    \App\core\Breadcrumb::add_current('/division/create', 'Добавление группы');
+    echo \App\core\Breadcrumb::out();
+
+    /** @var array $model */
+    /** @var array $role */
+    ?>
 </div>
+
 
 <div class="col">
     <h1>Добавление Группы</h1>
 </div>
+
 <form method="post" action="/group/create">
     <div class="form-group">
         <label for="group">Группа: </label>

@@ -1,5 +1,6 @@
 <?php
 
+use App\config\DB_connect;
 use App\core\Breadcrumb;
 
 /** @var array $access */

@@ -1,15 +1,16 @@
-<?php
-
-use App\core\Breadcrumb;
-
-Breadcrumb::add_current('/division/index', 'Подразделения');
-
-/** @var array $model */
-?>
-
 <div class="bg-light">
-    <?php echo Breadcrumb::out(); ?>
+    <?php
+
+    use App\config\DB_connect;
+
+    \App\core\Breadcrumb::add_current('/division/index', 'Подразделения');
+    echo \App\core\Breadcrumb::out();
+    $entityManagerClass = new DB_connect();
+    $entityManager = $entityManagerClass->connect();
+    /** @var array $model */
+    ?>
 </div>
+
 <br>
 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
     <table class="table table-hover">
@@ -21,6 +22,7 @@ Breadcrumb::add_current('/division/index', 'Подразделения');
         </thead>
         <?php foreach ($model as $models) : ?>
             <tr>
+
                 <td align="left"><?php echo $models->getDivision(); ?></td>
                 <td>
                     <a href="/division/update?id=<?php echo $models->getIdDivision(); ?>"

@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Сущность "КНИГИ" (данная сущность является связующей между базой и всем остальным)
+ * Сущнось "КНИГИ" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="books")
  */

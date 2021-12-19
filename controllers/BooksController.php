@@ -9,7 +9,6 @@ use App\models\Books;
 use App\models\BooksModel;
 use App\models\ConnectBooksModel;
 use App\models\ReadersTicketModel;
-use Exception;
 
 /**
  *Контроллер управления книгами
@@ -28,7 +27,7 @@ class BooksController
 
     /**
      * Вывод всех книгами
-     * @throws Exception
+     * @throws \Exception
      */
     public function index()
     {
@@ -50,7 +49,7 @@ class BooksController
 
     /**
      * Просмотр каждой книги (подробное описание)
-     * @throws Exception
+     * @throws \Exception
      */
     public function view()
     {
