@@ -2,7 +2,7 @@
 
 use App\core\Breadcrumb;
 
-Breadcrumb::add_current('/user/index', 'Книги');
+Breadcrumb::add_current('/books/index', 'Книги');
 
 /** @var array $model */
 /** @var array $access */

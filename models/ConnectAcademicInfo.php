@@ -5,6 +5,7 @@ namespace App\models;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Промежуточная таблица (для сохранения научных званий и степеней)
  * @ORM\Entity
  * @ORM\Table(name="connect_academic_info")
  */
@@ -58,7 +59,7 @@ class ConnectAcademicInfo
      * @ORM\JoinColumn(name="id_academic_title", referencedColumnName="id_academic_title", nullable=false, onDelete="CASCADE")
      */
     protected $connect_academic_info_title;
-
+//////////////////////////////////////////////////////////////////////////////////////
     /**
      * @return mixed
      */
@@ -170,6 +171,4 @@ class ConnectAcademicInfo
     {
         $this->connect_academic_info_title = $connect_academic_info_title;
     }
-
-
 }

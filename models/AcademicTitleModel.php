@@ -17,6 +17,7 @@ class AcademicTitleModel
         $entityManagerClass = new DB_connect();
         $this->entityManager = $entityManagerClass->connect();
     }
+
     /**
      * Вывод всех научных степеней
      * @return array|object[]

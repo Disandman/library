@@ -2,10 +2,10 @@
 
 namespace App\models;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Сущность "Пользователи" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
@@ -37,7 +37,6 @@ class User
      * @ORM\Column(type="boolean")
      */
     protected $active;
-
 
 /////////////////////////////////////////////////Связи/////////////////////////////////
 
@@ -81,16 +80,7 @@ class User
      * )
      */
     protected $connect_books;
-
-
-    /**
-     *
-     */
-    public function __construct()
-    {
-        $this->connect_academic_info = new ArrayCollection();
-        $this->connect_violation = new ArrayCollection();
-    }
+//////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * @param mixed $id_user
@@ -219,5 +209,4 @@ class User
     {
         $this->connect_academic_info = $connect_academic_info;
     }
-
 }

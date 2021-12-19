@@ -2,10 +2,10 @@
 
 namespace App\models;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Сущность "ГРУППЫ" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="group_readers")
  */
@@ -35,15 +35,7 @@ class Group
      * )
      */
     protected $readers_ticket_group;
-
-    /**
-     *
-     */
-    public function __construct()
-    {
-        $this->readers_ticket_group = new ArrayCollection();
-    }
-
+//////////////////////////////////////////////////////////////////////////////////////
     /**
      * @return mixed
      */
@@ -75,5 +67,4 @@ class Group
     {
         $this->group_name = $group_name;
     }
-
 }

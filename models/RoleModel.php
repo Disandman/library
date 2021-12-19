@@ -4,33 +4,47 @@ namespace App\models;
 
 use App\config\DB_connect;
 
+/**
+ * Данный клас предназначен для поиска через сущность Role некоторых элементов в базе (ролей)
+ */
 class RoleModel
 {
+    private $entityManager; //создание entityManager (Doctrine);
+
+    function __construct()
+    {
+        $entityManagerClass = new DB_connect();
+        $this->entityManager = $entityManagerClass->connect();
+    }
+
     /**
+     * Поиск всех записей в базе по сущности "РОЛИ"
      * @return array|object[]
      */
     public function getAll()
     {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $roleRepository = $entityManager->getRepository(':Role');
-        $role = $roleRepository->findAll();
-        return $role;
+        $roleRepository = $this->entityManager->getRepository(':Role');
+        return $roleRepository->findAll();
     }
 
     /**
+     * Поиск одной записи (уникальный идентификатор передается через GET запрос) в базе по сущности "РОЛИ"
      * @return mixed|object|null
      */
     public function getOne()
     {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $id_role = $_GET['id'];
-        $userRepository = $entityManager->getRepository(':Role');
-        $user = $userRepository->findOneBy(['id_role' => $id_role]);
-        return $user;
+        $userRepository = $this->entityManager->getRepository(':Role');
+        return $userRepository->findOneBy(['id_role' => $_GET['id']]);
     }
-
+    /**
+     * Используется для поиска id владельца билета
+     * @param $id
+     * @return mixed|object|null
+     */
+    public function getUserRoleId($id)
+    {
+        $userRepository = $this->entityManager->getRepository(':Role');
+        $user = $userRepository->find($id);
+        return $user->getIdRole();
+    }
 }

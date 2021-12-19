@@ -31,7 +31,8 @@ class ReadersTicketController
         $resultReadersTicket = $readersTicket->getAll();
 
         $model = [
-            'model' => $resultReadersTicket
+            'model' => $resultReadersTicket,
+            'readersTicket' => $readersTicket
         ];
 
         View::render('Читатели', 'readers-ticket/index.php', $model);
@@ -51,6 +52,8 @@ class ReadersTicketController
 
         $model = [
             'model' => $resultReadersTicket,
+            'readersTicketModel' => $readersTicketModel
+
         ];
 
         if ($_POST) {

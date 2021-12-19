@@ -34,7 +34,7 @@ class AcademicTitle
      * )
      */
     protected $connect_academic_info_title;
-
+//////////////////////////////////////////////////////////////////////////////////////
     /**
      * @return mixed
      */

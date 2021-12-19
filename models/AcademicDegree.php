@@ -34,7 +34,7 @@ class AcademicDegree
      * )
      */
     protected $connect_academic_info_degree;
-
+//////////////////////////////////////////////////////////////////////////////////////
     /**
      * @return mixed
      */

@@ -1,17 +1,17 @@
+<?php
+
+use App\core\Breadcrumb;
+
+Breadcrumb::add_current('/user/index', 'Пользователи');
+
+/** @var array $model */
+/** @var array $role */
+/** @var array $user */
+/** @var array $readersTicket */
+?>
+
 <div class="bg-light">
-    <?php
-
-    use App\config\DB_connect;
-
-    \App\core\Breadcrumb::add_current('/user/index', 'Пользователи');
-    echo \App\core\Breadcrumb::out();
-
-    $entityManagerClass = new DB_connect();
-    $entityManager = $entityManagerClass->connect();
-
-    /** @var array $model */
-    /** @var array $readersTicket */
-    ?>
+    <?php echo Breadcrumb::out(); ?>
 </div>
 
 <br>
@@ -45,13 +45,12 @@
 
                     <td align="left"><?php echo $models->getFullName(); ?></td>
                     <td align="left"><?php echo $models->getLogin(); ?></td>
-                    <td align="left"><?php /** @var object $entityManager */
-                        echo $entityManager->getRepository(':Role')->find($models->getRole())->getName(); ?></td>
+                    <td align="left"><?php echo $user->getUserRole($models->getRole())?></td>
                     <td align="left">
                         <?php $result = $readersTicket->getIdUser($models->getIdUser());
-                        echo \App\models\ReadersTicketModel::$position[$result->getIdPosition()];?>
+                        echo $readersTicket->getPositionId($result->getIdPosition());?>
                     </td>
-                    <td align="left"><?php echo \App\models\UserModels::$status[$models->getActive()]; ?></td>
+                    <td align="left"><?php echo $readersTicket->getUserStatus($models->getActive())?></td>
                     <td>
                         <a href="/user/view?id=<?php echo $models->getIdUser(); ?>"" class="btn btn-outline-info
                         btn-sm"><i class="bi bi-eye"></i></a>

@@ -7,7 +7,7 @@ use App\core\View;
 use App\models\AcademicDegreeModel;
 use App\models\AcademicTitleModel;
 use App\models\ConnectAcademicInfo;
-use App\models\ConnectAcadenicInfoModel;
+use App\models\ConnectAcademicInfoModel;
 use App\models\DivisionModel;
 use App\models\GroupModel;
 use App\models\ReadersTicket;
@@ -50,7 +50,8 @@ class UserController
         $model = [
             'model' => $resultUser,
             'role' => $resultRole,
-            'readersTicket' => $readersTicket
+            'readersTicket' => $readersTicket,
+            'user' => $user
         ];
 
         if ($this->access->getRole('Администратор')) {
@@ -70,7 +71,7 @@ class UserController
         $role = new RoleModel();
         $user = new UserModels();
         $readersTicket = new ReadersTicketModel();
-        $academicInfo = new ConnectAcadenicInfoModel();
+        $academicInfo = new ConnectAcademicInfoModel();
 
         $resultUser = $user->getOne();
         $resultRole = $role->getAll();
@@ -81,7 +82,10 @@ class UserController
             'model' => $resultUser,
             'role' => $resultRole,
             'readersTicket' => $resultReadersTicket,
-            'resultAcademicInfo' => $resultAcademicInfo
+            'resultAcademicInfo' => $resultAcademicInfo,
+            'user' => $user,
+            'readersTicketModel' => $readersTicket,
+            'academicInfo' => $academicInfo
         ];
 
         if ($this->access->getRole('Администратор')) {
@@ -117,7 +121,8 @@ class UserController
             'division' => $resultDivision,
             'group' => $resultGroup,
             'academicDegree' => $resultAcademicDegree,
-            'academicTitle' => $resultAcademicTitle
+            'academicTitle' => $resultAcademicTitle,
+            'readersTicketModel' => $readersTicketModel
         ];
         if ($this->access->getRole('Администратор')) {
             if ($_POST) {
@@ -157,14 +162,15 @@ class UserController
                 $classDivision = $this->entityManager->getRepository(':Division')->find($_POST['division']);
                 $readersTicket->setIdDivisionConnect($classDivision);
 
-                $this->entityManager->persist($readersTicket);
-                $this->entityManager->flush();
 /////////////////////////////Создание информации о студенте (курс, группа)///////////////////////////
                 if (!empty($_POST['group'])) {
                     $readersTicket->setIdCourse($_POST['course']);
                     $classGroup = $this->entityManager->getRepository(':Group')->find($_POST['group']);
                     $readersTicket->setIdGroupConnect($classGroup);
                 }
+                $this->entityManager->persist($readersTicket);
+                $this->entityManager->flush();
+
                 View::redirect('/user/index');
             }
             View::render('Добавление пользователя', 'user/create.php', $model);
@@ -183,7 +189,7 @@ class UserController
         $readersTicketModel = new ReadersTicketModel();
         $divisionModel = new DivisionModel();
         $groupModel = new GroupModel();
-        $academicInfoModel = new ConnectAcadenicInfoModel();
+        $academicInfoModel = new ConnectAcademicInfoModel();
         $academicDegreeModel = new AcademicDegreeModel();
         $academicTitleModel = new AcademicTitleModel();
 
@@ -204,7 +210,9 @@ class UserController
             'group' => $resultGroup,
             'academicDegree' => $academicDegree,
             'academicTitle' => $academicTitle,
-            'resultAcademicInfo' => $resultAcademicInfo
+            'resultAcademicInfo' => $resultAcademicInfo,
+            'readersTicketModel' => $readersTicketModel,
+            'roleModel' => $roleModel
         ];
         if ($this->access->getRole('Администратор')) {
             if ($_POST) {

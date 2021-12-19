@@ -5,9 +5,18 @@ namespace App\models;
 use App\config\DB_connect;
 use Exception;
 
+/**
+ * Проверка доступа на основе роли пользователя
+ */
 class Access
 {
+    private $entityManager; //создание entityManager (Doctrine);
 
+    function __construct()
+    {
+        $entityManagerClass = new DB_connect();
+        $this->entityManager = $entityManagerClass->connect();
+    }
     /**
      * @param $role
      * @return bool
@@ -15,31 +24,13 @@ class Access
      */
     public function getRole($role)
     {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
         if (!empty($_SESSION['id_user'])) {
 
             $user = new UserModels();
-            $id = $_SESSION['id_user'];
-            $user_model = $user->getIdUser($id);
+            $user_model = $user->getIdUser($_SESSION['id_user']);
 
-            /** @var object $entityManager */
-            $user_role = $entityManager->getRepository(':Role')->find($user_model->getRole())->getName();
-            if ($user_role == $role)
-                return true;
-        }
-    }
-
-    /**
-     * @return mixed|object|void|null
-     */
-    public function getUser()
-    {
-        if (!empty($_SESSION['id_user'])) {
-
-            $user = new UserModels();
-            $id = $_SESSION['id_user'];
-            return $user->getIdUser($id);
+            $user_role = $this->entityManager->getRepository(':Role')->find($user_model->getRole())->getName();
+            return $user_role == $role ?  true : false;
         }
     }
 }
