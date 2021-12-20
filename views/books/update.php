@@ -41,10 +41,5 @@ Breadcrumb::add_current('/books/create', 'Изменение книги');
         <input type="date" class="form-control" id="date_publication" value="<?php echo $model->getDatePublication() ?>" name="date_publication">
     </div>
     <br>
-    <div class="form-group">
-        <label for="date_receipt">Дата получения:</label>
-        <input type="date" class="form-control" id="date_receipt" value="<?php echo $model->getDateReceipt() ?>" name="date_receipt">
-    </div>
-    <br>
     <button type="submit" class="btn btn-outline-success">Сохранить</button>
 </form>

@@ -1,3 +1,10 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+
 <?php
 
 use App\core\Breadcrumb;
@@ -9,7 +16,8 @@ Breadcrumb::add_current('/readers-ticket/update', 'Блокировка чита
 /** @var string $readersTicketModel */
 ?>
 <script>
-    var filterDay = $('#filterDay input:radio:checked').val()
+    var filterDay = $('#filterDay input:radio:checked').val();
+    $('select').selectpicker();
 </script>
 <style>
     .date {
@@ -42,8 +50,14 @@ Breadcrumb::add_current('/readers-ticket/update', 'Блокировка чита
             <label for="date_receipt">Дата разблокировки:</label>
             <input type="date" class="form-control" id="date_receipt" value="<?php echo $model->getDateUnblocking() ?>"
                    name="date_unblocking">
-        </div>
         <br>
+        <label for="date_receipt">Нарушения:</label>
+        <select class="selectpicker form-control" multiple data-live-search="true" title="Выберите нарушение" id="violation" name="violation[]">
+            <?php foreach ($violationModel as $violationModels) : ?>
+                <option <?php if (!empty($resultConnectViolation)) foreach ($resultConnectViolation as $resultConnectViolations){ echo  $violationModels->getIdViolation() == $resultConnectViolations->getIdViolation() ? 'selected' : ''; }?> value="<?php echo $violationModels->getIdViolation(); ?>"><?php echo $violationModels->getNameViolations() . ' ('.$violationModels->getPriceViolations().') ₽'; ?></option>
+            <?php endforeach; ?>
+        </select>
+        </div>
     </div>
     <button type="submit" class="btn btn-outline-success">Сохранить</button>
 </form>

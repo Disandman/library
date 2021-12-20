@@ -22,7 +22,6 @@ $user = $modelUser->getUser();
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <script type="text/javascript" src="/js/bootstrap.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 </head>
 <body>
 <header>

@@ -42,11 +42,35 @@ class ConnectViolation
     protected $id_connect_violation;
 //////////////////////////////////////////////////////////////////////////////////////
     /**
+     * @return mixed
+     */
+    public function getIdConnectViolations()
+    {
+        return $this->id_connect_violations;
+    }
+
+    /**
      * @param mixed $id_connect_violations
      */
     public function setIdConnectViolations($id_connect_violations): void
     {
         $this->id_connect_violations = $id_connect_violations;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdViolation()
+    {
+        return $this->id_violation;
+    }
+
+    /**
+     * @param mixed $id_violation
+     */
+    public function setIdViolation($id_violation): void
+    {
+        $this->id_violation = $id_violation;
     }
 
     /**
@@ -68,16 +92,18 @@ class ConnectViolation
     /**
      * @return object
      */
-    public function getIdViolations(): object
+    public function getIdConnectViolation(): object
     {
-        return $this->id_violations;
+        return $this->id_connect_violation;
     }
 
     /**
-     * @param object $id_violations
+     * @param object $id_connect_violation
      */
-    public function setIdViolations(object $id_violations): void
+    public function setIdConnectViolation(object $id_connect_violation): void
     {
-        $this->id_violations = $id_violations;
+        $this->id_connect_violation = $id_connect_violation;
     }
+
+
 }

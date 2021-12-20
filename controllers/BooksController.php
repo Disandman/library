@@ -80,7 +80,7 @@ class BooksController
             $book->setDescription($_POST['description']);
             $book->setPriceBooks($_POST['price']);
             $book->setDatePublication($_POST['date_publication']);
-            $book->setDateReceipt($_POST['date_receipt']);
+            $book->setDateReceipt(date('Y-m-d'));//дата поступления(текущая дата)
 
             $this->entityManager->persist($book);
             $this->entityManager->flush();//запись в базу
