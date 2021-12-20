@@ -2,10 +2,10 @@
 
 namespace App\models;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Сущность "Подразделения" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="division")
  */
@@ -34,7 +34,7 @@ class Division
      * )
      */
     protected $readers_ticket_division;
-
+//////////////////////////////////////////////////////////////////////////////////////
     /**
      * @return mixed
      */
@@ -82,5 +82,4 @@ class Division
     {
         $this->readers_ticket_division = $readers_ticket_division;
     }
-
 }

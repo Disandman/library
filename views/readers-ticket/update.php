@@ -1,45 +1,49 @@
-<div class="bg-light">
-    <?php
+<?php
 
-    use App\config\DB_connect;
+use App\core\Breadcrumb;
 
-    \App\core\Breadcrumb::add('/readers-ticket/index', ' Читатели');
-    \App\core\Breadcrumb::add_current('/readers-ticket/update', 'Блокировка читателя');
-    echo \App\core\Breadcrumb::out();
+Breadcrumb::add('/readers-ticket/index', 'Читатели');
+Breadcrumb::add_current('/readers-ticket/update', 'Блокировка читателя');
 
-    /** @var array $model */
-    $entityManagerClass = new DB_connect();
-    $entityManager = $entityManagerClass->connect();
-    ?>
-</div>
+/** @var array $model */
+/** @var string $readersTicketModel */
+?>
 <script>
     var filterDay = $('#filterDay input:radio:checked').val()
 </script>
 <style>
-    .date { display: none; }
-    #danger-outlined:checked  ~ .show-on  { display: block; }
+    .date {
+        display: none;
+    }
+
+    #danger-outlined:checked ~ .show-on {
+        display: block;
+    }
 </style>
 
-<div class="col">
-    <h1>Блокировка: <?php echo $entityManager->getRepository(':User')->find($model->getIdUser())->getFullName(); ?></h1>
+<div class="bg-light">
+    <?php echo Breadcrumb::out(); ?>
 </div>
 
+<div class="col">
+    <h1>Блокировка: <?php echo $readersTicketModel->getUserName($model->getIdUser()) ?></h1>
+</div>
 <form method="post" action="/readers-ticket/block?id=<?php echo $model->getIdReadersTicket(); ?>">
-
-
-    <input type="radio" class="btn-check" name="block" value="1" id="success-outlined" autocomplete="off" <?php echo $model->getBlock() == 1 ? 'checked' : ''?>>
+    <input type="radio" class="btn-check" name="block" value="1" id="success-outlined"
+           autocomplete="off" <?php echo $model->getBlock() == 1 ? 'checked' : '' ?>>
     <label class="btn btn-outline-info" for="success-outlined">Активен</label>
-
-    <input type="radio" class="btn-check" name="block" value="0" id="danger-outlined" autocomplete="off" <?php echo $model->getBlock() == 0 ? 'checked' : ''?>>
+    <input type="radio" class="btn-check" name="block" value="0" id="danger-outlined"
+           autocomplete="off" <?php echo $model->getBlock() == 0 ? 'checked' : '' ?>>
     <label class="btn btn-outline-danger" for="danger-outlined">Заблокирован</label>
     <br>
     <br>
     <div class="date show-on">
-    <div class="form-group">
-        <label for="date_receipt">Дата разблокировки:</label>
-        <input type="date" class="form-control" id="date_receipt" value="<?php echo $model->getDateUnblocking() ?>" name="date_unblocking">
-    </div>
-    <br>
+        <div class="form-group">
+            <label for="date_receipt">Дата разблокировки:</label>
+            <input type="date" class="form-control" id="date_receipt" value="<?php echo $model->getDateUnblocking() ?>"
+                   name="date_unblocking">
+        </div>
+        <br>
     </div>
     <button type="submit" class="btn btn-outline-success">Сохранить</button>
 </form>

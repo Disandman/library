@@ -1,16 +1,15 @@
+<?php
+
+use App\core\Breadcrumb;
+
+Breadcrumb::add_current('/violation/index', 'Нарушения');
+
+/** @var array $model */
+?>
+
 <div class="bg-light">
-    <?php
-
-    use App\config\DB_connect;
-
-    \App\core\Breadcrumb::add_current('/group/index', 'Нарушения');
-    echo \App\core\Breadcrumb::out();
-    $entityManagerClass = new DB_connect();
-    $entityManager = $entityManagerClass->connect();
-    /** @var array $model */
-    ?>
+    <?php echo Breadcrumb::out(); ?>
 </div>
-
 <br>
 <table class="table table-hover">
     <thead class="thead-dark">
@@ -22,7 +21,6 @@
     </thead>
     <?php foreach ($model as $models) : ?>
         <tr>
-
             <td align="left"><?php echo $models->getNameViolations(); ?></td>
             <td align="left"><?php echo $models->getPriceViolations(); ?></td>
             <td>

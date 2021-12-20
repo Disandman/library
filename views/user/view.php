@@ -1,21 +1,20 @@
+<?php
+
+use App\core\Breadcrumb;
+
+Breadcrumb::add('/user/index', 'Пользователи');
+Breadcrumb::add_current('/user/view', 'Просмотр пользователя');
+
+/** @var array $model */
+/** @var array $user */
+/** @var array $readersTicketModel */
+/** @var array $readersTicket */
+/** @var array $academicInfo */
+/** @var object $resultAcademicInfo */
+?>
+
 <div class="bg-light">
-    <?php
-    use App\config\DB_connect;
-    use App\models\ReadersTicketModel;
-
-    /** @var array $model */
-    /** @var array $readersTicket */
-    /** @var object $entityManager */
-    /** @var object $resultAcademicInfo */
-
-    \App\core\Breadcrumb::add('/user/index', 'Пользователи');
-    \App\core\Breadcrumb::add_current('/user/view', 'Просмотр пользователя');
-    echo \App\core\Breadcrumb::out();
-
-    $entityManagerClass = new DB_connect();
-    $entityManager = $entityManagerClass->connect();
-
-    ?>
+    <?php echo Breadcrumb::out(); ?>
 </div>
 
 <div class="card">
@@ -35,26 +34,26 @@
         <tr>
             <th scope="col">Роль</th>
             <td align="left">
-                <?php echo $entityManager->getRepository(':Role')->find($model->getRole())->getName(); ?>
+                <?php echo $user->getUserRole($model->getRole())?>
             </td>
         </tr>
         <tr>
             <th scope="col">Подразделение</th>
             <td align="left">
-                <?php echo $readersTicket->getIdDivision() !== null ? $entityManager->getRepository(':Division')->find($readersTicket->getIdDivision())->getDivision() : '-'; ?>
+                <?php echo $readersTicket->getIdDivision() !== null ? $readersTicketModel->getUserDivision($readersTicket->getIdDivision()) : '-'; ?>
             </td>
         </tr>
         <tr>
             <th scope="col">Должность</th>
             <td align="left">
-                <?php echo \App\models\ReadersTicketModel::$position[$readersTicket->getIdPosition()]; ?>
+                <?php echo $readersTicketModel->getPositionId($readersTicket->getIdPosition()); ?>
             </td>
         </tr>
         <?php if ($resultAcademicInfo !== null) : ?>
             <tr>
                 <th scope="col">Научная степень</th>
                 <td align="left">
-                    <?php echo $entityManager->getRepository(':AcademicTitle')->find($resultAcademicInfo->getIdAcademicTitle())->getName() ?>
+                    <?php echo $academicInfo->getAcademicTitle($resultAcademicInfo->getIdAcademicTitle())?>
                 </td>
             </tr>
         <?php endif; ?>
@@ -62,7 +61,7 @@
             <tr>
                 <th scope="col">Научное звание</th>
                 <td align="left">
-                    <?php echo $entityManager->getRepository(':AcademicDegree')->find($resultAcademicInfo->getIdAcademicDegree())->getName() ?>
+                    <?php echo $academicInfo->getAcademicDegree($resultAcademicInfo->getIdAcademicDegree())?>
                 </td>
             </tr>
         <?php endif; ?>
@@ -70,7 +69,7 @@
             <tr>
                 <th scope="col">Курс</th>
                 <td align="left">
-                    <?php echo ReadersTicketModel::$course[$readersTicket->getIdCourse()] ?>
+                    <?php echo $readersTicketModel->getUserCourse($readersTicket->getIdCourse())?>
                 </td>
             </tr>
         <?php endif; ?>
@@ -78,13 +77,13 @@
             <tr>
                 <th scope="col">Группа</th>
                 <td align="left">
-                    <?php echo $entityManager->getRepository(':Group')->find($readersTicket->getIdGroup())->getGroupName() ?>
+                    <?php echo$readersTicketModel->getUserGroup($readersTicket->getIdGroup())?>
                 </td>
             </tr>
         <?php endif; ?>
         <tr>
             <th scope="col">Статус</th>
-            <td align="left"><?php echo \App\models\UserModels::$status[$model->getActive()]; ?></td>
+            <td align="left"><?php echo $readersTicketModel->getUserStatus($model->getActive())?></td>
         </tr>
     </table>
     <div class="container text-center">

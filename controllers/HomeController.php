@@ -24,6 +24,6 @@ class HomeController
      */
     public function indexInit()
     {
-        View::render('Главная страница', 'site/init.php');
+        View::render('Инициализация приложения', 'site/init.php');
     }
 }

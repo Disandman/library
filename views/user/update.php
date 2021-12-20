@@ -1,26 +1,23 @@
-<div class="bg-light">
-    <?php
+<?php
 
-    use App\config\DB_connect;
-    use App\models\ReadersTicketModel;
+use App\core\Breadcrumb;
 
-    \App\core\Breadcrumb::add('/user/index', 'Пользователи');
-    \App\core\Breadcrumb::add_current('/user/create', 'Изменение пользователя');
-    echo \App\core\Breadcrumb::out();
+Breadcrumb::add('/user/index', 'Пользователи');
+Breadcrumb::add_current('/user/create', 'Изменение пользователя');
 
-    $entityManagerClass = new DB_connect();
-    $entityManager = $entityManagerClass->connect();
+/** @var array $model */
+/** @var array $role */
+/** @var array $division */
+/** @var array $readersTicket */
+/** @var array $group */
+/** @var array $academicTitle */
+/** @var array $academicDegree */
+/** @var array $resultAcademicInfo */
+/** @var array $readersTicketModel */
+/** @var array $roleModel */
 
-    /** @var array $model */
-    /** @var array $role */
-    /** @var array $division */
-    /** @var array $readersTicket */
-    /** @var array $group */
-    /** @var array $academicTitle */
-    /** @var array $academicDegree */
-    /** @var array $resultAcademicInfo */
-    ?>
-</div>
+?>
+
 <script>
     $(document).ready(function () {
         $('#position').on('change', function () {
@@ -30,6 +27,10 @@
         });
     });
 </script>
+<div class="bg-light">
+    <?php echo Breadcrumb::out(); ?>
+</div>
+
 <div class="col">
     <h1>Изменение: <?php echo $model->getLogin() ?></h1>
 </div>
@@ -53,7 +54,7 @@
     <div class="form-group">
         <label for="position">Должность</label>
         <select class="form-control" id="position" name="position">
-            <?php foreach (ReadersTicketModel::$position as $key =>$positions):?>
+            <?php foreach ($readersTicketModel->getPosition() as $key =>$positions):?>
                 <option value="" disabled hidden>Выберите должность...</option>
             <option <?php echo $key == $readersTicket->getIdPosition() ? 'selected' : '';?> value="<?php echo $key;?>"><?php echo $positions;?></option>
             <?php endforeach;?>
@@ -87,7 +88,7 @@
     <div class="form-group">
         <label for="course">Курс</label>
         <select class="form-control" id="course" name="course">
-            <?php  foreach (\App\models\ReadersTicketModel::$course as $key =>$courses):?>
+            <?php  foreach ($readersTicketModel->getCource() as $key =>$courses):?>
                     <option value="" disabled <?php if (empty($readersTicket->getIdCourse())) echo 'selected'?> hidden>Выберите курс...</option>
                     <option <?php if (!empty($readersTicket->getIdCourse())) echo $key == $readersTicket->getIdCourse() ? 'selected' : '';?> value="<?php echo $key;?>"><?php echo $courses;?></option>
                 <?php endforeach;?>
@@ -118,7 +119,7 @@
     <div class="form-group">
         <label for="exampleFormControlStatus">Статус</label>
         <select class="form-control" id="exampleFormControlStatus" name="status">
-            <?php foreach (\App\models\UserModels::$status as $key => $statuses){ ?>
+            <?php foreach ($readersTicketModel->getStatus() as $key => $statuses){ ?>
             <option value="<?php echo $key;?>"><?php echo $statuses;}?></option>
         </select>
     </div>
@@ -128,7 +129,7 @@
         <select class="form-control" id="exampleFormControlRole" name="role">
 
             <?php foreach ($role as $roles) : ?>
-                <option <?php echo  $roles->getIdrole() == $entityManager->getRepository(':Role')->find($model->getRole())->getIdRole() ? 'selected' : ''; ?> value="<?php echo $roles->getIdRole(); ?>"><?php echo $roles->getName(); ?></option>
+                <option <?php echo  $roles->getIdrole() == $roleModel->getUserRoleId($model->getRole()) ? 'selected' : ''; ?> value="<?php echo $roles->getIdRole(); ?>"><?php echo $roles->getName(); ?></option>
             <?php endforeach; ?>
 
         </select>

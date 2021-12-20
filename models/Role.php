@@ -2,10 +2,10 @@
 
 namespace App\models;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Сущность "Роли" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="role")
  */
@@ -34,6 +34,7 @@ class Role
      * )
      */
     protected $role;
+//////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * @return mixed
@@ -82,6 +83,4 @@ class Role
     {
         $this->role = $role;
     }
-
-
 }

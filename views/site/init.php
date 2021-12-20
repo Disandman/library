@@ -85,7 +85,6 @@
     }
 </style>
 
-
 <div class="wrap">
     <button onclick="location.href='/init/init'" class="button">Инициализировать</button>
 </div>

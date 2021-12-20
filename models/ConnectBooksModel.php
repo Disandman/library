@@ -9,6 +9,21 @@ use App\config\DB_connect;
  */
 class ConnectBooksModel
 {
+    const FROM_THE_READER = 1;
+    const ORDERED = 0;
+    const LOST = 2;
+
+    /**
+     * Статус книги (используется при отображении всех книг)
+     * @var string[]
+     */
+    public static array $status_books= [
+        self::FROM_THE_READER => 'У читателя',
+        self::ORDERED => 'Заказана',
+        self::LOST => 'Потеряна',
+    ];
+
+
     private $access; //проверка доступа на основе роли
     private $entityManager; //создание entityManager (Doctrine);
 
@@ -28,6 +43,49 @@ class ConnectBooksModel
         $connect_books_model = $this->entityManager->getRepository(':ConnectBooks');
         return $connect_books_model->findAll();
     }
+
+    /**
+     * Поиск пользователей у кого книги на руках
+     * @return array|object[]
+     */
+    public function getBooksUser($id)
+    {
+        $query = $this->entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');
+        $query->where('p.id_books =' . $id);//книги
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Поиск пользователей у кого книги на руках
+     * @return array|object[]
+     */
+    public function getBooksUserStatus($id_user,$id_books)
+    {
+        $user_model = $this->entityManager->getRepository(':ConnectBooks');
+        $users = $user_model->findOneBy(['id_user' => $id_user,'id_books' => $id_books]);
+        return $users->getStatus();
+    }
+    /**
+     * Вывод имени пользователя
+     * @return array|object[]
+     */
+    public function getUserFullName($id)
+    {
+        $user_model = $this->entityManager->getRepository(':User');
+        $users = $user_model->findOneBy(['id_user' => $id]);
+        return $users->getFullName();
+    }
+
+    /**
+     * Используется для поиска Статуса
+     * @param $id
+     * @return mixed|object|null
+     */
+    public function getStatusBooks($status)
+    {
+        return self::$status_books[$status];
+    }
+
 
     /**
      * Поиск одной записи (уникальный идентификатор передается через GET запрос) в базе по сущности "КНИНИ ПОЛЬЗОВАТЕЛЕЙ"
@@ -177,5 +235,4 @@ class ConnectBooksModel
         $findBooks = $userRepository->findOneBy(['id_books' => $id]);
         return $findBooks->getPriceBooks();
     }
-
 }

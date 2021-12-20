@@ -5,8 +5,6 @@ use App\core\Breadcrumb;
 Breadcrumb::add('/books/index', 'Книги');
 Breadcrumb::add_current('/books/create', 'Добавление книги');
 
-/** @var array $model */
-/** @var array $role */
 ?>
 
 <div class="bg-light">

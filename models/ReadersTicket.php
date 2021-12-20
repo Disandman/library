@@ -2,10 +2,10 @@
 
 namespace App\models;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Сущность "ЧИТАТЕЛЬСКИЕ БИЛЕТЫ" (данная сущность является связующей между базой и всем остальным)
  * @ORM\Entity
  * @ORM\Table(name="readers_ticket")
  */
@@ -68,7 +68,6 @@ class ReadersTicket
      */
     protected $id_division_connect;
 
-
     /**
      * @var object
      *
@@ -83,7 +82,7 @@ class ReadersTicket
      * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user",onDelete="CASCADE")
      */
     private $user_connect;
-
+/////////////////////////////////////////////////////////////////////////////////////
     /**
      * @return mixed
      */
@@ -275,7 +274,4 @@ class ReadersTicket
     {
         $this->user_connect = $user_connect;
     }
-
-
-
 }

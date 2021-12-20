@@ -1,24 +1,23 @@
+<?php
+
+use App\core\Breadcrumb;
+
+Breadcrumb::add('/user/index', 'Пользователи');
+Breadcrumb::add_current('/user/create', 'Добавление пользователя');
+
+/** @var array $model */
+/** @var array $role */
+/** @var array $division */
+/** @var array $group */
+/** @var array $academicDegree */
+/** @var array $academicTitle */
+/** @var array $readersTicketModel */
+?>
+
 <div class="bg-light">
-    <?php
-
-    use App\models\ReadersTicketModel;
-
-    \App\core\Breadcrumb::add('/user/index', 'Пользователи');
-    \App\core\Breadcrumb::add_current('/user/create', 'Добавление пользователя');
-    echo \App\core\Breadcrumb::out();
-
-    /** @var array $model */
-    /** @var array $role */
-    /** @var array $division */
-    /** @var array $group */
-    /** @var array $academicDegree */
-    /** @var array $academicTitle */
-
-    ?>
+    <?php echo Breadcrumb::out(); ?>
 </div>
-<div class="col">
-    <h1>Создание пользователя</h1>
-</div>
+
 <script>
     $(document).ready(function () {
         $('#position').on('change', function () {
@@ -29,6 +28,9 @@
     });
 </script>
 
+<div class="col">
+    <h1>Создание пользователя</h1>
+</div>
 <form method="post" action="/user/create">
     <div class="form-group">
         <label for="full_name">ФИО</label>
@@ -49,13 +51,12 @@
     <div class="form-group">
         <label for="position">Должность</label>
         <select class="form-control" id="position" name="position" required>
-            <?php foreach (ReadersTicketModel::$position as $key => $position){ ?>
+            <?php foreach ($readersTicketModel->getPosition() as $key => $position){ ?>
             <option disabled selected hidden>Выберите должность...</option>
             <option value="<?php echo $key; ?>"><?php echo $position;
                 } ?></option>
         </select>
     </div>
-
     <div id="2" class="choice" style="display:none;">
         <br>
         <div class="form-group">
@@ -83,7 +84,7 @@
         <div class="form-group">
             <label for="course">Курс</label>
             <select class="form-control" id="course" name="course">
-                <?php foreach (ReadersTicketModel::$course as $key => $courses){ ?>
+                <?php foreach ($readersTicketModel->getCource() as $key => $courses){ ?>
                 <option value="" disabled selected hidden>Выберите курс...</option>
                 <option value="<?php echo $key; ?>"><?php echo $courses;
                     } ?></option>
@@ -114,7 +115,7 @@
     <div class="form-group">
         <label for="exampleFormControlStatus">Статус</label>
         <select class="form-control" id="status" name="status">
-            <?php foreach (\App\models\UserModels::$status as $key => $statuses){ ?>
+            <?php foreach ($readersTicketModel->getStatus() as $key => $statuses){ ?>
             <option value="<?php echo $key; ?>"><?php echo $statuses;
                 } ?></option>
         </select>
@@ -126,7 +127,6 @@
             <?php foreach ($role as $roles) : ?>
                 <option value="<?php echo $roles->getIdRole(); ?>"><?php echo $roles->getName(); ?></option>
             <?php endforeach; ?>
-
         </select>
     </div>
     <br>

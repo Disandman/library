@@ -4,33 +4,36 @@ namespace App\models;
 
 use App\config\DB_connect;
 
+/**
+ * Данный клас предназначен для поиска через сущность Division некоторых элементов в базе (подразделений)
+ */
 class DivisionModel
 {
-    /**
-     * @return array|object[]
-     */
-    public function getAll()
+    private $entityManager; //создание entityManager (Doctrine);
+
+    function __construct()
     {
         $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $divisionRepository = $entityManager->getRepository(':Division');
-        $division = $divisionRepository->findAll();
-        return $division;
+        $this->entityManager = $entityManagerClass->connect();
     }
 
     /**
-     * @return mixed|object|null
+     * Поиск всех записей в базе по сущности "КНИГИ"
+     * @return array
+     */
+    public function getAll(): array
+    {
+        $divisionRepository = $this->entityManager->getRepository(':Division');
+        return $divisionRepository->findAll();
+    }
+
+    /**
+     * Поиск одной записи (уникальный идентификатор передается через GET запрос) в базе по сущности "ПОДРАЗДЕЛЕНИЯ"
+     * @return mixed
      */
     public function getOne()
     {
-        $entityManagerClass = new DB_connect();
-        $entityManager = $entityManagerClass->connect();
-
-        $id_division = $_GET['id'];
-        $divisionRepository = $entityManager->getRepository(':Division');
-        $division = $divisionRepository->findOneBy(['id_division' => $id_division]);
-        return $division;
+        $divisionRepository = $this->entityManager->getRepository(':Division');
+        return $divisionRepository->findOneBy(['id_division' => $_GET['id']]);
     }
-
 }

@@ -2,7 +2,7 @@
 
 use App\core\Breadcrumb;
 
-Breadcrumb::add_current('/user/index', 'Книги');
+Breadcrumb::add_current('/books/index', 'Книги');
 
 /** @var array $model */
 /** @var array $access */
@@ -21,15 +21,22 @@ Breadcrumb::add_current('/user/index', 'Книги');
             <th scope="col">Название</th>
             <th scope="col">Автор</th>
             <th scope="col">Дата публикации</th>
+            <th scope="col">У читателей</th>
             <th width="120"></th>
         </tr>
         </thead>
         <?php foreach ($model as $models) : ?>
             <tr>
-                <td align="left"><a href="/books/view?id=<?php echo $models->getIdBooks() ?>"><?php echo $models->getNameBooks(); ?></a>
+                <td align="left"><a
+                            href="/books/view?id=<?php echo $models->getIdBooks() ?>"><?php echo $models->getNameBooks(); ?></a>
                 </td>
                 <td align="left"><?php echo $models->getAuthor(); ?></td>
                 <td align="left"><?php echo $models->getDatePublication(); ?></td>
+                <td align="left"><?php
+                    foreach ($connectBooks->getBooksUser($models->getIdBooks()) as $user) {
+                        echo '<a href="/books-user/index?id=' . $user->getIdUser() . '">' . $connectBooks->getUserFullName($user->getIdUser()) . '<span class="badge bg-light text-dark">'.$connectBooks->getStatusBooks($connectBooks->getBooksUserStatus($user->getIdUser(),$models->getIdBooks())).'</span></a><br>';
+                    } ?>
+                </td>
                 <td>
                     <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) { ?>
                         <a href="/books/view?id=<?php echo $models->getIdBooks(); ?>"" class="btn btn-outline-info btn-sm">
