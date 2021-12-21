@@ -1,6 +1,10 @@
 <?php
 
 use App\core\Breadcrumb;
+use App\core\View;
+use App\models\ConnectBooksModel;
+use App\models\ConnectViolationModel;
+use App\models\ReadersTicketModel;
 
 Breadcrumb::add_current('/readers-ticket/index', 'Читатели');
 
@@ -28,26 +32,24 @@ Breadcrumb::add_current('/readers-ticket/index', 'Читатели');
         </tr>
         </thead>
         <?php foreach ($model as $models) : ?>
-            <tr>
-                <td align="left">
-                    <a href="/user/view?id=<?php echo $models->getIdUser() ?>"><?php echo $readersTicket->getUserName($models->getIdUser())?></a>
-                </td>
-                <td align="left"><?php echo !empty($models->getIdDivision()) ?  $readersTicket->getUserDivision($models->getIdDivision()) : ''?></td>
-                <td align="left"><?php echo !empty($models->getIdCourse()) ? $readersTicket->getUserCourse($models->getIdCourse()) : ''?></td>
-                <td align="left"><?php echo !empty($models->getIdGroup()) ? $readersTicket->getUserGroup($models->getIdGroup()) : ''?></td>
-                <td align="left"><?php echo $readersTicket->getUserStatus($models->getBlock())?></td>
-                <td align="left"><?php echo $models->getDateBlocking(); ?></td>
-                <td align="left"><?php echo $models->getDateUnblocking(); ?></td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a href="/books-user/index?id=<?php echo $readersTicket->getUserId($models->getIdUser())?>"
-                           class="btn btn-outline-primary btn-sm">Книги читателя</a>
-                        <a href="/readers-ticket/block?id=<?php echo $models->getIdReadersTicket(); ?>"
-                        <?php echo $models->getBlock() == 0 ? 'class="btn btn-danger btn-sm"><i class="bi bi-lock"></i>' : 'class="btn btn-success btn-sm"><i class="bi bi-unlock"></i>'; ?>
-                        </a>
-                    </div>
-                </td>
-            </tr>
+        <tr>
+            <td align="left">
+                <a href="/user/view?id=<?php echo $models->getIdUser() ?>"><?php echo $readersTicket->getUserName($models->getIdUser()) ?></a>
+            </td>
+            <td align="left"><?php echo !empty($models->getIdDivision()) ? $readersTicket->getUserDivision($models->getIdDivision()) : '' ?></td>
+            <td align="left"><?php echo !empty($models->getIdCourse()) ? $readersTicket->getUserCourse($models->getIdCourse()) : '' ?></td>
+            <td align="left"><?php echo !empty($models->getIdGroup()) ? $readersTicket->getUserGroup($models->getIdGroup()) : '' ?></td>
+            <td align="left"><?php echo $models->getBlock() == 0 ? '<a href="/books-user/blockAdmin?id='.$models->getIdUser().'" class="btn btn-outline-warning btn-sm">Заблоктрован</button>' : $readersTicket->getUserStatus($models->getBlock())?></td>
+            <td align="left"><?php echo $models->getDateBlocking(); ?></td>
+            <td align="left"><?php echo $models->getDateUnblocking(); ?></td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a href="/books-user/index?id=<?php echo $readersTicket->getUserId($models->getIdUser()) ?>"
+                       class="btn btn-outline-primary btn-sm">Книги читателя</a>
+                    <a href="/readers-ticket/block?id=<?php echo $models->getIdReadersTicket(); ?>"
+                    <?php echo $models->getBlock() == 0 ? 'class="btn btn-danger btn-sm"><i class="bi bi-lock"></i> </a>' : 'class="btn btn-success btn-sm"><i class="bi bi-unlock"></i> </a>'; ?>
+                </div>
+            </td>
+        </tr>
         <?php endforeach; ?>
     </table>
-

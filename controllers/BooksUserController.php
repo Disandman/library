@@ -7,6 +7,7 @@ use App\core\View;
 use App\models\Access;
 use App\models\ConnectBooks;
 use App\models\ConnectBooksModel;
+use App\models\ConnectViolationModel;
 use App\models\ReadersTicketModel;
 
 
@@ -34,28 +35,51 @@ class BooksUserController
     {
         $booksModel = new ConnectBooksModel();
         $readersTicketModel = new ReadersTicketModel();
+        $connectViolation = new ConnectViolationModel();
 
         $resultMyBooks = $booksModel->getMyBooks();//книги выданные
         $resultBooksOrdered = $booksModel->getOrdered();//книги заказанные
         $resultLostBooks = $booksModel->getLost(); //пропавшие книги
         $readersTicket = $readersTicketModel->getUserBlock();//проверка на блокировку абонемента
+        $resultConnectViolation = $connectViolation->getBlock();
 
         $model = [
             'myBook' => $resultMyBooks,
             'ordered' => $resultBooksOrdered,
             'lost' => $resultLostBooks,
             'access' => $this->access,
-            'booksModel' => $booksModel
+            'booksModel' => $booksModel,
+            'resultConnectViolation' => $resultConnectViolation,
+            'connectViolation' => $connectViolation
         ];
 
         if (!empty($readersTicket))//проверка (если абонемент заблокирован то выводить страницу блокировки если нет блокировки то выводить его книги)
             View::render('Мои книги', 'books-user/index.php', $model);
         else
-            View::render('Мои книги', 'books-user/block.php');
+            View::render('Мои книги', 'books-user/block.php', $model);
+    }
+
+    public function BlockAdmin()
+    {
+        $booksModel = new ConnectBooksModel();
+        $connectViolation = new ConnectViolationModel();
+
+        $resultLostBooks = $booksModel->getLost(); //пропавшие книги
+        $resultConnectViolation = $connectViolation->getBlock();
+
+        $model = [
+
+            'lost' => $resultLostBooks,
+            'booksModel' => $booksModel,
+            'resultConnectViolation' => $resultConnectViolation,
+            'connectViolation' => $connectViolation
+        ];
+
+            View::render('Мои книги', 'books-user/block.php', $model);
     }
 
 //    /**
-//     * Вывод книг читателя (администратору или сотруднику библиотеки)
+//     * Вывод всех книг (находятся у читателей либо утеряны но списаны)
 //     * @throws \Exception
 //     */
 //    public function indexWorker()

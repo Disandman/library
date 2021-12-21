@@ -62,7 +62,6 @@ class Routes
         $router->add('readers-ticket/index', ['controller' => 'ReadersTicketController', 'action' => 'index']);
         $router->add('readers-ticket/block', ['controller' => 'ReadersTicketController', 'action' => 'block']);
 
-
         $router->add('books-user/index', ['controller' => 'BooksUserController', 'action' => 'index']);
         $router->add('books-user/update', ['controller' => 'BooksUserController', 'action' => 'update']);
         $router->add('books-user/refusal', ['controller' => 'BooksUserController', 'action' => 'refusal']);
@@ -71,6 +70,7 @@ class Routes
         $router->add('books-user/issue', ['controller' => 'BooksUserController', 'action' => 'issue']);
         $router->add('books-user/add', ['controller' => 'BooksUserController', 'action' => 'add']);
         $router->add('books-user/lostRefusal', ['controller' => 'BooksUserController', 'action' => 'lostRefusal']);
+        $router->add('books-user/blockAdmin', ['controller' => 'BooksUserController', 'action' => 'blockAdmin']);
 
         $router->add('init/init', ['controller' => 'InitController', 'action' => 'init']);
 

@@ -235,4 +235,26 @@ class ConnectBooksModel
         $findBooks = $userRepository->findOneBy(['id_books' => $id]);
         return $findBooks->getPriceBooks();
     }
+
+    public function getLostBooksUser(){
+        $sumBooks = 0;
+        foreach ($this->getLost() as $losted) {
+            $books []= $this->getBooks($losted->getIdBooks()) . ' - ' . $this->getPriceBooks($losted->getIdBooks()) . ' ₽ <br>';
+            $sumBooks += $this->getPriceBooks($losted->getIdBooks());
+        }
+        return [$books,$sumBooks];
+    }
+
+    public function getViolationUser(){
+        $connectViolation = new ConnectViolationModel();
+        $resultConnectViolation = $connectViolation->getBlock();
+
+        $sumViolation = 0;
+        foreach ($resultConnectViolation as $resultConnectViolations) {
+            $violation [] =  $connectViolation->getViolationName($resultConnectViolations->getIdViolation()) . ' - ' . $connectViolation->getViolationPrice($resultConnectViolations->getIdViolation()) . ' ₽ <br>';
+            $sumViolation += $connectViolation->getViolationPrice($resultConnectViolations->getIdViolation());
+        }
+        return [$violation,$sumViolation];
+    }
+
 }

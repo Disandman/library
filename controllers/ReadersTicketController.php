@@ -4,6 +4,7 @@ namespace App\controllers;
 
 use App\config\DB_connect;
 use App\core\View;
+use App\models\ConnectBooksModel;
 use App\models\ConnectViolation;
 use App\models\ConnectViolationModel;
 use App\models\ReadersTicket;
@@ -33,11 +34,13 @@ class ReadersTicketController
     public function index()
     {
         $readersTicket = new ReadersTicketModel();
+        $booksModel = new ConnectBooksModel();
         $resultReadersTicket = $readersTicket->getAll();
 
         $model = [
             'model' => $resultReadersTicket,
-            'readersTicket' => $readersTicket
+            'readersTicket' => $readersTicket,
+            'booksModel' => $booksModel
         ];
 
         View::render('Читатели', 'readers-ticket/index.php', $model);
@@ -60,7 +63,6 @@ class ReadersTicketController
         $resultReadersTicket = $readersTicketModel->getOneView();
         $resultViolation = $violationModel->getAll();
         $resultConnectViolation = $connectViolationModel->getOne();
-        $readersTicket = $readersTicketModel->getOneView();
 
         $model = [
             'model' => $resultReadersTicket,
@@ -71,6 +73,7 @@ class ReadersTicketController
         ];
 
         if ($_POST) {//если пришел POST
+            $readersTicket = $this->entityManager->getRepository(ReadersTicket::class)->findOneBy(['id_readers_ticket' => $_GET['id']]);//поиск нужной записи в базе (данные идентификаторе записи получаем через GET запрос)
             if (!empty($resultConnectViolation)) {
                 foreach ($resultConnectViolation as $resultConnectViolations) {//проверка для мультиселекта (выборка из базы значений по id_user)
                     $violationDatabase [] = $resultConnectViolations->getIdViolation();//создание массива с идентификаторами нарушений (из базы)
@@ -98,21 +101,28 @@ class ReadersTicketController
                     }
                 }
             } else {//если в базе нет значений, то создаем их
-                foreach ($_POST['violation'] as $violations) {
+                if (!empty(($_POST['violation']))) {
+                    foreach ($_POST['violation'] as $violations) {
 
-                    $connectViolation = new ConnectViolation();
-                    $connectViolation->setIdConnectViolation($this->entityManager->getRepository(Violation::class)->findOneBy(['id_violation' => $violations]));
-                    $connectViolation->setIdUser($this->entityManager->getRepository(User::class)->findOneBy(['id_user' => $_GET['id']]));
-                    $this->entityManager->persist($connectViolation);
+                        $connectViolation = new ConnectViolation();
+                        $connectViolation->setIdConnectViolation($this->entityManager->getRepository(Violation::class)->findOneBy(['id_violation' => $violations]));
+                        $connectViolation->setIdUser($this->entityManager->getRepository(User::class)->findOneBy(['id_user' => $_GET['id']]));
+                        $this->entityManager->persist($connectViolation);
+                    }
                 }
             }
             $readersTicket->setBlock($_POST['block']);//блокировка читательского билета
             if ($_POST['block'] == 0) {//если чекбокс в положении "заблокировать"
                 $readersTicket->setDateBlocking(date('Y-m-d'));//текущее время
                 $readersTicket->setDateUnblocking($_POST['date_unblocking']);//дата до какого чиста блокировать
-            } else {
+            } else {//если разблокируют
                 $readersTicket->setDateBlocking(null);//перезапись на null
                 $readersTicket->setDateUnblocking(null);//перезапись на null
+                for ($i = 0; $i < count($violationDatabase); $i++) {
+                    $saveViolation = $this->entityManager->getRepository(ConnectViolation::class)->findOneBy(['id_user' => $_GET['id']]);
+                    $this->entityManager->remove($saveViolation);
+                    $this->entityManager->flush();//сохранение результата
+                }
             }
             $this->entityManager->persist($readersTicket);
             $this->entityManager->flush();//сохранение результата
