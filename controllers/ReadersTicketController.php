@@ -4,6 +4,8 @@ namespace App\controllers;
 
 use App\config\DB_connect;
 use App\core\View;
+use App\models\Access;
+use App\models\ConnectBooks;
 use App\models\ConnectBooksModel;
 use App\models\ConnectViolation;
 use App\models\ConnectViolationModel;
@@ -103,7 +105,6 @@ class ReadersTicketController
             } else {//если в базе нет значений, то создаем их
                 if (!empty(($_POST['violation']))) {
                     foreach ($_POST['violation'] as $violations) {
-
                         $connectViolation = new ConnectViolation();
                         $connectViolation->setIdConnectViolation($this->entityManager->getRepository(Violation::class)->findOneBy(['id_violation' => $violations]));
                         $connectViolation->setIdUser($this->entityManager->getRepository(User::class)->findOneBy(['id_user' => $_GET['id']]));
@@ -130,5 +131,51 @@ class ReadersTicketController
             View::redirect('/readers-ticket/index');
         }
         View::render('Блокировка читателя', 'readers-ticket/update.php', $model);
+    }
+
+    /**
+     * Разблокировка читательского билета
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
+     * @var array $violationDatabase
+     */
+    public function unblock()
+    {
+        $connectViolationModel = new ConnectViolationModel();
+        $connectBooksModel = new ConnectBooksModel();
+        $access = new Access();
+
+        $resultConnectViolation = $connectViolationModel->getOne();
+        $resultConnectBooks = $connectBooksModel->getLost();
+
+
+        if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) {
+            $readersTicket = $this->entityManager->getRepository(ReadersTicket::class)->findOneBy(['id_readers_ticket' => $_GET['id']]);//поиск нужной записи в базе (данные идентификаторе записи получаем через GET запрос)
+
+            if (!empty($resultConnectViolation)) {
+                for ($i = 0; $i < count($resultConnectViolation); $i++) {
+                    $saveViolation = $this->entityManager->getRepository(ConnectViolation::class)->findOneBy(['id_user' => $_GET['id']]);
+                    $this->entityManager->remove($saveViolation);
+                    $this->entityManager->flush();//сохранение результата
+                }
+            }
+            if (!empty($resultConnectBooks)) {
+                for ($i = 0; $i < count($resultConnectBooks); $i++) {
+                    $saveBooks = $this->entityManager->getRepository(ConnectBooks::class)->findOneBy(['id_user' => $_GET['id'],'status' => 2]);
+                    $saveBooks->setStatus(3);//изменение статуса на потеряно (списано)
+                    $this->entityManager->persist($saveBooks);
+                    $this->entityManager->flush();//сохранение результата
+                }
+            }
+            $readersTicket->setBlock(1);//разблокировка читательского билета
+            $readersTicket->setDateBlocking(null);//перезапись на null
+            $readersTicket->setDateUnblocking(null);//перезапись на null
+
+            $this->entityManager->persist($readersTicket);
+            $this->entityManager->flush();//сохранение результата
+
+            View::redirect('/readers-ticket/index');
+        }
     }
 }

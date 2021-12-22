@@ -12,6 +12,7 @@ class ConnectBooksModel
     const FROM_THE_READER = 1;
     const ORDERED = 0;
     const LOST = 2;
+    const LOST_FOREVER = 3;
 
     /**
      * Статус книги (используется при отображении всех книг)
@@ -21,6 +22,7 @@ class ConnectBooksModel
         self::FROM_THE_READER => 'У читателя',
         self::ORDERED => 'Заказана',
         self::LOST => 'Потеряна',
+        self::LOST_FOREVER => 'Потеряна (списана)',
     ];
 
 

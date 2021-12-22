@@ -21,10 +21,24 @@ class ViolationModel
      * Поиск всех записей в базе по сущности "Нарушения"
      * @return array|object[]
      */
-    public function getAll()
+    public function getAll(): array
     {
-        $groupRepository = $this->entityManager->getRepository(':Violation');
-        return $groupRepository->findAll();
+        if (!empty($_GET['name_violations'])){
+            $name_violations = $_GET['name_violations'];}
+        else $name_violations = '';
+        if (!empty($_GET['price_violations'])){
+            $price_violations = $_GET['price_violations'];}
+        else $price_violations = '';
+        $query = $this->entityManager->getRepository(':Violation')->createQueryBuilder('p');
+
+        $query
+            ->select('p')
+            ->where('p.name_violations LIKE :name_violations')
+            ->andWhere('p.price_violations LIKE :price_violations')
+            ->setParameter('name_violations','%'.$name_violations.'%')
+            ->setParameter('price_violations','%'.$price_violations.'%');
+
+        return  $query->getQuery()->getResult();
     }
 
     /**

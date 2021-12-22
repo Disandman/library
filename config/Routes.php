@@ -61,6 +61,7 @@ class Routes
 
         $router->add('readers-ticket/index', ['controller' => 'ReadersTicketController', 'action' => 'index']);
         $router->add('readers-ticket/block', ['controller' => 'ReadersTicketController', 'action' => 'block']);
+        $router->add('readers-ticket/unblock', ['controller' => 'ReadersTicketController', 'action' => 'unblock']);
 
         $router->add('books-user/index', ['controller' => 'BooksUserController', 'action' => 'index']);
         $router->add('books-user/update', ['controller' => 'BooksUserController', 'action' => 'update']);

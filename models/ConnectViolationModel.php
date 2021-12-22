@@ -36,7 +36,12 @@ class ConnectViolationModel
     public function getBlock()
     {
         $query = $this->entityManager->getRepository(':ConnectViolation')->createQueryBuilder('p');
-        $query->where('p.id_user =' . $_SESSION['id_user']);
+        if (!empty($_GET['id'])) {//если приходит GET, то в запросе используем id пользователя (только для администратора или сотрудника библиотеки)
+            $id_user = $_GET['id'];
+        } else {
+            $id_user = $_SESSION['id_user'];//для пользователя используем идентификатор взятый из сессии
+        }
+        $query->where('p.id_user =' . $id_user);
         return $query->getQuery()->getResult();
     }
     /**

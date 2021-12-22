@@ -22,7 +22,7 @@ $user = $modelUser->getUser();
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <script type="text/javascript" src="/js/bootstrap.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -40,23 +40,24 @@ $user = $modelUser->getUser();
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/">Главная</a>
                         </li>
-                        <?php if (!empty($_SESSION['id_user'])) { ?>
-                            <?php if (!$access->getRole('Администратор')): ?>
-
+                        <?php if (!empty($_SESSION['id_user'])) : ?>
+                            <?php if (!$access->getRole('Администратор') && !$access->getRole('Сотрудник библиотеки')) {?>
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page" href="/books-user/index">Мои Книги</a>
                                 </li>
-                            <?php endif; ?>
+                            <?php } ?>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="/books/index">Книги</a>
                             </li>
-                        <?php }
-                        if ($access->getRole('Администратор')): ?>
+                        <?php endif;
+                        if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')): ?>
                             <li class="nav-item">
                                 <a class="nav-link" aria-current="page" href="/readers-ticket/index">Читатели</a>
                             </li>
                             <li class="nav-item"><a class="nav-link" aria-current="page" href="/violation/index">Нарушения</a>
                             </li>
+                        <?php endif; ?>
+                            <?php if ($access->getRole('Администратор')) : ?>
                             <li class="nav-item dropdown dropstart ">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                                    data-bs-toggle="dropdown"

@@ -75,7 +75,7 @@ class BooksUserController
             'connectViolation' => $connectViolation
         ];
 
-            View::render('Мои книги', 'books-user/block.php', $model);
+            View::render('Нарушения пользователя', 'books-user/blockAdmin.php', $model);
     }
 
 //    /**

@@ -18,13 +18,22 @@ class DivisionModel
     }
 
     /**
-     * Поиск всех записей в базе по сущности "КНИГИ"
+     * Поиск всех записей в базе по сущности "ПОДРАЗДЕЛЕНИЯ"
      * @return array
      */
     public function getAll(): array
     {
-        $divisionRepository = $this->entityManager->getRepository(':Division');
-        return $divisionRepository->findAll();
+        if (!empty($_GET['division'])){
+            $division = $_GET['division'];}
+        else $division = '';
+        $query = $this->entityManager->getRepository(':Division')->createQueryBuilder('p');
+
+        $query
+            ->select('p')
+            ->where('p.division LIKE :division')
+            ->setParameter('division','%'.$division.'%');
+
+        return  $query->getQuery()->getResult();
     }
 
     /**

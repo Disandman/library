@@ -14,10 +14,13 @@ Breadcrumb::add_current('/division/index', 'Подразделения');
 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
     <table class="table table-hover">
         <thead class="thead-dark">
+        <form method="get" action="/division/index">
         <tr>
-            <th scope="col">Подразделение</th>
+            <th scope="col">Подразделение<input type="text" class="form-control" id="division" name="division" value="<?php echo !empty($_GET['division']) ? $_GET['division']:''?>"></th>
             <th width="120"></th>
+            <input type="submit" hidden="true" />
         </tr>
+        </form>
         </thead>
         <?php foreach ($model as $models) : ?>
             <tr>

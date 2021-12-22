@@ -23,8 +23,16 @@ class GroupModel
      */
     public function getAll(): array
     {
-        $groupRepository = $this->entityManager->getRepository(':Group');
-        return $groupRepository->findAll();
+        if (!empty($_GET['group_name'])){
+            $group_name = $_GET['group_name'];}
+        else $group_name = '';
+        $query = $this->entityManager->getRepository(':Group')->createQueryBuilder('p');
+        $query
+            ->select('p')
+            ->where('p.group_name LIKE :group_name')
+            ->setParameter('group_name','%'.$group_name.'%');
+
+        return  $query->getQuery()->getResult();
     }
 
     /**

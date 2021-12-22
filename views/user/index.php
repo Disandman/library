@@ -10,6 +10,35 @@ Breadcrumb::add_current('/user/index', 'Пользователи');
 /** @var array $readersTicket */
 ?>
 
+<script>
+    $(document).ready(function() {
+        $('#searchInput').AddXbutton('text');
+        $('#searchInput').focus();
+    });
+    (function($) {
+        $.fn.AddXbutton = function(options) {
+            var defaults = {
+                img: 'x.gif'//расположение картинки крестика по-умолчанию (относительно страницы, на которой находится инпут)
+            };
+            var opts = $.extend(defaults, options);
+            $(this)
+                .after($('<input type="image" id="xButton" src="' + opts['img'] + '" />') //после текстового инпута вставляем image-input
+                    .css({ 'display': 'none', 'cursor': 'pointer', 'marginLeft': '-15px' })// делаем его стильным
+                    .click(function() { //вешаем обработчик на клик
+                        $('#searchInput').val('').focus();
+                        $('#xButton').hide();
+                    }))
+                .keyup(function() { //на кейап мы проверяем, показывать нам крестик или нет
+                    if ($(this).val().length > 0) {
+                        $('#xButton').show(); //если текст какой-нибудь есть, но показываем
+                    } else {
+                        $('#xButton').hide();
+                    }
+                });
+            if ($(this).val() != '') $('#xButton').show(); //если при загрузке страницы в текстовом поле что-то есть, крестик надо сразу показать (например, при обновлении страницы)
+        };
+    })(jQuery);
+</script>
 <div class="bg-light">
     <?php echo Breadcrumb::out(); ?>
 </div>
@@ -31,18 +60,21 @@ Breadcrumb::add_current('/user/index', 'Пользователи');
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <table class="table table-hover">
             <thead class="thead-dark">
+            <form method="get" action="/user/index">
             <tr>
-                <th scope="col">ФИО</th>
-                <th scope="col">Логин</th>
+                <th scope="col">ФИО<input type="text" class="form-control" id="full_name" name="full_name" id="searchInput"  value="<?php echo !empty($_GET['full_name']) ? $_GET['full_name']:''?>"></th>
+                <th scope="col">Логин<input type="text" class="form-control" id="login" name="login" value="<?php echo !empty($_GET['login']) ? $_GET['login']:''?>"></th>
                 <th scope="col">Роль</th>
                 <th scope="col">Должность</th>
                 <th scope="col">Статус</th>
-                <th width="120"></th>
+                <th width="120"> <a href="/user/index" class="btn btn-danger btn-sm">сбросить поиск</a></th>
+
+                <input type="submit" hidden="true" />
             </tr>
+            </form>
             </thead>
             <?php foreach ($model as $models) : ?>
                 <tr>
-
                     <td align="left"><?php echo $models->getFullName(); ?></td>
                     <td align="left"><?php echo $models->getLogin(); ?></td>
                     <td align="left"><?php echo $user->getUserRole($models->getRole())?></td>

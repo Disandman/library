@@ -34,10 +34,23 @@ class UserModels
      * Поиск всех записей в базе по сущности "Пользователи"
      * @return array|object[]
      */
-    public function getAll()
+    public function getAll(): array
     {
-        $userRepository = $this->entityManager->getRepository(':User');
-        return $userRepository->findAll();
+        if (!empty($_GET['full_name'])){
+            $full_name = $_GET['full_name'];}
+        else $full_name = '';
+        if (!empty($_GET['login'])){
+            $login = $_GET['login'];}
+        else $login = '';
+        $query = $this->entityManager->getRepository(':User')->createQueryBuilder('p');
+        $query
+            ->select('p')
+            ->where('p.full_name LIKE :full_name')
+            ->andWhere('p.login LIKE :login')
+            ->setParameter('full_name','%'.$full_name.'%')
+            ->setParameter('login','%'.$login.'%');
+
+        return  $query->getQuery()->getResult();
     }
 
     /**

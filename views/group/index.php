@@ -13,10 +13,13 @@ Breadcrumb::add_current('/group/index', 'Группы');
 <br>
 <table class="table table-hover">
     <thead class="thead-dark">
+    <form method="get" action="/group/index">
     <tr>
-        <th scope="col">Группа</th>
+        <th scope="col">Группа<input type="text" class="form-control" id="group_name" name="group_name" value="<?php echo !empty($_GET['group_name']) ? $_GET['group_name']:''?>"></th>
         <th width="120"></th>
+        <input type="submit" hidden="true" />
     </tr>
+    </form>
     </thead>
     <?php foreach ($model as $models) : ?>
         <tr>

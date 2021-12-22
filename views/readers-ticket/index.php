@@ -1,10 +1,6 @@
 <?php
 
 use App\core\Breadcrumb;
-use App\core\View;
-use App\models\ConnectBooksModel;
-use App\models\ConnectViolationModel;
-use App\models\ReadersTicketModel;
 
 Breadcrumb::add_current('/readers-ticket/index', 'Читатели');
 

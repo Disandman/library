@@ -17,15 +17,18 @@ Breadcrumb::add_current('/books/index', 'Книги');
 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
     <table class="table table-hover">
         <thead class="thead-dark">
+        <form method="get" action="/books/index">
         <tr>
-            <th scope="col">Название</th>
-            <th scope="col">Автор</th>
-            <th scope="col">Дата публикации</th>
+            <th scope="col">Название<br><input type="text" class="form-control" id="name" name="name" value="<?php echo !empty($_GET['name']) ? $_GET['names']:''?>"></th>
+            <th scope="col">Автор<br><input type="text" class="form-control" id="author" name="author" value="<?php echo !empty($_GET['author']) ? $_GET['author']:'' ?>"></th>
+            <th scope="col">Дата публикации<br><input type="date" class="form-control" id="date_publication" name="date_publication" value="<?php echo !empty($_GET['date_publication'])? $_GET['date_publication']:'' ?>"></th>
             <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) : ?>
-            <th scope="col">У читателей</th>
+            <th scope="col">У читателей<br><input type="text" class="form-control" placeholder="Пока не работает"></th>
             <?php endif; ?>
             <th width="120"></th>
         </tr>
+            <input type="submit" hidden="true" />
+        </form>
         </thead>
         <?php foreach ($model as $models) : ?>
             <tr>

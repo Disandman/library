@@ -13,11 +13,14 @@ Breadcrumb::add_current('/violation/index', 'Нарушения');
 <br>
 <table class="table table-hover">
     <thead class="thead-dark">
+    <form method="get" action="/violation/index">
     <tr>
-        <th scope="col">Нарушение</th>
-        <th scope="col">Сумма</th>
+        <th scope="col">Нарушение<input type="text" class="form-control" id="name_violations" name="name_violations" value="<?php echo !empty($_GET['name_violations']) ? $_GET['name_violations']:''?>"></th>
+        <th scope="col">Сумма<input type="text" class="form-control" id="price_violations" name="price_violations" value="<?php echo !empty($_GET['price_violations']) ? $_GET['price_violations']:''?>"></th>
         <th width="120"></th>
+        <input type="submit" hidden="true" />
     </tr>
+    </form>
     </thead>
     <?php foreach ($model as $models) : ?>
         <tr>
