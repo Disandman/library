@@ -1,0 +1,14 @@
+# Global
+.*.swp
+.DS_Store
+
+# Application
+composer.lock
+vendor/
+.env
+
+# PHPStorm
+.idea/
+
+# VSCode
+.vscode/
