@@ -23,8 +23,8 @@ services:
             MYSQL_PASSWORD: ${DB_PASSWORD}
         env_file:
             - ./.env
-        volumes:
-            - ./docker/db:/docker-entrypoint-initdb.d/:ro
+#        volumes:
+#            - ./docker/db:/docker-entrypoint-initdb.d/:ro
 #            - /data/mysql:/var/lib/mysql
 
     # Nginx service
