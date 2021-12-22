@@ -19,9 +19,9 @@ Breadcrumb::add_current('/books/index', 'Книги');
         <thead class="thead-dark">
         <form method="get" action="/books/index">
         <tr>
-            <th scope="col">Название<br><input type="text" class="form-control" id="name" name="name" value="<?php echo !empty($_GET['name']) ? $_GET['names']:''?>"></th>
-            <th scope="col">Автор<br><input type="text" class="form-control" id="author" name="author" value="<?php echo !empty($_GET['author']) ? $_GET['author']:'' ?>"></th>
-            <th scope="col">Дата публикации<br><input type="date" class="form-control" id="date_publication" name="date_publication" value="<?php echo !empty($_GET['date_publication'])? $_GET['date_publication']:'' ?>"></th>
+            <th scope="col">Название<br><input type="text" class="form-control" id="name" placeholder="Найти по названию..." name="name" value="<?php echo !empty($_GET['name']) ? $_GET['names']:''?>"></th>
+            <th scope="col">Автор<br><input type="text" class="form-control" id="author" placeholder="Найти по автору..." name="author" value="<?php echo !empty($_GET['author']) ? $_GET['author']:'' ?>"></th>
+            <th scope="col">Дата публикации<br><input type="date" class="form-control" placeholder="Найти по дате..." id="date_publication" name="date_publication" value="<?php echo !empty($_GET['date_publication'])? $_GET['date_publication']:'' ?>"></th>
             <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) : ?>
             <th scope="col">У читателей<br><input type="text" class="form-control" placeholder="Пока не работает"></th>
             <?php endif; ?>

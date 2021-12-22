@@ -6,6 +6,7 @@ use App\core\Breadcrumb;
 /** @var array $myBook */
 /** @var array $ordered */
 /** @var array $lost */
+/** @var array $booksModel */
 /** @var object $entityManager */
 
 if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) {
@@ -114,7 +115,7 @@ if ($access->getRole('Администратор') || $access->getRole('Сотр
                         <td align="left">
                             <?php echo $booksModel->getPriceBooks($losted->getIdBooks()); ?>
                         </td>
-                        <?php if ($access->getRole('Администратор')) { ?>
+                        <?php if ($access->getRole('Администратор')|| $access->getRole('Сотрудник библиотеки')) { ?>
                             <td align="left">
                                 <a href="/books-user/lostRefusal?id=<?php echo $losted->getIdConnectBooks(); ?>"
                                    class="btn btn-outline-info btn-sm">Списать</a>

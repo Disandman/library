@@ -51,7 +51,7 @@ class InitController
             'д.филос.н.', 'к.филос.н.',
             'д.х.н.', 'к.х.н.',
             'д.э.н.', 'к.э.н.',
-            'д.ю.н.', 'к.ю.н.'
+            'д.ю.н.', 'к.ю.н.','б.з'
         ];
     }
 
@@ -74,9 +74,10 @@ class InitController
     private function role(): array
     {
         return [
+            'Читатель',
             'Администратор',
-            'Сотрудник библиотеки',
-            'Читатель'
+            'Сотрудник библиотеки'
+
         ];
     }
 
@@ -119,7 +120,7 @@ class InitController
         $user->setPassword(md5('admin'));
         $user->setFullName('Администратор системы');
         $user->setActive(1);
-        $classRole = $this->entityManager->getRepository(':Role')->find(1);
+        $classRole = $this->entityManager->getRepository(':Role')->find(2);
         $user->setRole($classRole);
 
         $this->entityManager->persist($user);
