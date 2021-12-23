@@ -16,7 +16,7 @@ class Routes
     {
         $router = new Router();
         $emptyUserModel = new UserModels();
-        $emptyUser = $emptyUserModel->getAll();
+        $emptyUser = $emptyUserModel->getAllDB();
 
         if (empty($emptyUser))//проверка на существование хотя бы одной записи пользователя в базе (если нет то переход на страницу инициализации)
             $router->add('', ['controller' => 'HomeController', 'action' => 'indexInit']);

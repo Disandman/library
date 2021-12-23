@@ -21,10 +21,20 @@ class RoleModel
      * Поиск всех записей в базе по сущности "РОЛИ"
      * @return array|object[]
      */
-    public function getAll()
+    public function getAll(): array
     {
-        $roleRepository = $this->entityManager->getRepository(':Role');
-        return $roleRepository->findAll();
+        if (!empty($_GET['role'])){
+            $role = $_GET['role'];}
+        else $role = '';
+
+        $query = $this->entityManager->getRepository(':Role')->createQueryBuilder('p');
+
+        $query
+            ->select('p')
+            ->where('p.name LIKE :role')
+            ->setParameter('role','%'.$role.'%');
+
+        return  $query->getQuery()->getResult();
     }
 
     /**

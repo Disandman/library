@@ -34,7 +34,7 @@ class User
     protected $full_name;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer")
      */
     protected $active;
 
@@ -80,6 +80,17 @@ class User
      * )
      */
     protected $connect_books;
+
+    /**
+     * @var object
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="ReadersTicket",
+     *      mappedBy="user_connect",
+     *      cascade={"persist", "remove"}
+     * )
+     */
+    protected $readers_ticket_user;
 //////////////////////////////////////////////////////////////////////////////////////
 
     /**

@@ -51,7 +51,7 @@ class UserController
             'model' => $resultUser,
             'role' => $resultRole,
             'readersTicket' => $readersTicket,
-            'user' => $user
+            'user' => $user,
         ];
 
         if ($this->access->getRole('Администратор')) {

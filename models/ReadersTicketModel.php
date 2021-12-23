@@ -52,10 +52,64 @@ class ReadersTicketModel
      * Поиск всех записей в базе по сущности "Читательские билеты"
      * @return array|object[]
      */
-    public function getAll()
+    public function getAll(): array
     {
-        $userRepository = $this->entityManager->getRepository(':ReadersTicket');
-        return $userRepository->findAll();
+        $query = $this->entityManager->getRepository(':ReadersTicket')->createQueryBuilder('p');
+        if (!empty($_GET['date_blocking'])) {
+            $query->andWhere('p.date_blocking= :date_blocking')
+                ->setParameter('date_blocking', $_GET['date_blocking']);
+        }
+        if (!empty($_GET['date_unblocking'])) {
+            $query->andWhere('p.date_unblocking= :date_unblocking')
+                ->setParameter('date_unblocking', $_GET['date_unblocking']);
+        }
+        if (!empty($_GET['position'])) {
+            $query->andWhere('p.id_position= :position')
+                ->setParameter('position', $_GET['position']);
+        }
+        if (!empty($_GET['block'])) {
+            $query->andWhere('p.block= :block')
+                ->setParameter('block', $_GET['block']);
+        }
+        if (!empty($_GET['course'])) {
+            $query->andWhere('p.id_course= :course')
+                ->setParameter('course', $_GET['course']);
+        }
+        if (!empty($_GET['full_name'])) {
+            $query
+                ->Join(
+                    'App\models\User',
+                    'u',
+                    'WITH',
+                    'p.id_user= u.id_user'
+                )
+                ->andWhere('u.full_name LIKE :full_name')
+                ->setParameter('full_name', '%'.$_GET['full_name'].'%');
+        }
+        if (!empty($_GET['division'])) {
+            $query
+                ->Join(
+                    'App\models\Division',
+                    'u',
+                    'WITH',
+                    'p.id_division= u.id_division'
+                )
+                ->andWhere('u.division LIKE :division')
+                ->setParameter('division', '%'.$_GET['division'].'%');
+        }
+        if (!empty($_GET['group'])) {
+            $query
+                ->Join(
+                    'App\models\Group',
+                    'u',
+                    'WITH',
+                    'p.id_group= u.id_group'
+                )
+                ->andWhere('u.group_name LIKE :group')
+                ->setParameter('group', '%'.$_GET['group'].'%');
+        }
+
+        return $query->getQuery()->getResult();
     }
 
     /**

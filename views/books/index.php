@@ -23,7 +23,7 @@ Breadcrumb::add_current('/books/index', 'Книги');
             <th scope="col">Автор<br><input type="text" class="form-control" id="author" placeholder="Найти по автору..." name="author" value="<?php echo !empty($_GET['author']) ? $_GET['author']:'' ?>"></th>
             <th scope="col">Дата публикации<br><input type="date" class="form-control" placeholder="Найти по дате..." id="date_publication" name="date_publication" value="<?php echo !empty($_GET['date_publication'])? $_GET['date_publication']:'' ?>"></th>
             <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) : ?>
-            <th scope="col">У читателей<br><input type="text" class="form-control" placeholder="Пока не работает"></th>
+            <th scope="col">У читателей</th>
             <?php endif; ?>
             <th width="120"></th>
         </tr>

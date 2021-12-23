@@ -36,21 +36,46 @@ class UserModels
      */
     public function getAll(): array
     {
-        if (!empty($_GET['full_name'])){
-            $full_name = $_GET['full_name'];}
-        else $full_name = '';
-        if (!empty($_GET['login'])){
-            $login = $_GET['login'];}
-        else $login = '';
+        if (!empty($_GET['full_name'])) {
+            $full_name = $_GET['full_name'];
+        } else $full_name = '';
+        if (!empty($_GET['login'])) {
+            $login = $_GET['login'];
+        } else $login = '';
+
         $query = $this->entityManager->getRepository(':User')->createQueryBuilder('p');
         $query
-            ->select('p')
             ->where('p.full_name LIKE :full_name')
             ->andWhere('p.login LIKE :login')
-            ->setParameter('full_name','%'.$full_name.'%')
-            ->setParameter('login','%'.$login.'%');
+            ->setParameter('full_name', '%' . $full_name . '%')
+            ->setParameter('login', '%' . $login . '%');
 
-        return  $query->getQuery()->getResult();
+        if (!empty($_GET['role_user'])) {
+            $query->andWhere('p.role= :role_user')
+                ->setParameter('role_user', $_GET['role_user']);
+        }
+        if (!empty($_GET['active'])) {
+            $query->andWhere('p.active= :active')
+                ->setParameter('active', (boolean)$_GET['active']);
+        }
+        if (!empty($_GET['position'])) {
+            $query
+                ->Join(
+                    'App\models\ReadersTicket',
+                    'u',
+                    'WITH',
+                    'p.id_user = u.id_user'
+                )
+                ->andWhere('u.id_position= :position')
+                ->setParameter('position', $_GET['position']);
+        }
+        return $query->getQuery()->getResult();
+    }
+
+    public function getAllDB()
+    {
+        $userRepository = $this->entityManager->getRepository(':User');
+        return $userRepository->findAll();
     }
 
     /**
@@ -84,6 +109,7 @@ class UserModels
         $userRepository = $this->entityManager->getRepository(':User');
         return $userRepository->findOneBy(['id_user' => $id]);
     }
+
     /**
      * Используется в навбаре для определения пользователя
      * @return mixed|object|void|null

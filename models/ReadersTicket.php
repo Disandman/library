@@ -78,7 +78,7 @@ class ReadersTicket
 
 
     /**
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="readers_ticket_user")
      * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user",onDelete="CASCADE")
      */
     private $user_connect;

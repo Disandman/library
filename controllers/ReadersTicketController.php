@@ -12,6 +12,7 @@ use App\models\ConnectViolationModel;
 use App\models\ReadersTicket;
 use App\models\ReadersTicketModel;
 use App\models\User;
+use App\models\UserModels;
 use App\models\Violation;
 use App\models\ViolationModel;
 
@@ -36,13 +37,15 @@ class ReadersTicketController
     public function index()
     {
         $readersTicket = new ReadersTicketModel();
+        $userModel = new UserModels();
         $booksModel = new ConnectBooksModel();
         $resultReadersTicket = $readersTicket->getAll();
 
         $model = [
             'model' => $resultReadersTicket,
             'readersTicket' => $readersTicket,
-            'booksModel' => $booksModel
+            'booksModel' => $booksModel,
+            'userModel' => $userModel
         ];
 
         View::render('Читатели', 'readers-ticket/index.php', $model);
