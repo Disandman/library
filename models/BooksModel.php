@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\DB_connect;
+use App\core\Paginator;
 
 /**
  * Данный клас предназначен для поиска через сущность Books некоторых элементов в базе (книг)
@@ -32,15 +33,15 @@ class BooksModel
      */
     public function getAll(): array
     {
-        if (!empty($_GET['name'])){
-            $name = $_GET['name'];}
-        else $name = '';
-        if (!empty($_GET['author'])){
-            $author = $_GET['author'];}
-        else $author = '';
-        if (!empty($_GET['date_publication'])){
-            $date_publication = $_GET['date_publication'];}
-        else $date_publication = '';
+        if (!empty($_GET['name'])) {
+            $name = $_GET['name'];
+        } else $name = '';
+        if (!empty($_GET['author'])) {
+            $author = $_GET['author'];
+        } else $author = '';
+        if (!empty($_GET['date_publication'])) {
+            $date_publication = $_GET['date_publication'];
+        } else $date_publication = '';
         $query = $this->entityManager->getRepository(':Books')->createQueryBuilder('p');
 
         $query
@@ -48,11 +49,19 @@ class BooksModel
             ->where('p.name_books LIKE :name')
             ->andWhere('p.author LIKE :author')
             ->andWhere('p.date_publication LIKE :date_publication')
-            ->setParameter('name','%'.$name.'%')
-            ->setParameter('author','%'.$author.'%')
-            ->setParameter('date_publication','%'.$date_publication.'%');
+            ->setParameter('name', '%' . $name . '%')
+            ->setParameter('author', '%' . $author . '%')
+            ->setParameter('date_publication', '%' . $date_publication . '%');
 
-        return  $query->getQuery()->getResult();
+        $paginator = new Paginator();
+        $maxResult = 10;
+        $resultPaginator = $paginator->getModelResultPage(count($query->getQuery()->getResult()),$maxResult);
+        $firstResult = $resultPaginator;
+
+        $query->setFirstResult($firstResult)
+            ->setMaxResults($maxResult);
+
+        return $query->getQuery()->getResult();
     }
 
     /**

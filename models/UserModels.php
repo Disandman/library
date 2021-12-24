@@ -34,14 +34,14 @@ class UserModels
      * Поиск всех записей в базе по сущности "Пользователи"
      * @return array|object[]
      */
-    public function getAll(): array
+     public function getAll(): array
     {
         if (!empty($_GET['full_name'])) {
             $full_name = $_GET['full_name'];
         } else $full_name = '';
         if (!empty($_GET['login'])) {
             $login = $_GET['login'];
-        } else $login = '';
+        } else {$login = '';}
 
         $query = $this->entityManager->getRepository(':User')->createQueryBuilder('p');
         $query
@@ -54,9 +54,12 @@ class UserModels
             $query->andWhere('p.role= :role_user')
                 ->setParameter('role_user', $_GET['role_user']);
         }
-        if (!empty($_GET['active'])) {
-            $query->andWhere('p.active= :active')
-                ->setParameter('active', (boolean)$_GET['active']);
+        if(!empty($_GET['active']) or isset($_GET['active']))
+        {
+            if ($_GET['active'] === '1' or $_GET['active'] === '0'){
+                $query->andWhere('p.active= :active')
+                    ->setParameter('active', $_GET['active'], 'integer');
+            }
         }
         if (!empty($_GET['position'])) {
             $query
@@ -72,6 +75,10 @@ class UserModels
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * Поиск всех записей в базе по сущности "Пользователи"
+     * @return array|object[]
+     */
     public function getAllDB()
     {
         $userRepository = $this->entityManager->getRepository(':User');

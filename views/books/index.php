@@ -18,16 +18,26 @@ Breadcrumb::add_current('/books/index', 'Книги');
     <table class="table table-hover">
         <thead class="thead-dark">
         <form method="get" action="/books/index">
-        <tr>
-            <th scope="col">Название<br><input type="text" class="form-control" id="name" placeholder="Найти по названию..." name="name" value="<?php echo !empty($_GET['name']) ? $_GET['names']:''?>"></th>
-            <th scope="col">Автор<br><input type="text" class="form-control" id="author" placeholder="Найти по автору..." name="author" value="<?php echo !empty($_GET['author']) ? $_GET['author']:'' ?>"></th>
-            <th scope="col">Дата публикации<br><input type="date" class="form-control" placeholder="Найти по дате..." id="date_publication" name="date_publication" value="<?php echo !empty($_GET['date_publication'])? $_GET['date_publication']:'' ?>"></th>
-            <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) : ?>
-            <th scope="col">У читателей</th>
-            <?php endif; ?>
-            <th width="120"></th>
-        </tr>
-            <input type="submit" hidden="true" />
+            <tr>
+                <th scope="col">Название<br><input type="text" class="form-control" id="name"
+                                                   placeholder="Найти по названию..." name="name"
+                                                   value="<?php echo !empty($_GET['name']) ? $_GET['names'] : '' ?>">
+                </th>
+                <th scope="col">Автор<br><input type="text" class="form-control" id="author"
+                                                placeholder="Найти по автору..." name="author"
+                                                value="<?php echo !empty($_GET['author']) ? $_GET['author'] : '' ?>">
+                </th>
+                <th scope="col">Дата публикации<br><input type="date" class="form-control"
+                                                          placeholder="Найти по дате..." id="date_publication"
+                                                          name="date_publication"
+                                                          value="<?php echo !empty($_GET['date_publication']) ? $_GET['date_publication'] : '' ?>">
+                </th>
+                <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) : ?>
+                    <th scope="col">У читателей</th>
+                <?php endif; ?>
+                <th width="120"></th>
+            </tr>
+            <input type="submit" hidden="true"/>
         </form>
         </thead>
         <?php foreach ($model as $models) : ?>
@@ -38,11 +48,11 @@ Breadcrumb::add_current('/books/index', 'Книги');
                 <td align="left"><?php echo $models->getAuthor(); ?></td>
                 <td align="left"><?php echo $models->getDatePublication(); ?></td>
                 <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) : ?>
-                <td align="left"><?php
-                    foreach ($connectBooks->getBooksUser($models->getIdBooks()) as $user) {
-                        echo '<a href="/books-user/index?id=' . $user->getIdUser() . '">' . $connectBooks->getUserFullName($user->getIdUser()) . '<span class="badge bg-light text-dark">'.$connectBooks->getStatusBooks($connectBooks->getBooksUserStatus($user->getIdUser(),$models->getIdBooks())).'</span></a><br>';
-                    } ?>
-                </td>
+                    <td align="left"><?php
+                        foreach ($connectBooks->getBooksUser($models->getIdBooks()) as $user) {
+                            echo '<a href="/books-user/index?id=' . $user->getIdUser() . '">' . $connectBooks->getUserFullName($user->getIdUser()) . '<span class="badge bg-light text-dark">' . $connectBooks->getStatusBooks($connectBooks->getBooksUserStatus($user->getIdUser(), $models->getIdBooks())) . '</span></a><br>';
+                        } ?>
+                    </td>
                 <?php endif; ?>
                 <td>
                     <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) { ?>
@@ -72,3 +82,26 @@ Breadcrumb::add_current('/books/index', 'Книги');
             <a href="/books/create" class="btn btn-success">Добавить</a>
         </div>
     <?php endif; ?>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item <?php if (empty($_GET['page'])) $_GET['page'] = 1;
+            echo $_GET['page'] <= 1 ? 'disabled' : '' ?>">
+                <a class="page-link" href="/books/index?page=<?php echo $_GET['page'] - 1 ?>">Предыдущая</a>
+            </li>
+            <?php
+            $paginator = new \App\core\Paginator();
+            for ($i = 1; $i <= $paginator->getCount(); $i++) {
+                $active = $_GET['page'] == $i ? 'active' : '';
+                $activeFin = $_GET['page'] == $paginator->getCount() ? 'active' : '';
+
+
+                    echo '<li class="page-item ' . $active . '"><a class="page-link" href="/books/index?page=' . $i . '">' . $i . '</a></li>';
+
+
+            }
+            ?>
+            <li class="page-item <?php echo $_GET['page'] >= $paginator->getCount() ? 'disabled' : '' ?>">
+                <a class="page-link" href="/books/index?page=<?php echo $_GET['page'] + 1 ?>">Следующая</a>
+            </li>
+        </ul>
+    </nav
