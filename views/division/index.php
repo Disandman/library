@@ -1,6 +1,7 @@
 <?php
 
 use App\core\Breadcrumb;
+use App\core\Paginator;
 
 Breadcrumb::add_current('/division/index', 'Подразделения');
 
@@ -37,4 +38,6 @@ Breadcrumb::add_current('/division/index', 'Подразделения');
     <div class="col-md-2 text-right">
         <a href="/division/create" class="btn btn-success">Добавить</a>
     </div>
+    <?php $paginator = new Paginator();
+    echo $paginator->getViewPaginator(); ?>
 

@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\DB_connect;
+use App\core\Paginator;
 
 /**
  * Данный клас предназначен для поиска через сущность ConnectBooks некоторых элементов в базе (книг читателей)
@@ -42,8 +43,17 @@ class ConnectBooksModel
      */
     public function getAll(): array
     {
-        $connect_books_model = $this->entityManager->getRepository(':ConnectBooks');
-        return $connect_books_model->findAll();
+        $query = $this->entityManager->getRepository(':ConnectBooks')->createQueryBuilder('p');
+
+        $paginator = new Paginator();
+        $maxResult = 10;
+        $resultPaginator = $paginator->getModelResultPage(count($query->getQuery()->getResult()),$maxResult);
+        $firstResult = $resultPaginator;
+
+        $query->setFirstResult($firstResult)
+            ->setMaxResults($maxResult);
+
+        return $query->getQuery()->getResult();
     }
 
     /**

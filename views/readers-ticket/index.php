@@ -1,6 +1,7 @@
 <?php
 
 use App\core\Breadcrumb;
+use App\core\Paginator;
 
 Breadcrumb::add_current('/readers-ticket/index', 'Читатели');
 
@@ -86,3 +87,5 @@ Breadcrumb::add_current('/readers-ticket/index', 'Читатели');
             </tr>
         <?php endforeach; ?>
     </table>
+<?php $paginator = new Paginator();
+echo $paginator->getViewPaginator(); ?>

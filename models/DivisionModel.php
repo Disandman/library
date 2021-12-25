@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\DB_connect;
+use App\core\Paginator;
 
 /**
  * Данный клас предназначен для поиска через сущность Division некоторых элементов в базе (подразделений)
@@ -23,17 +24,25 @@ class DivisionModel
      */
     public function getAll(): array
     {
-        if (!empty($_GET['division'])){
-            $division = $_GET['division'];}
-        else $division = '';
+        if (!empty($_GET['division'])) {
+            $division = $_GET['division'];
+        } else $division = '';
         $query = $this->entityManager->getRepository(':Division')->createQueryBuilder('p');
 
         $query
             ->select('p')
             ->where('p.division LIKE :division')
-            ->setParameter('division','%'.$division.'%');
+            ->setParameter('division', '%' . $division . '%');
 
-        return  $query->getQuery()->getResult();
+        $paginator = new Paginator();
+        $maxResult = 10;
+        $resultPaginator = $paginator->getModelResultPage(count($query->getQuery()->getResult()), $maxResult);
+        $firstResult = $resultPaginator;
+
+        $query->setFirstResult($firstResult)
+            ->setMaxResults($maxResult);
+
+        return $query->getQuery()->getResult();
     }
 
     /**

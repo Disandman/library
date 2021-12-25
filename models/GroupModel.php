@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\DB_connect;
+use App\core\Paginator;
 
 /**
  * Данный клас предназначен для поиска через сущность GROUP некоторых элементов в базе (групп)
@@ -23,16 +24,24 @@ class GroupModel
      */
     public function getAll(): array
     {
-        if (!empty($_GET['group_name'])){
-            $group_name = $_GET['group_name'];}
-        else $group_name = '';
+        if (!empty($_GET['group_name'])) {
+            $group_name = $_GET['group_name'];
+        } else $group_name = '';
         $query = $this->entityManager->getRepository(':Group')->createQueryBuilder('p');
         $query
             ->select('p')
             ->where('p.group_name LIKE :group_name')
-            ->setParameter('group_name','%'.$group_name.'%');
+            ->setParameter('group_name', '%' . $group_name . '%');
 
-        return  $query->getQuery()->getResult();
+        $paginator = new Paginator();
+        $maxResult = 10;
+        $resultPaginator = $paginator->getModelResultPage(count($query->getQuery()->getResult()), $maxResult);
+        $firstResult = $resultPaginator;
+
+        $query->setFirstResult($firstResult)
+            ->setMaxResults($maxResult);
+
+        return $query->getQuery()->getResult();
     }
 
     /**

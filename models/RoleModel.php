@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\DB_connect;
+use App\core\Paginator;
 
 /**
  * Данный клас предназначен для поиска через сущность Role некоторых элементов в базе (ролей)
@@ -23,18 +24,25 @@ class RoleModel
      */
     public function getAll(): array
     {
-        if (!empty($_GET['role'])){
-            $role = $_GET['role'];}
-        else $role = '';
+        if (!empty($_GET['role'])) {
+            $role = $_GET['role'];
+        } else $role = '';
 
         $query = $this->entityManager->getRepository(':Role')->createQueryBuilder('p');
 
         $query
             ->select('p')
             ->where('p.name LIKE :role')
-            ->setParameter('role','%'.$role.'%');
+            ->setParameter('role', '%' . $role . '%');
+        $paginator = new Paginator();
+        $maxResult = 10;
+        $resultPaginator = $paginator->getModelResultPage(count($query->getQuery()->getResult()), $maxResult);
+        $firstResult = $resultPaginator;
 
-        return  $query->getQuery()->getResult();
+        $query->setFirstResult($firstResult)
+            ->setMaxResults($maxResult);
+
+        return $query->getQuery()->getResult();
     }
 
     /**
@@ -46,6 +54,7 @@ class RoleModel
         $userRepository = $this->entityManager->getRepository(':Role');
         return $userRepository->findOneBy(['id_role' => $_GET['id']]);
     }
+
     /**
      * Используется для поиска id владельца билета
      * @param $id

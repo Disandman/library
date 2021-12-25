@@ -1,6 +1,7 @@
 <?php
 
 use App\core\Breadcrumb;
+use App\core\Paginator;
 
 /** @var array $access */
 /** @var array $myBook */
@@ -115,7 +116,7 @@ if ($access->getRole('Администратор') || $access->getRole('Сотр
                         <td align="left">
                             <?php echo $booksModel->getPriceBooks($losted->getIdBooks()); ?>
                         </td>
-                        <?php if ($access->getRole('Администратор')|| $access->getRole('Сотрудник библиотеки')) { ?>
+                        <?php if ($access->getRole('Администратор') || $access->getRole('Сотрудник библиотеки')) { ?>
                             <td align="left">
                                 <a href="/books-user/lostRefusal?id=<?php echo $losted->getIdConnectBooks(); ?>"
                                    class="btn btn-outline-info btn-sm">Списать</a>
@@ -127,3 +128,5 @@ if ($access->getRole('Администратор') || $access->getRole('Сотр
         </div>
     </div>
 </div>
+<?php $paginator = new Paginator();
+echo $paginator->getViewPaginator(); ?>

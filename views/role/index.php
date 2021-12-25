@@ -1,6 +1,7 @@
 <?php
 
 use App\core\Breadcrumb;
+use App\core\Paginator;
 
 Breadcrumb::add_current('/role/index', 'Роли');
 
@@ -36,3 +37,5 @@ Breadcrumb::add_current('/role/index', 'Роли');
     <div class="col-md-2 text-right">
         <a href="/role/create" class="btn btn-success">Добавить</a>
     </div>
+<?php $paginator = new Paginator();
+echo $paginator->getViewPaginator(); ?>

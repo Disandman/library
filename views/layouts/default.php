@@ -104,6 +104,7 @@ $user = $modelUser->getUser();
 <main role="main" class="flex-shrink-0">
     <div class="container">
         <?php echo $content; ?>
+        <div>&#160;</div>
     </div>
 </main>
 <footer class="footer fixed-bottom bg-light">

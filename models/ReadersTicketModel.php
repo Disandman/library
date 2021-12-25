@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\DB_connect;
+use App\core\Paginator;
 
 /**
  * Данный клас предназначен для поиска через сущность ReadersTicket некоторых элементов в базе (чит.билетов)
@@ -110,6 +111,13 @@ class ReadersTicketModel
                     ->andWhere('u.group_name LIKE :group')
                     ->setParameter('group', '%' . $_GET['group'] . '%');
             }
+        $paginator = new Paginator();
+        $maxResult = 10;
+        $resultPaginator = $paginator->getModelResultPage(count($query->getQuery()->getResult()),$maxResult);
+        $firstResult = $resultPaginator;
+
+        $query->setFirstResult($firstResult)
+            ->setMaxResults($maxResult);
 
             return $query->getQuery()->getResult();
         }

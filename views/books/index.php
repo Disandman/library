@@ -1,6 +1,7 @@
 <?php
 
 use App\core\Breadcrumb;
+use App\core\Paginator;
 
 Breadcrumb::add_current('/books/index', 'Книги');
 
@@ -82,26 +83,7 @@ Breadcrumb::add_current('/books/index', 'Книги');
             <a href="/books/create" class="btn btn-success">Добавить</a>
         </div>
     <?php endif; ?>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item <?php if (empty($_GET['page'])) $_GET['page'] = 1;
-            echo $_GET['page'] <= 1 ? 'disabled' : '' ?>">
-                <a class="page-link" href="/books/index?page=<?php echo $_GET['page'] - 1 ?>">Предыдущая</a>
-            </li>
-            <?php
-            $paginator = new \App\core\Paginator();
-            for ($i = 1; $i <= $paginator->getCount(); $i++) {
-                $active = $_GET['page'] == $i ? 'active' : '';
-                $activeFin = $_GET['page'] == $paginator->getCount() ? 'active' : '';
+    <?php $paginator = new Paginator();
+    echo $paginator->getViewPaginator(); ?>
 
 
-                    echo '<li class="page-item ' . $active . '"><a class="page-link" href="/books/index?page=' . $i . '">' . $i . '</a></li>';
-
-
-            }
-            ?>
-            <li class="page-item <?php echo $_GET['page'] >= $paginator->getCount() ? 'disabled' : '' ?>">
-                <a class="page-link" href="/books/index?page=<?php echo $_GET['page'] + 1 ?>">Следующая</a>
-            </li>
-        </ul>
-    </nav

@@ -3,6 +3,7 @@
 namespace App\models;
 
 use App\config\DB_connect;
+use App\core\Paginator;
 
 /**
  * Данный клас предназначен для поиска через сущность Violation некоторых элементов в базе (нарушений)
@@ -37,6 +38,14 @@ class ViolationModel
             ->andWhere('p.price_violations LIKE :price_violations')
             ->setParameter('name_violations','%'.$name_violations.'%')
             ->setParameter('price_violations','%'.$price_violations.'%');
+
+        $paginator = new Paginator();
+        $maxResult = 10;
+        $resultPaginator = $paginator->getModelResultPage(count($query->getQuery()->getResult()),$maxResult);
+        $firstResult = $resultPaginator;
+
+        $query->setFirstResult($firstResult)
+            ->setMaxResults($maxResult);
 
         return  $query->getQuery()->getResult();
     }
